@@ -356,6 +356,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "120FPS"
 horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="ScoreTally" type="AudioStreamPlayer" parent="." unique_id=1944532967]
 stream = ExtResource("3_vjpdy")
