@@ -166,3 +166,7 @@ func show_lss_level_info(container: OnlineLevelContainer) -> void:
 	%LSSLevelInfo.show()
 	await get_tree().physics_frame
 	%Download.grab_focus()
+
+func restart_game() -> void:
+	OS.set_restart_on_exit(true)
+	get_tree().quit()

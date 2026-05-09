@@ -221,7 +221,12 @@ func setup_config_dirs() -> void:
 		"saves",
 		"screenshots",
 		"level_packs",
-		"blueprints"
+		"blueprints",
+		"mods",
+		
+		"custom_characters/.disabled",
+		"level_packs/.disabled",
+		"mods/.disabled",
 	]
 
 	for d in dirs:
