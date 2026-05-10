@@ -43,6 +43,9 @@ var manifest_data : ModManifest
 
 var mod_hook_preprocessor := _ModLoaderModHookPreProcessor.new()
 
+# Custom Object Related
+var path_custom_dir := ""
+var mod_is_object := false
 
 func _ready() -> void:
 	load_store()
@@ -79,7 +82,7 @@ func init(store: Dictionary) -> void:
 		ModToolUtils.output_error("OS currently not supported. Please open an issue on GitHub")
 
 	name_mod_dir = store.name_mod_dir
-	path_mod_dir = "res://mods-unpacked/" + store.name_mod_dir
+	path_custom_dir = "res://custom_objects-unpacked/" + store.name_mod_dir
 	path_current_template_dir = store.path_current_template_dir
 	path_export_dir = store.path_export_dir
 	path_global_export_dir = ProjectSettings.globalize_path(path_export_dir)
@@ -96,6 +99,7 @@ func init(store: Dictionary) -> void:
 
 func update_paths(new_name_mod_dir: String) -> void:
 	path_mod_dir = "res://mods-unpacked/" + new_name_mod_dir
+	path_custom_dir = "res://custom_objects-unpacked/" + new_name_mod_dir
 	path_temp_dir = "user://temp/" + new_name_mod_dir
 	path_global_temp_dir = ProjectSettings.globalize_path(path_temp_dir)
 	path_manifest = path_mod_dir + "/manifest.json"

@@ -9,11 +9,12 @@ var level_file := {}
 var building = false
 signal level_building_complete
 
-func _ready() -> void:
-	EntityIDMapper.load_entity_map()
-
 func load_level(temp_level_file := {}) -> void:
 	building = true
+	
+	CustomObjectsGetter.find_objects()
+	EntityIDMapper.load_entity_map(LevelEditor.level_file.has("Mods"))
+	
 	for i in 5:
 		LevelEditor.sub_areas[i] = build_sublevel(i, temp_level_file)
 	level_building_complete.emit()
@@ -66,10 +67,16 @@ func add_entities(level: Node, chunk := "", chunk_id := 0, layer := 0) -> void:
 		var entity_tile_position = decode_tile_position_from_chars(entity_chunk_position[0], entity_chunk_position[1], chunk_id)
 		var entity_node: Node = null
 		if EntityIDMapper.map.has(entity_id) == false:
-			Global.log_error("MISSING ENTITY ID: " + entity_id)
+			if (!LevelEditor.level_file.has("Mods")):
+				Global.log_error("MISSING ENTITY ID: " + entity_id)
+			elif !LevelEditor.level_file["Mods"].has(entity_id):
+				Global.log_error("MISSING ENTITY ID: \"%s\" BUT LEVEL CONTAINS MODS. DID YOU CHANGED ITS ID?")
 			continue
 		if EntityIDMapper.map[entity_id][0] != "res://Scenes/Prefabs/Entities/Player.tscn":
-			entity_node = load(EntityIDMapper.map[entity_id][0]).instantiate()
+			var scene := load(EntityIDMapper.map[entity_id][0])
+			if (scene == null):
+				scene = load("res://Scenes/Prefabs/Entities/Enemies/Goomba.tscn")
+			entity_node = scene.instantiate()
 		else:
 			entity_node = level.get_node("EntityLayer1/Player")
 		if entity_node == null:

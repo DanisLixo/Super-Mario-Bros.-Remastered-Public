@@ -35,7 +35,13 @@ var disabled := false
 
 const BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
+var is_mod := false
+var scene_path := ""
+var mod_path := ""
+
 func _ready() -> void:
+	if (owner == null):
+		owner = get_tree().current_scene
 	set_icon_texture()
 	set_second_icon_texture()
 	update_visuals()

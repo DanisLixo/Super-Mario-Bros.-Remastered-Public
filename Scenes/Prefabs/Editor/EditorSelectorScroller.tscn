@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cfslj1a1hjgr2"]
+
+[ext_resource type="Script" uid="uid://c7xreamx2wvdq" path="res://Scripts/Classes/Editor/EditorSelectorScroller.gd" id="1_04e8y"]
+[ext_resource type="Texture2D" uid="uid://dqi2e7yddiqhy" path="res://Assets/Sprites/Editor/ScrollerIcon.png" id="4_wo2mo"]
+
+[node name="EditorSelectorScroller" type="Control" unique_id=906066614]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 3
+anchors_preset = 0
+mouse_force_pass_scroll_events = false
+script = ExtResource("1_04e8y")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2080591570]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("4_wo2mo")

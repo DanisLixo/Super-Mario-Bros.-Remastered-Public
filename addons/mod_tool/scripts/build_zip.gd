@@ -3,14 +3,22 @@ class_name ModToolZipBuilder
 
 
 func build_zip(mod_tool_store: ModToolStore) -> void:
+	print("started")
+	
 	var writer := ZIPPacker.new()
 	var err := writer.open(mod_tool_store.path_global_final_zip)
 	if not err == OK:
+		ModLoaderLog.error("Couldn't make zip file.", "")
 		return
-
+	
+	var dir := ModToolUtils.get_flat_view_dict(mod_tool_store.path_mod_dir)
+	if (mod_tool_store.mod_is_object):
+		dir = ModToolUtils.get_flat_view_dict(mod_tool_store.path_mod_dir)
+	
 	# Get all file paths inside the mod folder
-	mod_tool_store.path_mod_files = ModToolUtils.get_flat_view_dict(mod_tool_store.path_mod_dir)
-
+	mod_tool_store.path_mod_files = ModToolUtils.get_flat_view_dict(mod_tool_store.path_custom_dir)
+	
+	print(str(mod_tool_store.path_mod_files))
 	# Loop over each file path
 	for i in mod_tool_store.path_mod_files.size():
 		var path_mod_file := mod_tool_store.path_mod_files[i] as String

@@ -7,8 +7,7 @@ signal dir_selected(dir_path)
 @onready var directory_list: VBoxContainer = $"%DirectoryList"
 
 
-func generate_dir_buttons(dir_path: String) -> void:
-	clear_directory_list()
+func generate_dir_buttons(dir_path: String, type := 0) -> void:
 	var dir_paths := _ModLoaderPath.get_dir_paths_in_dir(dir_path)
 
 	for path in dir_paths:
@@ -16,13 +15,23 @@ func generate_dir_buttons(dir_path: String) -> void:
 
 		var dir_btn := Button.new()
 		dir_btn.text = dir_name
-
+		
+		if (type == 0):
+			%Mods.show()
+		if (type == 1):
+			%Objects.show()
+		
 		directory_list.add_child(dir_btn)
+		directory_list.move_child(dir_btn, [%Mods, %Objects][type].get_index() + 1)
 		dir_btn.pressed.connect(_on_dir_btn_dir_selected.bind(path))
-
+	
 
 func clear_directory_list() -> void:
+	%Mods.hide()
+	%Objects.hide()
 	for child in directory_list.get_children():
+		if (child is not Button):
+			continue
 		directory_list.remove_child(child)
 		child.queue_free()
 

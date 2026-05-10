@@ -19,8 +19,8 @@ static var cache := {}
 static var property_cache := {}
 static var active_flags := []
 
-var current_json_path := ""
 
+var current_json_path := ""
 static var state := [0, 0, 0]
 
 static var pack_configs := {}

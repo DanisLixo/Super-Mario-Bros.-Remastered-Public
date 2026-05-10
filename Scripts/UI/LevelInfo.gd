@@ -44,7 +44,7 @@ func reopen() -> void:
 	%Play.grab_focus()
 
 func _process(_delta: float) -> void:
-	if (Global.multibind_action_just_pressed("ui_back") || Input.is_action_just_pressed("mb_right")) and active:
+	if (Global.multibind_action_just_pressed("ui_back") || Input.is_action_just_pressed("mb_right")) and active and not $"../../../../../CharacterSelect".visible:
 		closed.emit()
 		close()
 

@@ -427,14 +427,14 @@ func is_mod_id_array_valid(own_mod_id: String, mod_id_array: PackedStringArray, 
 	return is_valid
 
 
-func is_mod_id_valid(original_mod_id: String, check_mod_id: String, type := "", is_silent := false) -> bool:
+func is_mod_id_valid(original_mod_id: String, check_mod_id: String, type := "", is_silent := false, for_custom_object := false) -> bool:
 	var intro_text = "A %s for the mod \"%s\" is invalid: " % [type, original_mod_id] if not type == "" else ""
 
 	# contains hyphen?
 	if not check_mod_id.count("-") == 1:
-		if not is_silent:
+		if not for_custom_object and not is_silent:
 			validation_messages_error.push_back(str(intro_text, "Expected a single hyphen in the mod ID, but the %s was: \"%s\"" % [type, check_mod_id]))
-		return false
+			return false
 
 	# at least 7 long (1 for hyphen, 3 each for namespace/name)
 	var mod_id_length = check_mod_id.length()
@@ -443,12 +443,19 @@ func is_mod_id_valid(original_mod_id: String, check_mod_id: String, type := "", 
 			validation_messages_error.push_back(str(intro_text, "Mod ID for \"%s\" is too short. It must be at least 7 characters long, but its length is: %s" % [check_mod_id, mod_id_length]))
 		return false
 
+	var re := RegEx.new()
+	re.compile("^[a-zA-Z0-9_]{3,}$") # alphanumeric and _ and at least 3 characters
+	if for_custom_object:
+		if re.search(check_mod_id) == null:
+			if not is_silent:
+				validation_messages_error.push_back(str(intro_text, "Name for the folder can only use letters, numbers and underscores, but was: \"%s\"" % check_mod_id))
+			return false
+		return true
+	
 	var split = check_mod_id.split("-")
 	var check_namespace = split[0]
 	var check_name = split[1]
-	var re := RegEx.new()
-	re.compile("^[a-zA-Z0-9_]{3,}$") # alphanumeric and _ and at least 3 characters
-
+	
 	if re.search(check_namespace) == null:
 		if not is_silent:
 			validation_messages_error.push_back(str(intro_text, "Mod ID has an invalid namespace (author) for \"%s\". Namespace can only use letters, numbers and underscores, but was: \"%s\"" % [check_mod_id, check_namespace]))

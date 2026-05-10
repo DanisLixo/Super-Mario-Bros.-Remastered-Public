@@ -146,13 +146,15 @@ var something_changed := false
 func _ready() -> void:
 	Global.level_editor = self
 	$TileMenu.hide()
-	EntityIDMapper.load_entity_map()
 	DiscordManager.set_discord_status("In The Level Editor...")
 	playing_level = false
 	menu_open = $TileMenu.visible
 	Global.get_node("GameHUD").hide()
 	OffScreenDespawner.editor_testing_safety = true
 	Global.can_time_tick = false
+	$CustomObjectsGetter.instantiate_selectors()
+	$CustomObjectsGetter.merge_customs_to_map()
+	
 	for i in get_tree().get_nodes_in_group("Selectors"):
 		tile_list.append(i)
 	var idx := 0
@@ -432,6 +434,7 @@ func close_save_menu() -> void:
 
 func handle_tile_cursor() -> void:
 	%TileCursor.show()
+	$TileCursor/SpaceWarning.visible = Input.is_action_pressed("quick_connect")
 	var target_mouse_icon = null
 	var snapped_position = ((%TileCursor.get_global_mouse_position() - CURSOR_OFFSET).snapped(Vector2(16, 16))) + CURSOR_OFFSET
 	%TileCursor.global_position = (snapped_position)
@@ -908,6 +911,7 @@ func open_tile_selection_menu_scene_ref(selector: TilePropertySceneRef) -> void:
 	current_state = EditorState.SELECTING_TILE_SCENE
 	selection_filter = selector.editing_node.get_node("EditorPropertyExposer").filters[selector.tile_property_name]
 	for i in get_tree().get_nodes_in_group("Selectors"):
+		print(str(i.get_meta(selection_filter)))
 		i.disabled = !i.has_meta(selection_filter) and selection_filter != ""
 		i.update_visuals()
 	var old_scene = current_entity_scene
@@ -928,15 +932,27 @@ func on_tile_selected(selector: EditorTileSelector) -> void:
 	current_tile_type = selector.type
 	current_entity_selector = selector
 	selected_tile_index = tile_list.find(selector)
-	if selector.type == 1:
-		current_entity_id = selector.entity_id
-		current_entity_scene = load(EntityIDMapper.map[current_entity_id][0])
-	elif selector.type == 2:
-		current_terrain_id = selector.terrain_id
+	if selector.is_mod:
+		CustomObjectsGetter.set_local_custom_id(selector)
+		if selector.type == 1:
+			current_entity_id = selector.entity_id
+			current_entity_scene = load(EntityIDMapper.map[current_entity_id][0])
+		elif selector.type == 2:
+			current_terrain_id = selector.terrain_id
+		else:
+			current_tile_source = selector.source_id
+			current_tile_coords = selector.tile_coords
+			current_tile_flip = Vector2(selector.flip_h, selector.flip_v)
 	else:
-		current_tile_source = selector.source_id
-		current_tile_coords = selector.tile_coords
-		current_tile_flip = Vector2(selector.flip_h, selector.flip_v)
+		if selector.type == 1:
+			current_entity_id = selector.entity_id
+			current_entity_scene = load(EntityIDMapper.map[current_entity_id][0])
+		elif selector.type == 2:
+			current_terrain_id = selector.terrain_id
+		else:
+			current_tile_source = selector.source_id
+			current_tile_coords = selector.tile_coords
+			current_tile_flip = Vector2(selector.flip_h, selector.flip_v)
 	tile_selected.emit(selector)
 
 func reset_values_for_play() -> void:
@@ -995,7 +1011,11 @@ func place_tile(tile_position := Vector2i.ZERO, layer_num := current_layer, tile
 				if old_tile.get_meta("ID", "") == tile_to_place:
 					return 
 			remove_tile(tile_position, layer_num, false)
+			
 			current_entity_scene = load(EntityIDMapper.map[tile_to_place][0])
+			
+			var split = ""
+			split = EntityIDMapper.map[tile_to_place][1].split(",")
 			node = current_entity_scene.instantiate()
 			if node.has_node("AmountLimiter"):
 				if node.get_node("AmountLimiter").run_check(get_tree()):
@@ -1003,7 +1023,6 @@ func place_tile(tile_position := Vector2i.ZERO, layer_num := current_layer, tile
 					Global.log_error("Only one of these is allowed in a room at a time!", false)
 					return
 			var spawn_offset := Vector2i.ZERO
-			var split = EntityIDMapper.map[tile_to_place][1].split(",")
 			spawn_offset = Vector2i(int(split[0]), int(split[1]))
 			node.global_position = (tile_position * 16) + (Vector2i(8, 8) + spawn_offset)
 			node.set_meta("tile_position", tile_position)

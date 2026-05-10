@@ -337,6 +337,7 @@ text = "EDITOR_MAIN_REFRESH"
 [node name="SelectableLabel3" parent="BG/Border/Levels/VBoxContainer/LevelList/TopBit/MarginContainer/VBoxContainer" unique_id=849967971 instance=ExtResource("12_psbt7")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../Button")
+focus_neighbor_bottom = NodePath("../../../../OpenAutosave/SelectableLabel")
 text = "EDITOR_MAIN_LSS"
 
 [node name="HSeparator" type="HSeparator" parent="BG/Border/Levels/VBoxContainer/LevelList" unique_id=1815239064]
@@ -354,6 +355,7 @@ layout_mode = 2
 [node name="SelectableLabel" parent="BG/Border/Levels/VBoxContainer/LevelList/OpenAutosave" unique_id=1846027017 instance=ExtResource("12_psbt7")]
 layout_mode = 2
 size_flags_vertical = 1
+focus_neighbor_right = NodePath("../../TopBit/MarginContainer/VBoxContainer/SelectableLabel3")
 text = "EDITOR_MAIN_AUTOSAVES"
 
 [node name="OpenModManager" type="HBoxContainer" parent="BG/Border/Levels/VBoxContainer/LevelList" unique_id=1693230786]
@@ -367,6 +369,7 @@ layout_mode = 2
 [node name="SelectableLabel" parent="BG/Border/Levels/VBoxContainer/LevelList/OpenModManager" unique_id=1942020564 instance=ExtResource("12_psbt7")]
 layout_mode = 2
 size_flags_vertical = 1
+focus_neighbor_right = NodePath("../../TopBit/MarginContainer/VBoxContainer/SelectableLabel3")
 text = "OPEN MOD MANAGER"
 
 [node name="Filter" parent="BG/Border/Levels/VBoxContainer/LevelList" unique_id=1217031182 instance=ExtResource("17_ruj08")]
@@ -515,14 +518,15 @@ focus_mode = 0
 mouse_filter = 2
 
 [node name="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo/SelectedLevel/MarginContainer/HBoxContainer/LeftHalf/LevelInfo" parent_id_path=PackedInt32Array(1573298747, 456570900) index="0" unique_id=1149291090]
-scroll_horizontal = 126
+scroll_horizontal = 196
 is_active = true
 
 [node name="ScrollContainer2" parent="BG/Border/Levels/VBoxContainer/LevelInfo/SelectedLevel/MarginContainer/HBoxContainer/LeftHalf/LevelInfo" parent_id_path=PackedInt32Array(1573298747, 456570900) index="1" unique_id=1538947480]
+scroll_horizontal = 82
 is_active = true
 
 [node name="ScrollContainer3" parent="BG/Border/Levels/VBoxContainer/LevelInfo/SelectedLevel/MarginContainer/HBoxContainer/LeftHalf/LevelInfo" parent_id_path=PackedInt32Array(1573298747, 456570900) index="2" unique_id=1855133180]
-scroll_horizontal = 22
+scroll_horizontal = 31
 is_active = true
 
 [node name="Panel" type="PanelContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo" unique_id=2125756912]
@@ -533,6 +537,7 @@ theme_override_styles/panel = ExtResource("8_psbt7")
 [node name="AutoScrollContainer" type="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo/Panel" unique_id=975980634]
 layout_mode = 2
 mouse_filter = 0
+scroll_vertical = 60
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 script = ExtResource("24_wf6nb")
@@ -713,7 +718,6 @@ theme_override_styles/separator = SubResource("StyleBoxLine_obbrw")
 
 [node name="LoadingMSG" type="Label" parent="BG/Border/Levels/VBoxContainer/LSSBrowser" unique_id=754692837]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_vertical = 6
 text = "Grabbing levels..."
@@ -752,6 +756,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="BG/Border/Levels/VBoxContainer/LSSBrowser/ScrollContainer" unique_id=606750476]
 layout_mode = 2
@@ -790,11 +795,12 @@ layout_mode = 2
 focus_mode = 0
 
 [node name="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/SelectedOnlineLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" parent_id_path=PackedInt32Array(561241708, 788084636) index="0" unique_id=339759982]
-scroll_horizontal = 41
+scroll_horizontal = 56
 is_active = true
 auto_connect_focus = false
 
 [node name="ScrollContainer2" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/SelectedOnlineLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" parent_id_path=PackedInt32Array(561241708, 788084636) index="1" unique_id=1470364982]
+scroll_horizontal = 82
 is_active = true
 auto_connect_focus = false
 
@@ -807,7 +813,7 @@ theme_override_styles/panel = ExtResource("8_psbt7")
 [node name="AutoScrollContainer" type="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/Panel" unique_id=1801631913]
 layout_mode = 2
 mouse_filter = 0
-scroll_vertical = 53
+scroll_vertical = 20
 horizontal_scroll_mode = 3
 script = ExtResource("24_wf6nb")
 direction = 1
@@ -1002,10 +1008,12 @@ layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wgcm7")
 
 [node name="ModsList" type="VBoxContainer" parent="BG/Border/Levels/VBoxContainer" unique_id=2134612155]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Tabs" type="HBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList" unique_id=821337814]
+visible = false
 layout_mode = 2
 
 [node name="Control" type="Control" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs" unique_id=1591137609]
@@ -1105,7 +1113,7 @@ text = "EDITOR_MAIN_REFRESH"
 [node name="Filter" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=1091119165 instance=ExtResource("22_13and")]
 layout_mode = 2
 title = "EDITOR_MAIN_FILTER"
-values = Array[String](["EDITOR_FILTER_ALL", "MODS_GML_FILTER_ENABLED", "MODS_GML_FILTER_DISABLED"])
+values = Array[String](["EDITOR_FILTER_ALL"])
 
 [node name="Search" type="HBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=1139225726]
 layout_mode = 2
@@ -1488,6 +1496,7 @@ text = "MENU_NO"
 [connection signal="pressed" from="BG/Border/Levels/VBoxContainer/LevelList/OpenAutosave/SelectableLabel" to="BG/Border/Levels/VBoxContainer/LevelList" method="close"]
 [connection signal="pressed" from="BG/Border/Levels/VBoxContainer/LevelList/OpenAutosave/SelectableLabel" to="BG/Border/Levels/VBoxContainer/AutosavesList" method="open"]
 [connection signal="pressed" from="BG/Border/Levels/VBoxContainer/LevelList/OpenModManager/SelectableLabel" to="BG/Border/Levels/VBoxContainer/LevelList" method="close"]
+[connection signal="pressed" from="BG/Border/Levels/VBoxContainer/LevelList/OpenModManager/SelectableLabel" to="BG/Border/Levels/VBoxContainer/ModsList" method="show"]
 [connection signal="pressed" from="BG/Border/Levels/VBoxContainer/LevelList/OpenModManager/SelectableLabel" to="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" method="open"]
 [connection signal="focus_entered" from="BG/Border/Levels/VBoxContainer/LevelList/Filter" to="BG/Border/Levels/VBoxContainer/LevelList/CustomLevels/MarginContainer/ScrollContainer" method="set_v_scroll" binds= [0]]
 [connection signal="mouse_entered" from="BG/Border/Levels/VBoxContainer/LevelList/Filter" to="BG/Border/Levels/VBoxContainer/LevelList/Filter" method="grab_focus"]
@@ -1554,8 +1563,13 @@ text = "MENU_NO"
 [connection signal="focus_entered" from="BG/Border/Levels/VBoxContainer/AutosavesList/Search/CustomLineEdit" to="BG/Border/Levels/VBoxContainer/AutosavesList/Search/Control/Cursor" method="show"]
 [connection signal="focus_exited" from="BG/Border/Levels/VBoxContainer/AutosavesList/Search/CustomLineEdit" to="BG/Border/Levels/VBoxContainer/AutosavesList/Search/Control/Cursor" method="hide"]
 [connection signal="text_submitted" from="BG/Border/Levels/VBoxContainer/AutosavesList/Search/CustomLineEdit" to="BG/Border/Levels/VBoxContainer/AutosavesList" method="search_submitted"]
+[connection signal="closed" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" to="BG/Border/Levels/VBoxContainer/LevelList" method="open"]
+[connection signal="closed" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" to="BG/Border/Levels/VBoxContainer/ModsList" method="hide"]
+[connection signal="closed" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" to="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" method="close"]
 [connection signal="pressed" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/SelectableLabel3" to="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" method="refresh" binds= [true]]
+[connection signal="pressed" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/SelectableLabel" to="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" method="open_folder"]
 [connection signal="pressed" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/SelectableLabel2" to="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" method="refresh"]
+[connection signal="value_changed" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Filter" to="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" method="update_show"]
 [connection signal="focus_entered" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search/CustomLineEdit" to="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search/Control/Cursor" method="show"]
 [connection signal="focus_exited" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search/CustomLineEdit" to="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search/Control/Cursor" method="hide"]
 [connection signal="text_submitted" from="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search/CustomLineEdit" to="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" method="search_submitted"]

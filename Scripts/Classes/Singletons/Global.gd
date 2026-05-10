@@ -199,7 +199,6 @@ var physics_multibind_pressed_buttons: Dictionary[StringName, int] = {}
 
 var unpressed_buttons: Dictionary[StringName, bool] = {}
 
-
 func _ready() -> void:
 	if is_snapshot: 
 		get_build_time()

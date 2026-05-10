@@ -31,7 +31,7 @@ static func get_local_folder_dir(path_join := "") -> String:
 				DirAccess.make_dir_recursive_absolute(local_dir)
 			return local_dir.path_join(path_join)
 		else:
-			push_warning("Portable flag found but exe directory is not writeable. Falling back to user://")
+			push_warning("Mods can't be loaded on portable mode, falling back to 'user://'.")
 	return "user://".path_join(path_join)
 
 static func get_game_install_dir() -> String:

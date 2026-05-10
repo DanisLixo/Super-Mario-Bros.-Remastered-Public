@@ -14,7 +14,7 @@ var mods_path = Global.config_path.path_join("mods")
 var restart := true
 
 func open(refresh_list := true) -> void:
-	$"../../Title".text = tr("MOD MANAGER")
+	$"../../Title".text = tr("MOD_MANAGER")
 	show()
 	if refresh_list:
 		refresh()
@@ -33,6 +33,7 @@ func _process(_delta: float) -> void:
 		closed.emit()
 
 func close() -> void:
+	$"../../Title".text = tr("CUSTOM_LEVELS")
 	hide()
 	set_process(false)
 

@@ -5,7 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://bwldw4ekgbwa7" path="res://Assets/Sprites/UI/EditorShortcutIcons.png" id="4_thawd"]
 [ext_resource type="Texture2D" uid="uid://bxciugu0dg7e8" path="res://Assets/Sprites/Editor/ChunkDisplay.png" id="5_o024b"]
 [ext_resource type="PackedScene" uid="uid://kag5i607liua" path="res://Scenes/Prefabs/UI/TileModifierMenu.tscn" id="8_bovjk"]
+[ext_resource type="Texture2D" uid="uid://51yon820ej2r" path="res://Assets/Sprites/UI/CursorSpaceWarning.png" id="8_evyrg"]
 [ext_resource type="PackedScene" uid="uid://knfs0rx7n1ry" path="res://Scenes/Prefabs/Editor/EditorTileSelector.tscn" id="8_wkmjk"]
+[ext_resource type="Script" uid="uid://364rywt44hy6" path="res://Scripts/Classes/UI/PackSprite.gd" id="9_742fr"]
 [ext_resource type="JSON" path="res://Assets/Sprites/Tilesets/Terrain/TerrainTiles.json" id="10_vhlvp"]
 [ext_resource type="Texture2D" uid="uid://cbgeyn530cdj6" path="res://Assets/Sprites/UI/EditorIcons.png" id="11_24ald"]
 [ext_resource type="JSON" path="res://Assets/Sprites/Enemies/Goomba.json" id="11_bkyu5"]
@@ -209,9 +211,11 @@
 [ext_resource type="PackedScene" uid="uid://k4bgruingvi0" path="res://Scenes/Prefabs/UI/EditorGuide.tscn" id="211_numt2"]
 [ext_resource type="Texture2D" uid="uid://b40xfep1drlm1" path="res://Assets/Sprites/Editor/Gizmos/PlayerFlinger.png" id="212_vcpfp"]
 [ext_resource type="PackedScene" uid="uid://07ukmj7s77wu" path="res://Scenes/Prefabs/Gizmos/Outputs/Flinger.tscn" id="213_uk8sr"]
+[ext_resource type="Texture2D" uid="uid://dv15dg02uv87q" path="res://Assets/Sprites/UI/CustomsEditorIcon.png" id="219_5mf74"]
 [ext_resource type="JSON" path="res://Assets/Sprites/Items/WingItem.json" id="221_o0k3u"]
 [ext_resource type="JSON" path="res://Assets/Sprites/Items/LuckyStar.json" id="224_vjdbd"]
 [ext_resource type="Script" uid="uid://0h04dap8ddvf" path="res://Scripts/Parts/AutosaveHandler.gd" id="225_s60en"]
+[ext_resource type="Script" uid="uid://chrc8xyasm540" path="res://Scripts/Classes/Components/CustomObjects/CustomObjectsGetter.gd" id="227_2blp1"]
 [ext_resource type="JSON" path="res://Assets/Sprites/Items/Key.json" id="229_u1728"]
 [ext_resource type="Texture2D" uid="uid://d3km1t0r7dcg3" path="res://Assets/Sprites/Editor/VineWarp.png" id="235_d5512"]
 [ext_resource type="Texture2D" uid="uid://duxkbhsbnmrvs" path="res://Assets/Sprites/Editor/Darkness.png" id="236_i73lv"]
@@ -1159,6 +1163,12 @@ z_index = 4096
 z_as_relative = false
 offset_right = 64.0
 offset_bottom = 48.0
+
+[node name="SpaceWarning" type="Sprite2D" parent="TileCursor" unique_id=1550232253]
+position = Vector2(4, -4)
+texture = ExtResource("8_evyrg")
+script = ExtResource("9_742fr")
+metadata/_custom_type_script = "uid://364rywt44hy6"
 
 [node name="TileMenu" type="CanvasLayer" parent="." unique_id=683279179]
 visible = false
@@ -6652,6 +6662,43 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("194_24ald")
 
+[node name="Custom" type="VBoxContainer" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer/TILES/ScrollContainer/VBoxContainer" unique_id=80084082]
+layout_mode = 2
+
+[node name="Title" type="VBoxContainer" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer/TILES/ScrollContainer/VBoxContainer/Custom" unique_id=204583037]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer/TILES/ScrollContainer/VBoxContainer/Custom/Title" unique_id=1493611758]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer/TILES/ScrollContainer/VBoxContainer/Custom/Title/HBoxContainer" unique_id=33619892]
+layout_mode = 2
+texture = ExtResource("219_5mf74")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer/TILES/ScrollContainer/VBoxContainer/Custom/Title/HBoxContainer" unique_id=1442483603]
+layout_mode = 2
+text = "EDITOR_MENU_PARTS_7"
+uppercase = true
+
+[node name="HSeparator" type="HSeparator" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer/TILES/ScrollContainer/VBoxContainer/Custom/Title" unique_id=873814357]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_8kfgg")
+
+[node name="MarginContainer" type="MarginContainer" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer/TILES/ScrollContainer/VBoxContainer/Custom" unique_id=249267769]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer/TILES/ScrollContainer/VBoxContainer/Custom/MarginContainer" unique_id=446293836]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Customs" type="HFlowContainer" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer/TILES/ScrollContainer/VBoxContainer/Custom/MarginContainer/VBoxContainer" unique_id=835745777]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="LEVEL" type="MarginContainer" parent="TileMenu/MarginContainer/VBoxContainer/PanelContainer" unique_id=1826282093]
 visible = false
 layout_mode = 2
@@ -7492,6 +7539,9 @@ script = ExtResource("225_s60en")
 process_callback = 0
 wait_time = 300.0
 one_shot = true
+
+[node name="CustomObjectsGetter" type="Node" parent="." unique_id=835828670]
+script = ExtResource("227_2blp1")
 
 [connection signal="connection_node_found" from="." to="CanvasLayer/TileModifierMenu" method="connect_signal"]
 [connection signal="open_scene_ref_tile_menu" from="CanvasLayer/TileModifierMenu" to="." method="open_tile_selection_menu_scene_ref"]

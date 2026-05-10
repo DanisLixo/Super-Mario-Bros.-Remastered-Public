@@ -1,0 +1,29 @@
+{
+	"script": "MainScript.gd",
+	"scene": "MainScene.tscn",
+	"offset": [0, 0],
+	
+	"properties": {
+		"name" : "ExampleObject",
+		"description" : "Example Description. Hi!",
+		"type" : "entity",
+		"icon": {
+			"texture": "res://Assets/Sprites/Blocks/BubbleNoteBlock.json",
+			"region_override": [0, 0, 16, 16]
+		},
+		"secondary_icon": {
+			"texture": "Assets/Sprites/Blocks/Crate.json",
+			"region_override": [0, 0, 16, 16]
+		}
+	},
+	"tile": {
+		"source_id": 0,
+		"terrain_id": 0,
+		"tile_coords": 0,
+		"flip_h": 0,
+		"flip_v": 0
+	},
+	"metadata": {"comment": "Here are things that sets what an object can be used to, like being able to be stored inside a block."
+		
+	}
+}

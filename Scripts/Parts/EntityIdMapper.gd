@@ -17,11 +17,14 @@ func _ready() -> void:
 	if Engine.is_editor_hint() == false and OS.is_debug_build() and auto_update:
 		update_map()
 
-static func load_entity_map() -> void:
+static func load_entity_map(modded := false) -> void:
 	map = JSON.parse_string(FileAccess.open(MAP_PATH, FileAccess.READ).get_as_text())
-
+	if modded:
+		map.merge(LevelEditor.level_file["Mods"])
+		print(str(map))
+	
 func update_map() -> void:
-	map = JSON.parse_string(FileAccess.open(MAP_PATH, FileAccess.READ).get_as_text())
+	load_entity_map()
 	get_ids()
 	save_to_json()
 	print("done")

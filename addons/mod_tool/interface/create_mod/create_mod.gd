@@ -6,6 +6,7 @@ signal mod_dir_created
 
 const DIR_NAME_DEFAULT_TEMPLATE = "default"
 const DIR_NAME_MINIMAL_TEMPLATE = "minimal"
+const DIR_NAME_CUSTOM_OBJECT_TEMPLATE = "custom_object"
 
 @onready var mod_tool_store: ModToolStore = get_node_or_null("/root/ModToolStore")
 @onready var mod_namespace: ModToolInterfaceInputString = $"%Namespace"
@@ -18,18 +19,20 @@ func _ready() -> void:
 	mod_namespace.show_error_if_not(false)
 	mod_name.show_error_if_not(false)
 	mod_id.show_error_if_not(false)
+	
 
-
-func add_mod() -> void:
+func add_mod(for_custom_object := false) -> void:
 	# Validate mod-id
-	if not mod_tool_store.manifest_data.is_mod_id_valid(mod_tool_store.name_mod_dir, mod_tool_store.name_mod_dir, "", true):
+	if not mod_tool_store.manifest_data.is_mod_id_valid(mod_tool_store.name_mod_dir, mod_tool_store.name_mod_dir, "", true, !%Namespace.is_required):
 		ModToolUtils.output_error('Invalid name or namespace: "%s". You may only use letters, numbers, underscores and at least 3 characters for each.' % mod_tool_store.name_mod_dir)
 		return
-
+	
+	var path_dir_to_use := mod_tool_store.path_mod_dir if not for_custom_object else mod_tool_store.path_custom_dir
+	
 	# Check if mod dir exists
-	if not _ModLoaderFile.dir_exists(mod_tool_store.path_mod_dir):
+	if not _ModLoaderFile.dir_exists(path_dir_to_use):
 		# If not - create it
-		var success := ModToolUtils.make_dir_recursive(mod_tool_store.path_mod_dir)
+		var success := ModToolUtils.make_dir_recursive(path_dir_to_use)
 		if not success:
 			return
 
@@ -40,9 +43,9 @@ func add_mod() -> void:
 		for path in template_paths:
 			var template_local_path := path.trim_prefix(mod_tool_store.path_current_template_dir) as String
 			if _ModLoaderFile.file_exists(path):
-				ModToolUtils.file_copy(path, mod_tool_store.path_mod_dir.path_join(template_local_path))
+				ModToolUtils.file_copy(path, path_dir_to_use.path_join(template_local_path))
 			else:
-				ModToolUtils.make_dir_recursive(mod_tool_store.path_mod_dir.path_join(template_local_path))
+				ModToolUtils.make_dir_recursive(path_dir_to_use.path_join(template_local_path))
 
 		# Update FileSystem
 		mod_tool_store.editor_file_system.scan()
@@ -50,13 +53,15 @@ func add_mod() -> void:
 		await mod_tool_store.editor_file_system.filesystem_changed
 
 		# Navigate to the new mod dir in the FileSystem pannel
-		EditorInterface.get_file_system_dock().navigate_to_path(mod_tool_store.path_mod_dir.path_join("mod_main.gd"))
+		EditorInterface.get_file_system_dock().navigate_to_path(path_dir_to_use.path_join("mod_main.gd"))
 
 		# Output info
-		ModToolUtils.output_info("Added base mod files to " + mod_tool_store.path_mod_dir)
-
+		ModToolUtils.output_info("Added base mod files to " + path_dir_to_use)
+		
+		if (for_custom_object):
+			return
 		# Open mod_main.gd in the code editor
-		var mod_main_script := load(mod_tool_store.path_mod_dir.path_join("mod_main.gd"))
+		var mod_main_script := load(path_dir_to_use.path_join("mod_main.gd"))
 		EditorInterface.edit_script(mod_main_script)
 		EditorInterface.set_main_screen_editor("Script")
 
@@ -80,7 +85,7 @@ func add_mod() -> void:
 
 	else:
 		# If so - show error and ask if user wants to connect with the mod instead
-		ModToolUtils.output_error("Mod directory at %s already exists." % mod_tool_store.path_mod_dir)
+		ModToolUtils.output_error("Mod directory at %s already exists." % path_dir_to_use)
 		# TODO: Ask user to connect with the mod instead
 		return
 
@@ -97,14 +102,15 @@ func get_template_options() -> Array[String]:
 	# Add the default templates
 	mod_template_options.push_back(DIR_NAME_DEFAULT_TEMPLATE)
 	mod_template_options.push_back(DIR_NAME_MINIMAL_TEMPLATE)
-
+	mod_template_options.push_back(DIR_NAME_CUSTOM_OBJECT_TEMPLATE)
 	for template_dir in template_dirs:
 		var template_dir_name: String = template_dir.split("/")[-1]
 
 		# Skip if its one of the default templates
 		if (
 			template_dir_name == DIR_NAME_DEFAULT_TEMPLATE or
-			template_dir_name == DIR_NAME_MINIMAL_TEMPLATE
+			template_dir_name == DIR_NAME_MINIMAL_TEMPLATE or
+			template_dir_name == DIR_NAME_CUSTOM_OBJECT_TEMPLATE
 		):
 			continue
 
@@ -116,23 +122,29 @@ func get_template_options() -> Array[String]:
 
 func _on_Namespace_value_changed(new_value: String, input_node: ModToolInterfaceInputString) -> void:
 	input_node.validate(mod_tool_store.manifest_data.is_name_or_namespace_valid(new_value, true))
-	mod_id.input_text = "%s-%s" % [mod_namespace.get_input_value(), mod_name.get_input_value()]
-
+	
+	if %Namespace.is_required:
+		mod_id.input_text = "%s-%s" % [mod_namespace.get_input_value(), mod_name.get_input_value()]
+	else:
+		mod_id.input_text = mod_name.get_input_value()
 
 func _on_ModName_value_changed(new_value: String, input_node: ModToolInterfaceInputString) -> void:
 	input_node.validate(mod_tool_store.manifest_data.is_name_or_namespace_valid(new_value, true))
-	mod_id.input_text = "%s-%s" % [mod_namespace.get_input_value(), mod_name.get_input_value()]
+	if %Namespace.is_required:
+		mod_id.input_text = "%s-%s" % [mod_namespace.get_input_value(), mod_name.get_input_value()]
+	else:
+		mod_id.input_text = mod_name.get_input_value()
 
 
 func _on_ModId_value_changed(new_value: String, input_node: ModToolInterfaceInputString) -> void:
-	input_node.validate(mod_tool_store.manifest_data.is_mod_id_valid(new_value, new_value, "", true))
+	input_node.validate(mod_tool_store.manifest_data.is_mod_id_valid(new_value, new_value, "", true, true))
 	mod_tool_store.name_mod_dir = new_value
-
+	mod_tool_store.name_mod_dir.replace(" ", "")
 
 func _on_btn_create_mod_pressed() -> void:
-	add_mod()
+	add_mod(!%Namespace.is_required)
 	emit_signal("mod_dir_created")
-
+	reset()
 
 func _on_CreateMod_about_to_show() -> void:
 	# Reset Inputs
@@ -146,8 +158,39 @@ func _on_CreateMod_about_to_show() -> void:
 
 
 func _on_ModTemplate_value_changed(new_value: String, input_node: ModToolInterfaceInputOptions) -> void:
+	if new_value == "custom_object":
+		%Namespace.hide()
+		%Namespace.is_required = false
+		
+		%ModName.input_placeholder = "ObjectName"
+		%ModName.label_text = "Object Name"
+		
+		%ModId.label_text = "Folder Name"
+		%ModId.input_placeholder = "FolderName"
+	else:
+		%Namespace.show()
+		%Namespace.is_required = true
+		
+		%ModName.input_placeholder = "ModName"
+		%ModName.label_text = "Mod Name"
+		
+		%ModId.label_text = "Mod ID"
+		%ModId.input_placeholder = "Namespace-ModName"
 	mod_tool_store.path_current_template_dir = mod_tool_store.PATH_TEMPLATES_DIR + new_value
 
 
 func _on_close_requested() -> void:
 	hide()
+	reset()
+
+func reset() -> void:
+	mod_tool_store.path_current_template_dir = mod_tool_store.PATH_TEMPLATES_DIR + "default"
+	
+	%Namespace.show()
+	%Namespace.is_required = true
+	
+	%ModName.input_placeholder = "ModName"
+	%ModName.label_text = "Mod Name"
+	
+	%ModId.label_text = "Mod ID"
+	%ModId.input_placeholder = "Namespace-ModName"

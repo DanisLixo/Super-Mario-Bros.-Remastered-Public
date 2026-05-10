@@ -124,22 +124,25 @@ func _is_mod_dir_valid() -> bool:
 
 	# Check if mod dir exists
 	if not _ModLoaderFile.dir_exists(mod_tool_store.path_mod_dir):
-		ModToolUtils.output_error("Mod folder %s does not exist" % mod_tool_store.path_mod_dir)
-		return false
-
+		if not _ModLoaderFile.dir_exists(mod_tool_store.path_custom_dir):
+			ModToolUtils.output_error("Mod folder %s does not exist" % mod_tool_store.path_mod_dir)
+			return false
+	
 	return true
 
 
-func load_mod(name_mod_dir: String) -> void:
+func load_mod(name_mod_dir: String, is_custom_object := false) -> void:
 	# Set the dir name
 	mod_tool_store.name_mod_dir = name_mod_dir
+	mod_tool_store.mod_is_object = is_custom_object
 
 	# Load Manifest
-	manifest_editor.load_manifest()
-	manifest_editor.update_ui()
+	if (!is_custom_object):
+		manifest_editor.load_manifest()
+		manifest_editor.update_ui()
 
 	# TODO: Load Mod Config if existing
-
+	
 	ModToolUtils.output_info("Mod \"%s\" loaded." % name_mod_dir)
 
 
@@ -147,6 +150,8 @@ func _on_export_pressed() -> void:
 	if _is_mod_dir_valid():
 		var zipper := ModToolZipBuilder.new()
 		zipper.build_zip(mod_tool_store)
+	else:
+		print("mod not valid")
 
 
 func _on_clear_output_pressed() -> void:
@@ -175,13 +180,15 @@ func _on_CreateMod_mod_dir_created() -> void:
 
 func _on_ConnectMod_pressed() -> void:
 	# Opens a popup that displays the mod directory names in the mods-unpacked directory
-	select_mod.generate_dir_buttons(ModLoaderMod.get_unpacked_dir())
+	select_mod.clear_directory_list()
+	select_mod.generate_dir_buttons(ModLoaderMod.get_unpacked_dir(), 0)
+	select_mod.generate_dir_buttons("res://custom_objects-unpacked", 1)
 	select_mod.popup_centered()
 
 
 func _on_SelectMod_dir_selected(dir_path: String) -> void:
 	var mod_dir_name := dir_path.split("/")[-1]
-	load_mod(mod_dir_name)
+	load_mod(mod_dir_name, dir_path.contains("custom_objects-unpacked"))
 	select_mod.hide()
 	_update_ui()
 

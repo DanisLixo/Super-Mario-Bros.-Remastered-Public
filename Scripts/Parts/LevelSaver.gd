@@ -25,6 +25,10 @@ func save_level(level_name := "Unnamed Level", level_author := "You", level_desc
 		idx += 1
 	level_file["Info"] = {"Name": level_name, "Author": level_author, "Description": level_desc, "Difficulty": difficulty}
 	level_file["Version"] = Global.version_number
+	
+	if LevelEditor.level_file.has("Mods"):
+		level_file.get_or_add("Mods", LevelEditor.level_file["Mods"])
+	# print(str(level_file))
 	return level_file
 
 func save_subarea(level: CustomLevel = null) -> Dictionary:
@@ -112,7 +116,7 @@ func get_entities(level: CustomLevel) -> void:
 			entity_string += base64_charset[chunk_position.x]
 			entity_string += base64_charset[chunk_position.y]
 			entity_string += ","
-
+			
 			entity_string += EntityIDMapper.get_map_id(entity.scene_file_path)
 			if entity.has_node("EditorPropertyExposer"):
 				entity_string += entity.get_node("EditorPropertyExposer").get_string()
