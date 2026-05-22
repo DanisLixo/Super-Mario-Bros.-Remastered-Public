@@ -76,7 +76,7 @@ var total_deaths := 0
 var portable_mode := false
 var checked_portable := false
 
-const RESOLUTIONS := [Vector2(256, 240), Vector2(380, 240), Vector2(426, 240), Vector2(256, 240)]
+const RESOLUTIONS := [Vector2(256, 240), Vector2(320, 240), Vector2(426, 240), Vector2(256, 240)]
 
 var score := 0:
 	set(value):
@@ -105,15 +105,11 @@ var world_num := 1
 var level_num := 1
 var disco_mode := false
 
-enum Room{MAIN_ROOM, BONUS_ROOM, COIN_HEAVEN, PIPE_CUTSCENE, TITLE_SCREEN}
-
-const room_strings := ["MainRoom", "BonusRoom", "CoinHeaven", "PipeCutscene", "TitleScreen"]
-
-var current_room: Room = Room.MAIN_ROOM
-
 signal transition_finished
 var transitioning_scene := false
 var awaiting_transition := false
+
+var current_room_type := Level.RoomType.NORMAL
 
 signal level_complete_begin
 signal score_tally_finished
@@ -233,6 +229,8 @@ func setup_config_dirs() -> void:
 		var full_path = config_path.path_join(d)
 		if not DirAccess.dir_exists_absolute(full_path):
 			DirAccess.make_dir_recursive_absolute(full_path)
+			
+	ModsTransfer.move_mods_to_new_path(ModsTransfer.find_mods_in_old_path())
 
 func get_config_path() -> String:
 	var exe_path := OS.get_executable_path()
@@ -495,10 +493,13 @@ func transition_to_scene(scene_path = "") -> void:
 	transition_finished.emit()
 
 func reload_editor() -> void:
-	$Transition/TransitionBlock/Label.show()
+	$Transition/TransitionBlock/EditorLoading/PlayerSprite.update()
+	$Transition/TransitionBlock/EditorLoading/PlayerSprite.animation = "Jump"
+	$Transition/TransitionBlock/EditorLoading.show()
+	
 	transition_to_scene("res://Scenes/Levels/LevelEditor.tscn")
 	await get_tree().create_timer(0.5).timeout
-	$Transition/TransitionBlock/Label.hide()
+	$Transition/TransitionBlock/EditorLoading.hide()
 
 func do_fake_transition(duration := 0.2) -> void:
 	if fade_transition:

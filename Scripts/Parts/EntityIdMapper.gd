@@ -27,7 +27,7 @@ func update_map() -> void:
 	load_entity_map()
 	get_ids()
 	save_to_json()
-	print("done")
+	print("Update ID Map.")
 
 func clear_map() -> void:
 	map = {}

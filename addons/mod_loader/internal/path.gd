@@ -16,7 +16,6 @@ static func get_local_folder_dir(path_join := "") -> String:
 	var exe_path := OS.get_executable_path()
 	var exe_dir  := exe_path.get_base_dir()
 	var portable_flag := exe_dir.path_join("portable.txt")
-	
 	# Test that exe dir is writeable, if not fallback to user://
 	if FileAccess.file_exists(portable_flag):
 		var test_file = exe_dir.path_join("test.txt")
@@ -31,8 +30,9 @@ static func get_local_folder_dir(path_join := "") -> String:
 				DirAccess.make_dir_recursive_absolute(local_dir)
 			return local_dir.path_join(path_join)
 		else:
-			push_warning("Mods can't be loaded on portable mode, falling back to 'user://'.")
+			push_warning("Mods can't be loaded on portable mode, falling back to \"user://\".")
 	return "user://".path_join(path_join)
+
 
 static func get_game_install_dir() -> String:
 	var game_install_directory := OS.get_executable_path().get_base_dir()
