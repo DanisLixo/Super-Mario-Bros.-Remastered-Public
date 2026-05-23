@@ -10,13 +10,16 @@ var duped_selectors: Array[Control] = []
 var expanded := false
 
 func _ready() -> void:
+	refresh_tiles()
+	set_physics_process(false)
+
+func refresh_tiles() -> void:
 	for i in get_children():
 		if i is EditorTileSelector:
 			selectors.append(i)
 			i.get_node("Button").mouse_entered.connect(set_physics_process.bind(true))
 			i.get_node("Button").mouse_exited.connect(set_physics_process.bind(false))
 	_physics_process(0)
-	set_physics_process(false)
 
 func _physics_process(delta: float) -> void:
 	handle_inputs()
@@ -24,6 +27,9 @@ func _physics_process(delta: float) -> void:
 		selectors[i].visible = i == selected_index
 
 func handle_inputs() -> void:
+	if (selectors.is_empty()):
+		return
+	
 	var old_selected := selected_index
 	if Global.multibind_action_just_pressed("scroll_up"):
 		selected_index += 1

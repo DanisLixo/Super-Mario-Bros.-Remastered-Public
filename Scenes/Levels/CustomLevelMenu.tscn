@@ -164,19 +164,15 @@ metadata/_custom_type_script = "uid://ca3bew33g45eq"
 
 [node name="Levels" type="MarginContainer" parent="BG/Border" unique_id=335581734]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.020833347
-anchor_right = 1.0208334
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 4.800003
-offset_right = -4.800003
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 16
-metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BG/Border/Levels" unique_id=798909362]
 layout_mode = 2
@@ -329,7 +325,6 @@ text = "EDITOR_MAIN_REFRESH"
 [node name="SelectableLabel3" parent="BG/Border/Levels/VBoxContainer/LevelList/TopBit/MarginContainer/VBoxContainer" unique_id=849967971 instance=ExtResource("12_psbt7")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../Button")
-focus_neighbor_bottom = NodePath("../../../../OpenAutosave/SelectableLabel")
 text = "EDITOR_MAIN_LSS"
 
 [node name="HSeparator" type="HSeparator" parent="BG/Border/Levels/VBoxContainer/LevelList" unique_id=1815239064]
@@ -621,6 +616,7 @@ text = "EDITOR_MAIN_REFRESH"
 [node name="Sort" parent="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer" unique_id=638628928 instance=ExtResource("22_13and")]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 0
 title = "EDITOR_LSS_SORT"
 values = Array[String](["EDITOR_LSS_SORT_FEATURED", "EDITOR_LSS_SORT_RECENT", "EDITOR_LSS_SORT_DOWNLOADS", "EDITOR_LSS_SORT_RATING"])
 add_colon = false
@@ -628,6 +624,7 @@ add_colon = false
 [node name="Order" parent="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer" unique_id=515114127 instance=ExtResource("22_13and")]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 0
 title = "EDITOR_LSS_ORDER"
 values = Array[String](["EDITOR_LSS_ORDER_ASC", "EDITOR_LSS_ORDER_DEC"])
 add_colon = false
@@ -636,6 +633,7 @@ add_colon = false
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../Search/CustomLineEdit")
+mouse_filter = 0
 title = "Page"
 values = Array[String](["1"])
 
@@ -693,6 +691,7 @@ theme_override_styles/separator = SubResource("StyleBoxLine_obbrw")
 
 [node name="LoadingMSG" type="Label" parent="BG/Border/Levels/VBoxContainer/LSSBrowser" unique_id=754692837]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 6
 text = "Grabbing levels..."
@@ -731,7 +730,6 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="BG/Border/Levels/VBoxContainer/LSSBrowser/ScrollContainer" unique_id=606750476]
 layout_mode = 2
@@ -943,389 +941,6 @@ layout_mode = 2
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wgcm7")
 
-[node name="ModsList" type="VBoxContainer" parent="BG/Border/Levels/VBoxContainer" unique_id=2134612155]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Tabs" type="HBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList" unique_id=821337814]
-visible = false
-layout_mode = 2
-
-[node name="Control" type="Control" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs" unique_id=1591137609]
-custom_minimum_size = Vector2(0, 16)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="GML" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs/Control" unique_id=1979739147 instance=ExtResource("19_hvf3u")]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -12.0
-offset_top = -8.0
-offset_right = 12.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-focus_neighbor_right = NodePath("../Edit")
-
-[node name="Label" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs/Control/GML" index="2" unique_id=1354378166]
-text = "GML"
-
-[node name="Control2" type="Control" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs" unique_id=527873039]
-custom_minimum_size = Vector2(0, 16)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Chars" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs/Control2" unique_id=1844389542 instance=ExtResource("19_hvf3u")]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -12.0
-offset_top = -8.0
-offset_right = 12.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-focus_neighbor_right = NodePath("../Edit")
-
-[node name="Label" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs/Control2/Chars" index="2" unique_id=1354378166]
-text = "CHARACTERS"
-
-[node name="Control3" type="Control" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs" unique_id=927003860]
-custom_minimum_size = Vector2(0, 16)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Packs" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs/Control3" unique_id=1063970696 instance=ExtResource("19_hvf3u")]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -12.0
-offset_top = -8.0
-offset_right = 12.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-focus_neighbor_right = NodePath("../Edit")
-
-[node name="Label" parent="BG/Border/Levels/VBoxContainer/ModsList/Tabs/Control3/Packs" index="2" unique_id=1354378166]
-text = "LEVEL PACKS"
-
-[node name="GMLBrowser" type="VBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList" unique_id=775062567]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("34_vig88")
-
-[node name="SelectableLabel3" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=1831555970 instance=ExtResource("12_psbt7")]
-layout_mode = 2
-text = "MODS_GENERAL_APPLY"
-
-[node name="SelectableLabel" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=1891296134 instance=ExtResource("12_psbt7")]
-layout_mode = 2
-text = "EDITOR_MAIN_OPEN_FOLDER"
-
-[node name="SelectableLabel2" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=836026100 instance=ExtResource("12_psbt7")]
-layout_mode = 2
-text = "EDITOR_MAIN_REFRESH"
-
-[node name="Filter" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=1091119165 instance=ExtResource("22_13and")]
-layout_mode = 2
-title = "EDITOR_MAIN_FILTER"
-values = Array[String](["EDITOR_FILTER_ALL"])
-
-[node name="Search" type="HBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=1139225726]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search" unique_id=311736676]
-custom_minimum_size = Vector2(8, 0)
-layout_mode = 2
-
-[node name="Cursor" type="TextureRect" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search/Control" unique_id=837695356]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("AtlasTexture_17x1k")
-stretch_mode = 3
-
-[node name="ResourceSetter" type="Node" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search/Control/Cursor" unique_id=122696885 node_paths=PackedStringArray("node_to_affect")]
-script = ExtResource("14_tjro6")
-node_to_affect = NodePath("..")
-property_name = "texture"
-mode = 1
-resource_json = ExtResource("15_7mmoe")
-metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
-
-[node name="TextureRect" type="TextureRect" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search" unique_id=622699660]
-layout_mode = 2
-texture = ExtResource("17_gmv51")
-stretch_mode = 3
-
-[node name="CustomLineEdit" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/Search" unique_id=1663316245 instance=ExtResource("18_qigcv")]
-layout_mode = 2
-size_flags_horizontal = 3
-text_overrun_behavior = 3
-
-[node name="HSeparator" type="HSeparator" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=436450792]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_8tilv")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=958998596]
-layout_mode = 2
-size_flags_vertical = 3
-follow_focus = true
-horizontal_scroll_mode = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/ScrollContainer" unique_id=1449415874]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 4
-
-[node name="ModsContainers" type="VBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/ScrollContainer/MarginContainer" unique_id=2076447272]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/ScrollContainer/MarginContainer/ModsContainers" unique_id=1280894216]
-layout_mode = 2
-text = "MODS_NO_MODS_FOUND"
-
-[node name="EnabledGML" type="Label" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/ScrollContainer/MarginContainer/ModsContainers" unique_id=1149951285]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 0
-text = "ENABLED"
-vertical_alignment = 2
-
-[node name="HSeparator" type="HSeparator" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/ScrollContainer/MarginContainer/ModsContainers/EnabledGML" unique_id=781885194]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -4.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_styles/separator = SubResource("StyleBoxLine_hjpen")
-
-[node name="DisabledGML" type="Label" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/ScrollContainer/MarginContainer/ModsContainers" unique_id=1492958284]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "DISABLED"
-vertical_alignment = 2
-
-[node name="HSeparator" type="HSeparator" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser/ScrollContainer/MarginContainer/ModsContainers/DisabledGML" unique_id=984445986]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -4.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_styles/separator = SubResource("StyleBoxLine_hjpen")
-
-[node name="HFlowContainer" type="HFlowContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=1057316654]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="HSeparator3" type="HSeparator" parent="BG/Border/Levels/VBoxContainer/ModsList/GMLBrowser" unique_id=300257961]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_wgcm7")
-
-[node name="CharactersBrowser" type="VBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList" unique_id=379292721]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("35_p7o5i")
-
-[node name="SelectableLabel" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser" unique_id=821878294 instance=ExtResource("12_psbt7")]
-layout_mode = 2
-text = "EDITOR_MAIN_OPEN_FOLDER"
-
-[node name="SelectableLabel2" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser" unique_id=924249291 instance=ExtResource("12_psbt7")]
-layout_mode = 2
-text = "EDITOR_MAIN_REFRESH"
-
-[node name="Filter" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser" unique_id=91716513 instance=ExtResource("22_13and")]
-layout_mode = 2
-title = "EDITOR_MAIN_FILTER"
-values = Array[String](["EDITOR_FILTER_ALL", "MODS_GML_FILTER_ENABLED", "MODS_GML_FILTER_DISABLED"])
-
-[node name="Search" type="HBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser" unique_id=1984003291]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser/Search" unique_id=1026448754]
-custom_minimum_size = Vector2(8, 0)
-layout_mode = 2
-
-[node name="Cursor" type="TextureRect" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser/Search/Control" unique_id=2145116858]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("AtlasTexture_17x1k")
-stretch_mode = 3
-
-[node name="ResourceSetter" type="Node" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser/Search/Control/Cursor" unique_id=1088068231 node_paths=PackedStringArray("node_to_affect")]
-script = ExtResource("14_tjro6")
-node_to_affect = NodePath("..")
-property_name = "texture"
-mode = 1
-resource_json = ExtResource("15_7mmoe")
-metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
-
-[node name="TextureRect" type="TextureRect" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser/Search" unique_id=1396293349]
-layout_mode = 2
-texture = ExtResource("17_gmv51")
-stretch_mode = 3
-
-[node name="CustomLineEdit" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser/Search" unique_id=1038209636 instance=ExtResource("18_qigcv")]
-layout_mode = 2
-size_flags_horizontal = 3
-text_overrun_behavior = 3
-
-[node name="HSeparator" type="HSeparator" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser" unique_id=316651651]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_8tilv")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser" unique_id=1049005376]
-layout_mode = 2
-size_flags_vertical = 3
-follow_focus = true
-horizontal_scroll_mode = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser/ScrollContainer" unique_id=1731797140]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 4
-
-[node name="CharactersContainers" type="VBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser/ScrollContainer/MarginContainer" unique_id=1655187497]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="BG/Border/Levels/VBoxContainer/ModsList/CharactersBrowser/ScrollContainer/MarginContainer/CharactersContainers" unique_id=863878632]
-layout_mode = 2
-text = "MODS_NO_MODS_FOUND"
-
-[node name="LevelPacksBrowser" type="VBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList" unique_id=1985335562]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="SelectableLabel" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser" unique_id=199199627 instance=ExtResource("12_psbt7")]
-layout_mode = 2
-text = "EDITOR_MAIN_OPEN_FOLDER"
-
-[node name="SelectableLabel2" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser" unique_id=1943429728 instance=ExtResource("12_psbt7")]
-layout_mode = 2
-text = "EDITOR_MAIN_REFRESH"
-
-[node name="Filter" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser" unique_id=2099691425 instance=ExtResource("22_13and")]
-layout_mode = 2
-title = "EDITOR_MAIN_FILTER"
-values = Array[String](["EDITOR_FILTER_ALL", "MODS_GML_FILTER_ENABLED", "MODS_GML_FILTER_DISABLED"])
-
-[node name="Search" type="HBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser" unique_id=606960097]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser/Search" unique_id=1118333784]
-custom_minimum_size = Vector2(8, 0)
-layout_mode = 2
-
-[node name="Cursor" type="TextureRect" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser/Search/Control" unique_id=428669601]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("AtlasTexture_17x1k")
-stretch_mode = 3
-
-[node name="ResourceSetter" type="Node" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser/Search/Control/Cursor" unique_id=703411148 node_paths=PackedStringArray("node_to_affect")]
-script = ExtResource("14_tjro6")
-node_to_affect = NodePath("..")
-property_name = "texture"
-mode = 1
-resource_json = ExtResource("15_7mmoe")
-metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
-
-[node name="TextureRect" type="TextureRect" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser/Search" unique_id=1413476642]
-layout_mode = 2
-texture = ExtResource("17_gmv51")
-stretch_mode = 3
-
-[node name="CustomLineEdit" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser/Search" unique_id=1062249895 instance=ExtResource("18_qigcv")]
-layout_mode = 2
-size_flags_horizontal = 3
-text_overrun_behavior = 3
-
-[node name="HSeparator" type="HSeparator" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser" unique_id=804553437]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_8tilv")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser" unique_id=1686475564]
-layout_mode = 2
-size_flags_vertical = 3
-follow_focus = true
-horizontal_scroll_mode = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser/ScrollContainer" unique_id=445403355]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 4
-
-[node name="LevelPacksContainers" type="VBoxContainer" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser/ScrollContainer/MarginContainer" unique_id=417163389]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="BG/Border/Levels/VBoxContainer/ModsList/LevelPacksBrowser/ScrollContainer/MarginContainer/LevelPacksContainers" unique_id=88017646]
-layout_mode = 2
-text = "MODS_NO_MODS_FOUND"
-
 [node name="LabelFontChanger" type="Node" parent="." unique_id=762005581 node_paths=PackedStringArray("labels")]
 script = ExtResource("21_hpawg")
 labels = [NodePath("../BG/Border/Levels/VBoxContainer/Title"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/TopBit/Button/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo/ScrollContainer/LevelName"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/TopBit/Button/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo/Container/Label"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/TopBit/MarginContainer/VBoxContainer/SelectableLabel"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/TopBit/MarginContainer/VBoxContainer/SelectableLabel2"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/TopBit/MarginContainer/VBoxContainer/SelectableLabel3"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/Search/CustomLineEdit"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/CustomLevels/MarginContainer/ScrollContainer/MarginContainer/LevelContainers/Label"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/CustomLevels/MarginContainer/ScrollContainer/MarginContainer/LevelContainers/SavedLevels"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/CustomLevels/MarginContainer/ScrollContainer/MarginContainer/LevelContainers/DownloadedLevels"), null, NodePath("../BG/Border/Levels/VBoxContainer/LevelInfo/Panel/AutoScrollContainer/VBoxContainer/Description"), NodePath("../BG/Border/Levels/VBoxContainer/LevelInfo/Panel/AutoScrollContainer/VBoxContainer/AutosaveTime"), NodePath("../BG/Border/Levels/VBoxContainer/LevelInfo/HBoxContainer/Play/Label"), NodePath("../BG/Border/Levels/VBoxContainer/LevelInfo/HBoxContainer/Edit/Label"), NodePath("../BG/Border/Levels/VBoxContainer/LevelInfo/HBoxContainer/Delete/Label"), NodePath("../BG/Border/Levels/VBoxContainer/LevelInfo/HBoxContainer/DeleteConfirm/Label"), NodePath("../BG/Border/Levels/VBoxContainer/LevelList/TopBit/MarginContainer/VBoxContainer/SelectableLabel3"), NodePath("../BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/RefreshList"), NodePath("../BG/Border/Levels/VBoxContainer/LSSBrowser/LoadingMSG"), NodePath("../BG/Border/Levels/VBoxContainer/LSSBrowser/OverloadMSG"), NodePath("../BG/Border/Levels/VBoxContainer/LSSBrowser/ErrorMSG"), NodePath("../BG/Border/Levels/VBoxContainer/LSSBrowser/SearchFail"), null, NodePath("../BG/Border/Levels/VBoxContainer/AutosavesList/AutosavedLevels/MarginContainer/AutosaveScrollContainer/MarginContainer/AutosaveContainers/Label")]
@@ -1474,8 +1089,14 @@ settings_category = "editor"
 [connection signal="level_selected" from="BG/Border/Levels/VBoxContainer/LSSBrowser" to="BG/Border/Levels/VBoxContainer/LSSLevelInfo" method="open"]
 [connection signal="level_selected" from="BG/Border/Levels/VBoxContainer/LSSBrowser" to="BG/Border/Levels/VBoxContainer/LSSBrowser" method="close" unbinds=1]
 [connection signal="pressed" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/RefreshList" to="BG/Border/Levels/VBoxContainer/LSSBrowser" method="grab_levels"]
+[connection signal="mouse_entered" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Sort" to="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Sort" method="grab_focus"]
+[connection signal="mouse_exited" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Sort" to="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Sort" method="release_focus"]
 [connection signal="value_changed" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Sort" to="BG/Border/Levels/VBoxContainer/LSSBrowser" method="set_filter"]
+[connection signal="mouse_entered" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Order" to="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Order" method="grab_focus"]
+[connection signal="mouse_exited" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Order" to="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Order" method="release_focus"]
 [connection signal="value_changed" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Order" to="BG/Border/Levels/VBoxContainer/LSSBrowser" method="set_order"]
+[connection signal="mouse_entered" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Page" to="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Page" method="grab_focus"]
+[connection signal="mouse_exited" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Page" to="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Page" method="release_focus"]
 [connection signal="value_changed" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Page" to="BG/Border/Levels/VBoxContainer/LSSBrowser" method="set_page"]
 [connection signal="focus_entered" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Search/CustomLineEdit" to="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Search/Control/Cursor" method="show"]
 [connection signal="focus_exited" from="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Search/CustomLineEdit" to="BG/Border/Levels/VBoxContainer/LSSBrowser/VBoxContainer/Search/Control/Cursor" method="hide"]
@@ -1531,6 +1152,3 @@ settings_category = "editor"
 [editable path="BG/Border/Levels/VBoxContainer/LevelInfo/HBoxContainer/DeleteConfirm"]
 [editable path="BG/Border/Levels/VBoxContainer/LevelInfo/HBoxContainer/OpenAutosaves"]
 [editable path="BG/Border/Levels/VBoxContainer/LSSLevelInfo/SelectedOnlineLevel"]
-[editable path="BG/Border/Levels/VBoxContainer/ModsList/Tabs/Control/GML"]
-[editable path="BG/Border/Levels/VBoxContainer/ModsList/Tabs/Control2/Chars"]
-[editable path="BG/Border/Levels/VBoxContainer/ModsList/Tabs/Control3/Packs"]

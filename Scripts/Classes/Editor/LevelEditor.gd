@@ -936,25 +936,15 @@ func on_tile_selected(selector: EditorTileSelector) -> void:
 	selected_tile_index = tile_list.find(selector)
 	if selector.is_mod:
 		CustomObjectsGetter.set_local_custom_id(selector)
-		if selector.type == 1:
-			current_entity_id = selector.entity_id
-			current_entity_scene = load(EntityIDMapper.map[current_entity_id][0])
-		elif selector.type == 2:
-			current_terrain_id = selector.terrain_id
-		else:
-			current_tile_source = selector.source_id
-			current_tile_coords = selector.tile_coords
-			current_tile_flip = Vector2(selector.flip_h, selector.flip_v)
+	if selector.type == 1:
+		current_entity_id = selector.entity_id
+		current_entity_scene = load(EntityIDMapper.map[current_entity_id][0])
+	elif selector.type == 2:
+		current_terrain_id = selector.terrain_id
 	else:
-		if selector.type == 1:
-			current_entity_id = selector.entity_id
-			current_entity_scene = load(EntityIDMapper.map[current_entity_id][0])
-		elif selector.type == 2:
-			current_terrain_id = selector.terrain_id
-		else:
-			current_tile_source = selector.source_id
-			current_tile_coords = selector.tile_coords
-			current_tile_flip = Vector2(selector.flip_h, selector.flip_v)
+		current_tile_source = selector.source_id
+		current_tile_coords = selector.tile_coords
+		current_tile_flip = Vector2(selector.flip_h, selector.flip_v)
 	tile_selected.emit(selector)
 
 func reset_values_for_play() -> void:

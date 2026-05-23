@@ -6,9 +6,9 @@ static var OBJECTS_VIRTUAL_FOLDER = "res://custom_objects-unpacked"
 const OBJECT_INFO := "ObjectInfo.json"
 
 static var JSON_EXAMPLE := {
-	"script": "",
 	"scene": "",
 	"offset": [0, 0],
+	"group": "",
 	
 	"properties": {
 		"name" : "",
@@ -85,18 +85,22 @@ static func find_objects() -> void:
 		var json := JSON_EXAMPLE.duplicate_deep()
 		Global.merge_dict(json, object_info)
 		if json["scene"] == null:
+			Global.log_error("Failed to load custom object from path \"%s\". No scene got set for it to work." % object_path)
 			continue
 		
 		loaded_names.push_back(mod_name)
 		customs.push_back([OBJECTS_VIRTUAL_FOLDER.path_join(mod_name), json])
 		print("Object got installed(?), check: %s" % str(DirAccess.get_files_at(OBJECTS_VIRTUAL_FOLDER.path_join(mod_name))))
-
+	
 func instantiate_selectors() -> void:
 	selectors.clear()
 	
 	for object in customs:
 		create_tile_selector(object[0], object[1])
+	for scroller in groups:
+		scroller.refresh_tiles()
 
+var groups := []
 func create_tile_selector(objPath: String = "", json: Dictionary = JSON_EXAMPLE) -> void:
 	var tileSelect: EditorTileSelector = tileSelectorScene.instantiate()
 	
@@ -145,6 +149,24 @@ func create_tile_selector(objPath: String = "", json: Dictionary = JSON_EXAMPLE)
 	
 	tileSelect.add_to_group("Selectors")
 	selectors.append(tileSelect)
+	
+	if (!json["group"].is_empty()):
+		var tileScroller: EditorSelectorScroller
+		
+		for scroller in groups:
+			if scroller.name == json["group"]:
+				tileScroller = scroller
+				break
+		if (tileScroller == null):
+			tileScroller = tileScrollerScene.instantiate()
+			tileScroller.name = json["group"]
+			
+			%Customs.add_child(tileScroller)
+			groups.push_back(tileScroller)
+		
+		tileScroller.add_child(tileSelect)
+		return
+	
 	%Customs.add_child(tileSelect)
 
 static func set_local_custom_id(selector: EditorTileSelector) -> void:
