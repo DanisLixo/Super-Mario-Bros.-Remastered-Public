@@ -12,7 +12,7 @@ extends Node
 
 @export var metadata_node: Node = owner
 
-enum ResourceMode {SPRITE_FRAMES, TEXTURE, AUDIO, RAW, FONT}
+enum ResourceMode {SPRITE_FRAMES, TEXTURE, AUDIO, RAW, FONT, THEME}
 @export var use_cache := true
 
 @export var sync: Array[ResourceSetterNew] = []
@@ -44,8 +44,8 @@ func _init() -> void:
 	set_process_mode(Node.PROCESS_MODE_ALWAYS)
 
 func _ready() -> void:
-	Global.level_time_changed.connect(update_resource)
-	Global.level_theme_changed.connect(update_resource)
+	if mode != ResourceMode.THEME:
+		Global.level_theme_changed.connect(update_resource)
 
 func _enter_tree() -> void:
 	safety_check()
@@ -66,9 +66,10 @@ func update_resource() -> void:
 		property_cache.clear()
 	if node_to_affect != null:
 		var resource = get_resource(resource_json)
-		node_to_affect.set(property_name, resource)
-		if node_to_affect is AnimatedSprite2D:
-			node_to_affect.play()
+		if mode != ResourceMode.THEME:
+			node_to_affect.set(property_name, resource)
+			if node_to_affect is AnimatedSprite2D:
+				node_to_affect.play()
 	state = [Global.level_theme, Global.theme_time, Global.current_room_type]
 	updated.emit()
 
@@ -102,7 +103,7 @@ func get_resource(json_file: JSON) -> Resource:
 			if json.has("source"):
 				if json.get("source") is String:
 					source_resource_path = json_file.resource_path.replace(json_file.resource_path.get_file(), json.source)
-			else:
+			elif mode != ResourceMode.THEME:
 				Global.log_error("Error getting variations! " + resource_path)
 				return
 			if json.has("flags"):
@@ -186,6 +187,15 @@ func get_resource(json_file: JSON) -> Resource:
 			else:
 				resource = load(source_resource_path)
 			resource.set_meta("base_path", source_resource_path)
+		ResourceMode.THEME:
+			Global.theme_override = json.get("theme", "")
+			Global.time_override = json.get("time", "")
+			Global.music_override = json.get("music", "")
+			Global.primary_bg_override = json.get("primary_bg", -1)
+			Global.secondary_bg_override = json.get("secondary_bg", -1)
+			Global.particle_override = json.get("particles", -1)
+			Global.extra_music_override = json.get("extra_bgm", "")
+			Global.liquid_override = json.get("liquid", -1)
 	if cache.has(json_file.resource_path) == false and use_cache and not is_random:
 		cache[json_file.resource_path] = resource
 	return resource
@@ -233,6 +243,8 @@ func get_variation_json(json := {}) -> Dictionary:
 	
 	if force_properties.has("Theme"):
 		level_theme = force_properties.Theme
+	if Global.theme_override != "":
+		level_theme = Global.theme_override
 	if json.has(level_theme) == false:
 		level_theme = "default"
 	if json.has(level_theme):
@@ -244,6 +256,8 @@ func get_variation_json(json := {}) -> Dictionary:
 	var level_time = Global.theme_time
 	if force_properties.has("Time"):
 		level_time = force_properties.Time
+	if Global.time_override != "":
+		level_time = Global.time_override
 	if json.has(level_time):
 		json = get_variation_json(json[level_time])
 	
@@ -291,9 +305,9 @@ func get_variation_json(json := {}) -> Dictionary:
 		else:
 			json = get_variation_json(json[level_string])
 	
-	var room = Level.ROOM_STRINGS[Global.current_room_type]
+	var room = "RoomType:" + Level.ROOM_STRINGS[Global.current_room_type]
 	if json.has(room) == false:
-		room = Level.ROOM_STRINGS[0]
+		room = "RoomType:Default"
 	if json.has(room):
 		if json.get(room).has("link"):
 			json = get_variation_json(json[json.get(room).get("link")])
@@ -337,14 +351,20 @@ func get_variation_json(json := {}) -> Dictionary:
 			var node_to_use = metadata_node
 			if node_to_use == null:
 				node_to_use = owner
-			var meta_value = str(node_to_use.get_meta(meta_name, "Default"))
-			if json[i].has(meta_value):
-				if json[i].get(meta_value).has("link"):
-					json = get_variation_json(json[i][json.get(meta_value).get("link")])
-				else:
-					json = get_variation_json(json[i][meta_value])
-				break
+			var meta_value = str(node_to_use.get_meta(meta_name, "Default")) if node_to_use != null else "Default"
+			var meta_json = null
 			
+			if json[i].has(meta_value):
+				meta_json = json[i].get(meta_value)
+			elif json[i].has("Default"):
+				meta_json = json[i].get("Default")
+			if meta_json != null:
+				if meta_json.has("link"):
+					json = get_variation_json(json[i][meta_json.get("link")])
+				else:
+					json = get_variation_json(meta_json)
+				break
+		
 	return json
 
 func get_config_file(resource_pack := "") -> void:

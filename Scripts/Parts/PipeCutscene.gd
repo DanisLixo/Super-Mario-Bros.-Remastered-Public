@@ -4,14 +4,9 @@ extends Level
 static var seen_cutscene := false
 
 func _enter_tree() -> void:
-	Global.game_paused = false
-	theme = WORLD_THEMES[Global.current_campaign][Global.world_num]
-	if Global.world_num > 4 and Global.world_num <= 8 or Global.current_campaign == "SMBANN":
-		theme_time = "Night"
-	else:
-		theme_time = "Day"
-	Global.level_theme = theme
-	Global.theme_time = theme_time
+	Global.current_room_type = room_type
+	if is_inside_tree():
+		update_theme()
 
 func _ready() -> void:
 	Global.current_level = null

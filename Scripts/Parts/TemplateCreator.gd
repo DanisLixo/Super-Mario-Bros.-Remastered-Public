@@ -146,6 +146,8 @@ func get_directories(base_dir := "", files := [], directories := []) -> void:
 	for i in DirAccess.get_directories_at(base_dir):
 		if base_dir.contains("LevelGuides") == false and base_dir.contains(".godot") == false:
 			get_directories(base_dir + "/" + i, files, directories)
+	
+	files.append("res://Assets/themes.json")
 
 @warning_ignore("shadowed_variable")
 func get_files(base_dir := "", files := []) -> void:

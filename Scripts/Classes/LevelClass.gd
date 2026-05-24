@@ -3,6 +3,7 @@ class_name Level
 extends Node
 
 @export var music: JSON = null
+static var extra_music: JSON = null
 @export var room_type := RoomType.NORMAL
 @export_enum("Overworld", "Underground", "Desert", "Snow", "Jungle", "Beach", "Garden", "Mountain", "Skyland", "Autumn", "Pipeland", "Space", "Underwater", "Volcano", "Castle", "CastleWater", "Airship", "Bonus") var theme := "Overworld"
 
@@ -10,8 +11,8 @@ extends Node
 
 const THEME_IDXS := ["Overworld", "Underground", "Desert", "Snow", "Jungle", "Beach", "Garden", "Mountain", "Skyland", "Autumn", "Pipeland", "Space", "Underwater", "Volcano", "GhostHouse", "Castle", "CastleWater", "Airship", "Bonus"]
 
-enum RoomType{NORMAL, BONUS_ROOM, COIN_HEAVEN, PIPE_CUTSCENE, TITLE_SCREEN}
-const ROOM_STRINGS := ["MainRoom", "BonusRoom", "CoinHeaven", "PipeCutscene", "TitleScreen"]
+enum RoomType{NORMAL, BONUS_ROOM, COIN_HEAVEN, PIPE_CUTSCENE, TITLE_SCREEN, SublevelExit}
+const ROOM_STRINGS := ["MainRoom", "BonusRoom", "CoinHeaven", "PipeCutscene", "TitleScreen", "SublevelExit"]
 
 static var WORLD_COUNTS := {
 	"SMB1": 8,
@@ -143,6 +144,7 @@ func spawn_in_extra_players() -> void:
 	return
 
 func update_theme() -> void:
+	Global.update_theme()
 	if auto_set_theme:
 		if Global.CAMPAIGNS.has(Global.current_campaign) == false and first_load:
 			Global.current_campaign = "SMB1"
