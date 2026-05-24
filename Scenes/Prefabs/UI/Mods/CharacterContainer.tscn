@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://hc12onijqtrt"]
 
-[ext_resource type="Script" uid="uid://b0cbm2xd0ttu6" path="res://Scripts/UI/GMLModContainer.gd" id="1_4kjv1"]
+[ext_resource type="Script" uid="uid://b0cbm2xd0ttu6" path="res://Scripts/UI/mods/GMLModContainer.gd" id="1_4kjv1"]
 [ext_resource type="StyleBox" uid="uid://comkghpj0djcl" path="res://Resources/UI/Panel.tres" id="2_6p13k"]
 [ext_resource type="StyleBox" uid="uid://dlbdmqmnl30sq" path="res://Resources/UI/PanelSelected.tres" id="3_tknc3"]
 [ext_resource type="Script" uid="uid://cbal8ms2oe1ik" path="res://Scripts/Classes/Components/ResourceSetterNew.gd" id="4_oy7ew"]

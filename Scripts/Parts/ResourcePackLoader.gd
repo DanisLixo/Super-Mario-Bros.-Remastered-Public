@@ -4,7 +4,6 @@ const RESOURCE_PACK_CONTAINER = preload("uid://lggi3b4310yl")
 var resource_packs := []
 var containers := []
 
-
 func _ready() -> void:
 	get_resource_packs()
 

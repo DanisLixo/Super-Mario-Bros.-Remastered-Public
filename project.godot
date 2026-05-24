@@ -16,6 +16,7 @@ warnings/check_angle_interpolation_type_conflicting=false
 [application]
 
 config/name="SMB1R"
+config/tags=PackedStringArray("mario")
 run/main_scene="uid://bn66tnn8nlpi7"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.6", "Forward Plus")
@@ -82,7 +83,9 @@ folder_colors={
 "res://Assets/Sprites/Players/Mario/": "red",
 "res://Assets/Sprites/Players/Toad/": "blue",
 "res://Assets/Sprites/Players/Toadette/": "pink",
+"res://Assets/Temp/": "gray",
 "res://Resources/": "yellow",
+"res://Resources/LevelPackTemplate/": "gray",
 "res://Resources/SpriteFrames/": "purple",
 "res://Resources/SpriteFrames/Player/": "orange",
 "res://Resources/SpriteFrames/Player/Luigi/": "green",

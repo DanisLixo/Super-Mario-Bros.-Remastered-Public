@@ -1,37 +1,75 @@
 extends Node
 
+enum TemplateMode {CHARACTER, LEVEL_PACK, RESOURCE_PACK}
+
 var files := []
 var directories := []
 
 signal fnt_file_downloaded(text: String)
-
 var downloaded_fnt_text := []
 
-signal pack_created
+signal template_created(mode)
 
-const base_info_json := {
+const resource_pack_base_info_json := {
 	"name": "New Pack",
 	"description": "Template, give me a description!",
 	"author": "Me, until you change it",
 	"version": "1.0"
 	}
 	
-const disallowed_files := ["bgm","ctex","json", "fnt", "svg", "txt"]
-const extention_blacklist := ["txt"]
+const level_pack_base_info_json := {
+	"name": "Test Pack",
+	"text_colour": "1f1f1f",
+	"author": "JoeMama",
+	"description": "Hello :)",
+	"difficulty": 0,
+	"resource_pack": "smas pack demo version",
+	"number_of_worlds": 8,
+	"levels_per_world": [5, 4, 4, 4, 4, 4, 4, 4],
 
-func create_template() -> void:
-	await get_tree().process_frame
-	get_directories("res://Assets", files, directories)
+	"world_themes": [
+		["Overworld", "Day"],
+		["Overworld", "Day"],
+		["Overworld", "Day"],
+		["Overworld", "Day"],
+		["Overworld", "Day"],
+		["Overworld", "Day"],
+		["Overworld", "Day"],
+		["Overworld", "Day"]
+	],
+
+	"levels": [
+        "1.lvl"
+	]
+}
+	
+const disallowed_files := ["bgm","ctex","json", "fnt", "svg", "txt", "lvl"]
+const extention_blacklist := ["txt", "svg"]
+
+func create_template(mode := TemplateMode.RESOURCE_PACK) -> void:
+	var resources_path := "res://Assets"
+	var new_path = Global.config_path.path_join("resource_packs/new_pack")
+	
+	match(mode):
+		TemplateMode.CHARACTER:
+			resources_path = "res://Assets/Sprites/Players/Mario"
+			new_path = Global.config_path.path_join("custom_characters/new_character")
+		TemplateMode.LEVEL_PACK:
+			resources_path = "res://Resources/LevelPackTemplate"
+			new_path = Global.config_path.path_join("level_packs/new_pack")
+	
+	get_directories(resources_path, files, directories)
+	
 	for i in directories:
-		DirAccess.make_dir_recursive_absolute(i.replace("res://Assets", Global.config_path.path_join("resource_packs/new_pack")))
+		DirAccess.make_dir_recursive_absolute(i.replace(resources_path, new_path))
 	for i in files:
 		if i.get_extension() in extention_blacklist:
 			continue
 		var destination = i
 		if destination.contains("res://"):
-			destination = i.replace("res://Assets", Global.config_path.path_join("resource_packs/new_pack"))
+			destination = i.replace(resources_path, new_path)
 		else:
-			destination = i.replace(Global.config_path.path_join("resource_packs/BaseAssets"), Global.config_path.path_join("resource_packs/new_pack"))
+			destination = i.replace(Global.config_path.path_join("resource_packs/BaseAssets/Sprites/Players/Mario"), new_path)
 		var data = []
 		if i.contains(".fnt"):
 			print("Got fnt file")
@@ -43,9 +81,6 @@ func create_template() -> void:
 			# For some reason, Godot's BMFont importer REALLY
 			# doesn't like ScoreFont when the PNG is saved at runtime
 			data = FileAccess.get_file_as_bytes(i + ".txt")
-		elif i.contains(".svg"):
-			## DON'T import SVGs
-			continue
 		elif disallowed_files.has(i.get_extension()) == false and i.contains("res://"):
 			var resource = load(i)
 			if resource is Texture:
@@ -84,21 +119,33 @@ func create_template() -> void:
 			if OS.is_debug_build(): print("saving error: " + error_string(new_file.get_error()))
 			new_file.close()
 	
-	var pack_info_path = Global.config_path.path_join("resource_packs/new_pack/pack_info.json")
-	DirAccess.make_dir_recursive_absolute(pack_info_path.get_base_dir())
-	var file = FileAccess.open(pack_info_path, FileAccess.WRITE)
-	file.store_string(JSON.stringify(base_info_json, "\t"))
-	file.close()
-	print("Done")
-	pack_created.emit()
+	if (mode != TemplateMode.CHARACTER):
+		var template_pack_info := resource_pack_base_info_json
+		if (mode == TemplateMode.LEVEL_PACK):
+			template_pack_info = level_pack_base_info_json
+		
+		var pack_info_path = new_path.path_join("pack_info.json")
+		var file = FileAccess.open(pack_info_path, FileAccess.WRITE)
+		file.store_string(JSON.stringify(template_pack_info, "\t"))
+		file.close()
+	
+	match(mode):
+		TemplateMode.CHARACTER:
+			print("Character got generated")
+		TemplateMode.LEVEL_PACK:
+			print("Level Pack got generated")
+		TemplateMode.RESOURCE_PACK:
+			print("Resource Pack got generated")
+	template_created.emit(mode)
 
 @warning_ignore("shadowed_variable")
 func get_directories(base_dir := "", files := [], directories := []) -> void:
+	directories.append(base_dir)
+	get_files(base_dir, files)
+	
 	for i in DirAccess.get_directories_at(base_dir):
 		if base_dir.contains("LevelGuides") == false and base_dir.contains(".godot") == false:
-			directories.append(base_dir + "/" + i)
 			get_directories(base_dir + "/" + i, files, directories)
-			get_files(base_dir + "/" + i, files)
 
 @warning_ignore("shadowed_variable")
 func get_files(base_dir := "", files := []) -> void:
@@ -112,3 +159,18 @@ func get_files(base_dir := "", files := []) -> void:
 				files.append(rom_assets_path)
 			else:
 				files.append(target_path)
+
+func download_fnt_text(file_path := "") -> PackedByteArray:
+	var http = HTTPRequest.new()
+	const GITHUB_URL = "https://raw.githubusercontent.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/refs/heads/main/"
+	var url = GITHUB_URL + file_path.replace("res://", "")
+	add_child(http)
+	http.request_completed.connect(file_downloaded)
+	http.request(url, [], HTTPClient.METHOD_GET)
+	await fnt_file_downloaded
+	http.queue_free()
+	return downloaded_fnt_text
+
+func file_downloaded(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	downloaded_fnt_text = body
+	fnt_file_downloaded.emit(downloaded_fnt_text)
