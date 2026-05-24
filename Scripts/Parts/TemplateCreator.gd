@@ -5,8 +5,8 @@ enum TemplateMode {CHARACTER, LEVEL_PACK, RESOURCE_PACK}
 var files := []
 var directories := []
 
-signal fnt_file_downloaded(text: String)
-var downloaded_fnt_text := []
+signal file_downloaded(text: String)
+var downloaded_file := []
 
 signal template_created(mode)
 
@@ -162,17 +162,17 @@ func get_files(base_dir := "", files := []) -> void:
 			else:
 				files.append(target_path)
 
-func download_fnt_text(file_path := "") -> PackedByteArray:
+func download_file(file_path := "") -> PackedByteArray:
 	var http = HTTPRequest.new()
 	const GITHUB_URL = "https://raw.githubusercontent.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/refs/heads/main/"
 	var url = GITHUB_URL + file_path.replace("res://", "")
 	add_child(http)
 	http.request_completed.connect(file_downloaded)
 	http.request(url, [], HTTPClient.METHOD_GET)
-	await fnt_file_downloaded
+	await file_downloaded
 	http.queue_free()
-	return downloaded_fnt_text
+	return downloaded_file
 
 func file_downloaded(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	downloaded_fnt_text = body
-	fnt_file_downloaded.emit(downloaded_fnt_text)
+	downloaded_file = body
+	file_downloaded.emit(downloaded_file)
