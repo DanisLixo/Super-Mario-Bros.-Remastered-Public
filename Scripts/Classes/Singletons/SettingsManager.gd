@@ -109,7 +109,7 @@ var file := {
 static var SETTINGS_DIR := Global.config_path.path_join("settings.cfg")
 
 func _enter_tree() -> void:
-	DirAccess.make_dir_absolute(Global.config_path.path_join("resource_packs"))
+	DirAccess.make_dir_absolute(ModsLoader.resource_packs_path)
 	load_settings()
 	await get_tree().physics_frame
 	apply_settings()

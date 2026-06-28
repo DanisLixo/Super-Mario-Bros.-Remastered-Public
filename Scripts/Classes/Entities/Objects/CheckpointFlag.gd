@@ -12,10 +12,10 @@ func _ready() -> void:
 		activated.show()
 
 func get_character_sprite_path(player_id := 0) -> String:
-	var character = Player.CHARACTERS[int(Global.player_characters[player_id])]
+	var character = CharactersHandler.CHARACTERS[int(Global.player_characters[player_id])]
 	var path = "res://Assets/Sprites/Players/" + character + "/CheckpointFlag.json"
 	if int(Global.player_characters[player_id]) > 3:
-		path = path.replace("res://Assets/Sprites/Players", Global.config_path.path_join("custom_characters"))
+		path = path.replace("res://Assets/Sprites/Players", ModsLoader.characters_path)
 	return path
 
 func activate(player: Player) -> void:

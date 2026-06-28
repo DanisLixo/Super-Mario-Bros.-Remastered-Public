@@ -1,0 +1,938 @@
+[gd_scene format=3 uid="uid://8bvn1rjg6j8"]
+
+[ext_resource type="Script" uid="uid://bsmrnnpjkhidw" path="res://Scripts/UI/LevelInfo.gd" id="1_n2viy"]
+[ext_resource type="PackedScene" uid="uid://dt20tjug8m6oh" path="res://Scenes/Prefabs/UI/CustomLevelContainer.tscn" id="2_77apo"]
+[ext_resource type="StyleBox" uid="uid://comkghpj0djcl" path="res://Resources/UI/Panel.tres" id="3_4fxsq"]
+[ext_resource type="Script" uid="uid://d63p6qr5a748" path="res://Scripts/UI/AutoScrollContainer.gd" id="4_tqnjb"]
+[ext_resource type="PackedScene" uid="uid://ckc73w2p3cdvj" path="res://Scenes/Parts/CustomMenuButton.tscn" id="5_4vfbf"]
+[ext_resource type="Texture2D" uid="uid://bnv2ocqgws3p7" path="res://Assets/Sprites/UI/Panel.png" id="6_ha67q"]
+[ext_resource type="Texture2D" uid="uid://hg5ql8d3dck7" path="res://Assets/Sprites/UI/CustomLevelActionIcon.png" id="7_bv3qg"]
+[ext_resource type="Script" uid="uid://cv5avutyesjxt" path="res://Scripts/UI/CustomLevelList.gd" id="8_o2jb6"]
+[ext_resource type="Texture2D" uid="uid://bgckb78kobtx3" path="res://Assets/Sprites/Players/Mario/LifeIcon.png" id="9_abfj6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wl6qh"]
+texture = ExtResource("6_ha67q")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+modulate_color = Color(1, 1, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38tt4"]
+atlas = ExtResource("7_bv3qg")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uk0td"]
+texture = ExtResource("6_ha67q")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+modulate_color = Color(1, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybo48"]
+atlas = ExtResource("7_bv3qg")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m538p"]
+texture = ExtResource("6_ha67q")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0, 0.5281222, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0n6y"]
+atlas = ExtResource("7_bv3qg")
+region = Rect2(36, 0, 12, 12)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_abfj6"]
+color = Color(1, 1, 1, 1)
+
+[node name="ModsInfoSection" type="Control" unique_id=1536521758]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CustomLevel" type="VBoxContainer" parent="." unique_id=1569782783]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+script = ExtResource("1_n2viy")
+
+[node name="SelectedLevel" parent="CustomLevel" unique_id=1572140822 instance=ExtResource("2_77apo")]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+
+[node name="ScrollContainer" parent="CustomLevel/SelectedLevel/MarginContainer/HBoxContainer/LeftHalf/LevelInfo" parent_id_path=PackedInt32Array(1572140822, 456570900) index="0" unique_id=1149291090]
+scroll_horizontal = 240
+is_active = true
+
+[node name="ScrollContainer2" parent="CustomLevel/SelectedLevel/MarginContainer/HBoxContainer/LeftHalf/LevelInfo" parent_id_path=PackedInt32Array(1572140822, 456570900) index="1" unique_id=1538947480]
+is_active = true
+
+[node name="ScrollContainer3" parent="CustomLevel/SelectedLevel/MarginContainer/HBoxContainer/LeftHalf/LevelInfo" parent_id_path=PackedInt32Array(1572140822, 456570900) index="2" unique_id=1855133180]
+scroll_horizontal = 16
+is_active = true
+
+[node name="Panel" type="PanelContainer" parent="CustomLevel" unique_id=120320174]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("3_4fxsq")
+
+[node name="AutoScrollContainer" type="ScrollContainer" parent="CustomLevel/Panel" unique_id=1863825040]
+layout_mode = 2
+mouse_filter = 0
+scroll_vertical = 55
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("4_tqnjb")
+direction = 1
+is_active = true
+auto_connect_focus = false
+metadata/_custom_type_script = "uid://d63p6qr5a748"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CustomLevel/Panel/AutoScrollContainer" unique_id=1414967803]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Description" type="Label" parent="CustomLevel/Panel/AutoScrollContainer/VBoxContainer" unique_id=879944586]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "this is text, isnt it so cool. WOWOWOWOWOWW"
+autowrap_mode = 2
+uppercase = true
+
+[node name="AutosaveTime" type="Label" parent="CustomLevel/Panel/AutoScrollContainer/VBoxContainer" unique_id=1117074627]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "AUTOSAVED AT WOOOOOOOOW"
+autowrap_mode = 2
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CustomLevel" unique_id=1791504259]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" parent="CustomLevel/HBoxContainer" unique_id=1979739147 instance=ExtResource("5_4vfbf")]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Label" parent="CustomLevel/HBoxContainer/Play" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_PLAY"
+
+[node name="Edit" parent="CustomLevel/HBoxContainer" unique_id=1353979782 instance=ExtResource("5_4vfbf")]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_right = NodePath("../Delete")
+
+[node name="Button" parent="CustomLevel/HBoxContainer/Edit" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wl6qh")
+theme_override_styles/focus = SubResource("StyleBoxTexture_wl6qh")
+
+[node name="Icon" parent="CustomLevel/HBoxContainer/Edit" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_38tt4")
+
+[node name="Label" parent="CustomLevel/HBoxContainer/Edit" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_EDIT"
+
+[node name="Delete" parent="CustomLevel/HBoxContainer" unique_id=2049076497 instance=ExtResource("5_4vfbf")]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+
+[node name="Button" parent="CustomLevel/HBoxContainer/Delete" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="CustomLevel/HBoxContainer/Delete" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="CustomLevel/HBoxContainer/Delete" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_DELETE"
+
+[node name="DeleteConfirm" parent="CustomLevel/HBoxContainer" unique_id=144448754 instance=ExtResource("5_4vfbf")]
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+focus_previous = NodePath("../Edit")
+
+[node name="Button" parent="CustomLevel/HBoxContainer/DeleteConfirm" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="CustomLevel/HBoxContainer/DeleteConfirm" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="CustomLevel/HBoxContainer/DeleteConfirm" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_CONFIRM"
+
+[node name="OpenAutosaves" parent="CustomLevel/HBoxContainer" unique_id=384104855 instance=ExtResource("5_4vfbf")]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Button" parent="CustomLevel/HBoxContainer/OpenAutosaves" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/focus = SubResource("StyleBoxTexture_m538p")
+
+[node name="Icon" parent="CustomLevel/HBoxContainer/OpenAutosaves" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_d0n6y")
+
+[node name="Label" parent="CustomLevel/HBoxContainer/OpenAutosaves" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_AUTOSAVES"
+
+[node name="LevelPack" type="VBoxContainer" parent="." unique_id=957306165]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+script = ExtResource("1_n2viy")
+
+[node name="selectedcontainer" type="HBoxContainer" parent="LevelPack" unique_id=606140093]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelPack/selectedcontainer" unique_id=1194596739]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LevelPack/selectedcontainer/VBoxContainer" unique_id=1150183745]
+layout_mode = 2
+text = "PACK NAME (color)"
+uppercase = true
+
+[node name="Label2" type="Label" parent="LevelPack/selectedcontainer/VBoxContainer" unique_id=887461163]
+layout_mode = 2
+text = "PACK AUTHOR"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="LevelPack/selectedcontainer" unique_id=1102082862]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="LevelPack/selectedcontainer/VBoxContainer2" unique_id=2114812372]
+layout_mode = 2
+text = "DIFFICULTY"
+
+[node name="Label4" type="Label" parent="LevelPack/selectedcontainer/VBoxContainer2" unique_id=1968323817]
+layout_mode = 2
+text = "TOTAL LEVELS"
+
+[node name="Panel" type="PanelContainer" parent="LevelPack" unique_id=1033938435]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("3_4fxsq")
+
+[node name="AutoScrollContainer" type="ScrollContainer" parent="LevelPack/Panel" unique_id=1089176019]
+layout_mode = 2
+mouse_filter = 0
+scroll_vertical = 55
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("4_tqnjb")
+direction = 1
+is_active = true
+auto_connect_focus = false
+metadata/_custom_type_script = "uid://d63p6qr5a748"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelPack/Panel/AutoScrollContainer" unique_id=1336806662]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Description" type="Label" parent="LevelPack/Panel/AutoScrollContainer/VBoxContainer" unique_id=74354066]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "this is text, isnt it so cool. WOWOWOWOWOWW"
+autowrap_mode = 2
+uppercase = true
+
+[node name="ResourcePack" type="Label" parent="LevelPack/Panel/AutoScrollContainer/VBoxContainer" unique_id=286619265]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "Resource Pack used"
+autowrap_mode = 2
+uppercase = true
+
+[node name="LevelList" type="VBoxContainer" parent="LevelPack" unique_id=682632347]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("8_o2jb6")
+
+[node name="CustomLevels" type="HBoxContainer" parent="LevelPack/LevelList" unique_id=1949165630]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelPack/LevelList/CustomLevels" unique_id=1850574833]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = -8
+theme_override_constants/margin_bottom = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LevelPack/LevelList/CustomLevels/MarginContainer" unique_id=2008073858]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelPack/LevelList/CustomLevels/MarginContainer/ScrollContainer" unique_id=1109950962]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+
+[node name="LevelContainers" type="VBoxContainer" parent="LevelPack/LevelList/CustomLevels/MarginContainer/ScrollContainer/MarginContainer" unique_id=876445253]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="LevelPack/LevelList/CustomLevels/MarginContainer/ScrollContainer/MarginContainer/LevelContainers" unique_id=1111466351]
+layout_mode = 2
+text = "EDITOR_MAIN_LIST_NOLEVEL"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="World" type="Label" parent="LevelPack/LevelList/CustomLevels/MarginContainer/ScrollContainer/MarginContainer/LevelContainers" unique_id=1103003445]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "WORLD %N"
+vertical_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="LevelPack/LevelList/CustomLevels/MarginContainer/ScrollContainer/MarginContainer/LevelContainers/World" unique_id=1239853351]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_abfj6")
+
+[node name="HFlowContainer" type="HFlowContainer" parent="LevelPack/LevelList" unique_id=554240130]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelPack" unique_id=1616570410]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" parent="LevelPack/HBoxContainer" unique_id=1849157410 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Label" parent="LevelPack/HBoxContainer/Play" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_PLAY"
+
+[node name="Edit" parent="LevelPack/HBoxContainer" unique_id=1022492102 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Delete")
+
+[node name="Button" parent="LevelPack/HBoxContainer/Edit" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wl6qh")
+theme_override_styles/focus = SubResource("StyleBoxTexture_wl6qh")
+
+[node name="Icon" parent="LevelPack/HBoxContainer/Edit" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_38tt4")
+
+[node name="Label" parent="LevelPack/HBoxContainer/Edit" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_EDIT"
+
+[node name="Delete" parent="LevelPack/HBoxContainer" unique_id=1563857307 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+
+[node name="Button" parent="LevelPack/HBoxContainer/Delete" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="LevelPack/HBoxContainer/Delete" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="LevelPack/HBoxContainer/Delete" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_DELETE"
+
+[node name="DeleteConfirm" parent="LevelPack/HBoxContainer" unique_id=1817826598 instance=ExtResource("5_4vfbf")]
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+focus_previous = NodePath("../Edit")
+
+[node name="Button" parent="LevelPack/HBoxContainer/DeleteConfirm" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="LevelPack/HBoxContainer/DeleteConfirm" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="LevelPack/HBoxContainer/DeleteConfirm" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_CONFIRM"
+
+[node name="OpenAutosaves" parent="LevelPack/HBoxContainer" unique_id=617242753 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Button" parent="LevelPack/HBoxContainer/OpenAutosaves" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/focus = SubResource("StyleBoxTexture_m538p")
+
+[node name="Icon" parent="LevelPack/HBoxContainer/OpenAutosaves" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_d0n6y")
+
+[node name="Label" parent="LevelPack/HBoxContainer/OpenAutosaves" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_AUTOSAVES"
+
+[node name="Character" type="VBoxContainer" parent="." unique_id=720319555]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+script = ExtResource("1_n2viy")
+
+[node name="selectedcontainer" type="HBoxContainer" parent="Character" unique_id=892977401]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Character/selectedcontainer" unique_id=2719777]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Character/selectedcontainer/VBoxContainer" unique_id=277707863]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="Character/selectedcontainer/VBoxContainer/HBoxContainer" unique_id=503293917]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("9_abfj6")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Character/selectedcontainer/VBoxContainer/HBoxContainer" unique_id=1653660011]
+layout_mode = 2
+text = "CHAR NAME (color)"
+uppercase = true
+
+[node name="Label2" type="Label" parent="Character/selectedcontainer/VBoxContainer" unique_id=849272637]
+layout_mode = 2
+text = "CHAR AUTHOR"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Character/selectedcontainer" unique_id=888220093]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="Character/selectedcontainer/VBoxContainer2" unique_id=1344004407]
+layout_mode = 2
+text = "CHAR ID"
+
+[node name="Panel" type="PanelContainer" parent="Character" unique_id=172557176]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("3_4fxsq")
+
+[node name="AutoScrollContainer" type="ScrollContainer" parent="Character/Panel" unique_id=395996229]
+layout_mode = 2
+mouse_filter = 0
+scroll_vertical = 55
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("4_tqnjb")
+direction = 1
+is_active = true
+auto_connect_focus = false
+metadata/_custom_type_script = "uid://d63p6qr5a748"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Character/Panel/AutoScrollContainer" unique_id=1372754195]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Description" type="Label" parent="Character/Panel/AutoScrollContainer/VBoxContainer" unique_id=1392551399]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "this is text, isnt it so cool. WOWOWOWOWOWW"
+autowrap_mode = 2
+uppercase = true
+
+[node name="AutosaveTime" type="Label" parent="Character/Panel/AutoScrollContainer/VBoxContainer" unique_id=351123915]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "HAS CUSTOM PHYSICS"
+autowrap_mode = 2
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Character" unique_id=1843541575]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" parent="Character/HBoxContainer" unique_id=1666328455 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Label" parent="Character/HBoxContainer/Play" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_PLAY"
+
+[node name="Edit" parent="Character/HBoxContainer" unique_id=903392325 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Delete")
+
+[node name="Button" parent="Character/HBoxContainer/Edit" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wl6qh")
+theme_override_styles/focus = SubResource("StyleBoxTexture_wl6qh")
+
+[node name="Icon" parent="Character/HBoxContainer/Edit" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_38tt4")
+
+[node name="Label" parent="Character/HBoxContainer/Edit" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_EDIT"
+
+[node name="Delete" parent="Character/HBoxContainer" unique_id=995543874 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+
+[node name="Button" parent="Character/HBoxContainer/Delete" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="Character/HBoxContainer/Delete" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="Character/HBoxContainer/Delete" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_DELETE"
+
+[node name="DeleteConfirm" parent="Character/HBoxContainer" unique_id=1108750482 instance=ExtResource("5_4vfbf")]
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+focus_previous = NodePath("../Edit")
+
+[node name="Button" parent="Character/HBoxContainer/DeleteConfirm" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="Character/HBoxContainer/DeleteConfirm" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="Character/HBoxContainer/DeleteConfirm" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_CONFIRM"
+
+[node name="OpenAutosaves" parent="Character/HBoxContainer" unique_id=739814622 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Button" parent="Character/HBoxContainer/OpenAutosaves" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/focus = SubResource("StyleBoxTexture_m538p")
+
+[node name="Icon" parent="Character/HBoxContainer/OpenAutosaves" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_d0n6y")
+
+[node name="Label" parent="Character/HBoxContainer/OpenAutosaves" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_AUTOSAVES"
+
+[node name="ResourcePack" type="VBoxContainer" parent="." unique_id=2142013011]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+script = ExtResource("1_n2viy")
+
+[node name="selectedcontainer" type="HBoxContainer" parent="ResourcePack" unique_id=516757503]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ResourcePack/selectedcontainer" unique_id=479568101]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ResourcePack/selectedcontainer/VBoxContainer" unique_id=504800668]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="ResourcePack/selectedcontainer/VBoxContainer/HBoxContainer" unique_id=651466116]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("9_abfj6")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="ResourcePack/selectedcontainer/VBoxContainer/HBoxContainer" unique_id=1678671255]
+layout_mode = 2
+text = "CHAR NAME (color)"
+uppercase = true
+
+[node name="Label2" type="Label" parent="ResourcePack/selectedcontainer/VBoxContainer" unique_id=1456426264]
+layout_mode = 2
+text = "CHAR AUTHOR"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ResourcePack/selectedcontainer" unique_id=267677483]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="ResourcePack/selectedcontainer/VBoxContainer2" unique_id=533918500]
+layout_mode = 2
+text = "CHAR ID"
+
+[node name="Panel" type="PanelContainer" parent="ResourcePack" unique_id=1846243189]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("3_4fxsq")
+
+[node name="AutoScrollContainer" type="ScrollContainer" parent="ResourcePack/Panel" unique_id=21909226]
+layout_mode = 2
+mouse_filter = 0
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("4_tqnjb")
+direction = 1
+is_active = true
+auto_connect_focus = false
+metadata/_custom_type_script = "uid://d63p6qr5a748"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ResourcePack/Panel/AutoScrollContainer" unique_id=1427816179]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Description" type="Label" parent="ResourcePack/Panel/AutoScrollContainer/VBoxContainer" unique_id=1725150022]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "this is text, isnt it so cool. WOWOWOWOWOWW"
+autowrap_mode = 2
+uppercase = true
+
+[node name="AutosaveTime" type="Label" parent="ResourcePack/Panel/AutoScrollContainer/VBoxContainer" unique_id=1853777847]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "HAS CUSTOM PHYSICS"
+autowrap_mode = 2
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ResourcePack" unique_id=2092432248]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" parent="ResourcePack/HBoxContainer" unique_id=2012196841 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Label" parent="ResourcePack/HBoxContainer/Play" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_PLAY"
+
+[node name="Edit" parent="ResourcePack/HBoxContainer" unique_id=587113172 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Delete")
+
+[node name="Button" parent="ResourcePack/HBoxContainer/Edit" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wl6qh")
+theme_override_styles/focus = SubResource("StyleBoxTexture_wl6qh")
+
+[node name="Icon" parent="ResourcePack/HBoxContainer/Edit" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_38tt4")
+
+[node name="Label" parent="ResourcePack/HBoxContainer/Edit" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_EDIT"
+
+[node name="Delete" parent="ResourcePack/HBoxContainer" unique_id=2062450525 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+
+[node name="Button" parent="ResourcePack/HBoxContainer/Delete" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="ResourcePack/HBoxContainer/Delete" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="ResourcePack/HBoxContainer/Delete" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_DELETE"
+
+[node name="DeleteConfirm" parent="ResourcePack/HBoxContainer" unique_id=1047733112 instance=ExtResource("5_4vfbf")]
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+focus_previous = NodePath("../Edit")
+
+[node name="Button" parent="ResourcePack/HBoxContainer/DeleteConfirm" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="ResourcePack/HBoxContainer/DeleteConfirm" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="ResourcePack/HBoxContainer/DeleteConfirm" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_CONFIRM"
+
+[node name="OpenAutosaves" parent="ResourcePack/HBoxContainer" unique_id=359521888 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Button" parent="ResourcePack/HBoxContainer/OpenAutosaves" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/focus = SubResource("StyleBoxTexture_m538p")
+
+[node name="Icon" parent="ResourcePack/HBoxContainer/OpenAutosaves" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_d0n6y")
+
+[node name="Label" parent="ResourcePack/HBoxContainer/OpenAutosaves" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_AUTOSAVES"
+
+[node name="Blueprint" type="VBoxContainer" parent="." unique_id=267786041]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+script = ExtResource("1_n2viy")
+
+[node name="selectedcontainer" type="HBoxContainer" parent="Blueprint" unique_id=1590345036]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Blueprint/selectedcontainer" unique_id=2042307256]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Blueprint/selectedcontainer/VBoxContainer" unique_id=1492940600]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="Blueprint/selectedcontainer/VBoxContainer/HBoxContainer" unique_id=587954558]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("9_abfj6")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Blueprint/selectedcontainer/VBoxContainer/HBoxContainer" unique_id=143992543]
+layout_mode = 2
+text = "CHAR NAME (color)"
+uppercase = true
+
+[node name="Label2" type="Label" parent="Blueprint/selectedcontainer/VBoxContainer" unique_id=840815467]
+layout_mode = 2
+text = "CHAR AUTHOR"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Blueprint/selectedcontainer" unique_id=1265734631]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="Blueprint/selectedcontainer/VBoxContainer2" unique_id=99795664]
+layout_mode = 2
+text = "CHAR ID"
+
+[node name="Panel" type="PanelContainer" parent="Blueprint" unique_id=1567543215]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("3_4fxsq")
+
+[node name="AutoScrollContainer" type="ScrollContainer" parent="Blueprint/Panel" unique_id=1042412059]
+layout_mode = 2
+mouse_filter = 0
+scroll_vertical = 55
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("4_tqnjb")
+direction = 1
+is_active = true
+auto_connect_focus = false
+metadata/_custom_type_script = "uid://d63p6qr5a748"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Blueprint/Panel/AutoScrollContainer" unique_id=245770726]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Description" type="Label" parent="Blueprint/Panel/AutoScrollContainer/VBoxContainer" unique_id=943868450]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "this is text, isnt it so cool. WOWOWOWOWOWW"
+autowrap_mode = 2
+uppercase = true
+
+[node name="AutosaveTime" type="Label" parent="Blueprint/Panel/AutoScrollContainer/VBoxContainer" unique_id=1089637958]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "HAS CUSTOM PHYSICS"
+autowrap_mode = 2
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Blueprint" unique_id=49100555]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" parent="Blueprint/HBoxContainer" unique_id=1953775888 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Label" parent="Blueprint/HBoxContainer/Play" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_PLAY"
+
+[node name="Edit" parent="Blueprint/HBoxContainer" unique_id=1664124663 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Delete")
+
+[node name="Button" parent="Blueprint/HBoxContainer/Edit" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wl6qh")
+theme_override_styles/focus = SubResource("StyleBoxTexture_wl6qh")
+
+[node name="Icon" parent="Blueprint/HBoxContainer/Edit" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_38tt4")
+
+[node name="Label" parent="Blueprint/HBoxContainer/Edit" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_EDIT"
+
+[node name="Delete" parent="Blueprint/HBoxContainer" unique_id=1305647937 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+
+[node name="Button" parent="Blueprint/HBoxContainer/Delete" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="Blueprint/HBoxContainer/Delete" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="Blueprint/HBoxContainer/Delete" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_DELETE"
+
+[node name="DeleteConfirm" parent="Blueprint/HBoxContainer" unique_id=2135433144 instance=ExtResource("5_4vfbf")]
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath("../Edit")
+focus_previous = NodePath("../Edit")
+
+[node name="Button" parent="Blueprint/HBoxContainer/DeleteConfirm" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
+theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
+
+[node name="Icon" parent="Blueprint/HBoxContainer/DeleteConfirm" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_ybo48")
+
+[node name="Label" parent="Blueprint/HBoxContainer/DeleteConfirm" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_LEVEL_CONFIRM"
+
+[node name="OpenAutosaves" parent="Blueprint/HBoxContainer" unique_id=1255206594 instance=ExtResource("5_4vfbf")]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Edit")
+
+[node name="Button" parent="Blueprint/HBoxContainer/OpenAutosaves" index="0" unique_id=47319333]
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_m538p")
+theme_override_styles/focus = SubResource("StyleBoxTexture_m538p")
+
+[node name="Icon" parent="Blueprint/HBoxContainer/OpenAutosaves" index="1" unique_id=1961946869]
+texture = SubResource("AtlasTexture_d0n6y")
+
+[node name="Label" parent="Blueprint/HBoxContainer/OpenAutosaves" index="2" unique_id=1354378166]
+text = "EDITOR_MAIN_AUTOSAVES"
+
+[connection signal="pressed" from="CustomLevel/HBoxContainer/Play/Button" to="CustomLevel" method="level_selected"]
+[connection signal="focus_entered" from="CustomLevel/HBoxContainer/Edit" to="CustomLevel/HBoxContainer/Delete" method="show"]
+[connection signal="focus_entered" from="CustomLevel/HBoxContainer/Edit" to="CustomLevel/HBoxContainer/DeleteConfirm" method="hide"]
+[connection signal="pressed" from="CustomLevel/HBoxContainer/Edit/Button" to="CustomLevel" method="level_edited"]
+[connection signal="pressed" from="CustomLevel/HBoxContainer/Delete/Button" to="CustomLevel/HBoxContainer/Delete" method="hide"]
+[connection signal="pressed" from="CustomLevel/HBoxContainer/Delete/Button" to="CustomLevel/HBoxContainer/DeleteConfirm" method="grab_focus"]
+[connection signal="pressed" from="CustomLevel/HBoxContainer/OpenAutosaves/Button" to="CustomLevel" method="close" binds= [false]]
+[connection signal="level_selected" from="LevelPack/LevelList" to="LevelPack/LevelList" method="close" unbinds=1]
+[connection signal="pressed" from="LevelPack/HBoxContainer/Play/Button" to="LevelPack" method="level_selected"]
+[connection signal="focus_entered" from="LevelPack/HBoxContainer/Edit" to="LevelPack/HBoxContainer/Delete" method="show"]
+[connection signal="focus_entered" from="LevelPack/HBoxContainer/Edit" to="LevelPack/HBoxContainer/DeleteConfirm" method="hide"]
+[connection signal="pressed" from="LevelPack/HBoxContainer/Edit/Button" to="LevelPack" method="level_edited"]
+[connection signal="pressed" from="LevelPack/HBoxContainer/Delete/Button" to="LevelPack/HBoxContainer/Delete" method="hide"]
+[connection signal="pressed" from="LevelPack/HBoxContainer/Delete/Button" to="LevelPack/HBoxContainer/DeleteConfirm" method="grab_focus"]
+[connection signal="pressed" from="LevelPack/HBoxContainer/OpenAutosaves/Button" to="LevelPack" method="close" binds= [false]]
+[connection signal="pressed" from="Character/HBoxContainer/Play/Button" to="Character" method="level_selected"]
+[connection signal="focus_entered" from="Character/HBoxContainer/Edit" to="Character/HBoxContainer/Delete" method="show"]
+[connection signal="focus_entered" from="Character/HBoxContainer/Edit" to="Character/HBoxContainer/DeleteConfirm" method="hide"]
+[connection signal="pressed" from="Character/HBoxContainer/Edit/Button" to="Character" method="level_edited"]
+[connection signal="pressed" from="Character/HBoxContainer/Delete/Button" to="Character/HBoxContainer/Delete" method="hide"]
+[connection signal="pressed" from="Character/HBoxContainer/Delete/Button" to="Character/HBoxContainer/DeleteConfirm" method="grab_focus"]
+[connection signal="pressed" from="Character/HBoxContainer/OpenAutosaves/Button" to="Character" method="close" binds= [false]]
+[connection signal="pressed" from="ResourcePack/HBoxContainer/Play/Button" to="ResourcePack" method="level_selected"]
+[connection signal="focus_entered" from="ResourcePack/HBoxContainer/Edit" to="ResourcePack/HBoxContainer/Delete" method="show"]
+[connection signal="focus_entered" from="ResourcePack/HBoxContainer/Edit" to="ResourcePack/HBoxContainer/DeleteConfirm" method="hide"]
+[connection signal="pressed" from="ResourcePack/HBoxContainer/Edit/Button" to="ResourcePack" method="level_edited"]
+[connection signal="pressed" from="ResourcePack/HBoxContainer/Delete/Button" to="ResourcePack/HBoxContainer/Delete" method="hide"]
+[connection signal="pressed" from="ResourcePack/HBoxContainer/Delete/Button" to="ResourcePack/HBoxContainer/DeleteConfirm" method="grab_focus"]
+[connection signal="pressed" from="ResourcePack/HBoxContainer/OpenAutosaves/Button" to="ResourcePack" method="close" binds= [false]]
+[connection signal="pressed" from="Blueprint/HBoxContainer/Play/Button" to="Blueprint" method="level_selected"]
+[connection signal="focus_entered" from="Blueprint/HBoxContainer/Edit" to="Blueprint/HBoxContainer/Delete" method="show"]
+[connection signal="focus_entered" from="Blueprint/HBoxContainer/Edit" to="Blueprint/HBoxContainer/DeleteConfirm" method="hide"]
+[connection signal="pressed" from="Blueprint/HBoxContainer/Edit/Button" to="Blueprint" method="level_edited"]
+[connection signal="pressed" from="Blueprint/HBoxContainer/Delete/Button" to="Blueprint/HBoxContainer/Delete" method="hide"]
+[connection signal="pressed" from="Blueprint/HBoxContainer/Delete/Button" to="Blueprint/HBoxContainer/DeleteConfirm" method="grab_focus"]
+[connection signal="pressed" from="Blueprint/HBoxContainer/OpenAutosaves/Button" to="Blueprint" method="close" binds= [false]]
+
+[editable path="CustomLevel/SelectedLevel"]
+[editable path="CustomLevel/HBoxContainer/Play"]
+[editable path="CustomLevel/HBoxContainer/Edit"]
+[editable path="CustomLevel/HBoxContainer/Delete"]
+[editable path="CustomLevel/HBoxContainer/DeleteConfirm"]
+[editable path="CustomLevel/HBoxContainer/OpenAutosaves"]
+[editable path="LevelPack/HBoxContainer/Play"]
+[editable path="LevelPack/HBoxContainer/Edit"]
+[editable path="LevelPack/HBoxContainer/Delete"]
+[editable path="LevelPack/HBoxContainer/DeleteConfirm"]
+[editable path="LevelPack/HBoxContainer/OpenAutosaves"]
+[editable path="Character/HBoxContainer/Play"]
+[editable path="Character/HBoxContainer/Edit"]
+[editable path="Character/HBoxContainer/Delete"]
+[editable path="Character/HBoxContainer/DeleteConfirm"]
+[editable path="Character/HBoxContainer/OpenAutosaves"]
+[editable path="ResourcePack/HBoxContainer/Play"]
+[editable path="ResourcePack/HBoxContainer/Edit"]
+[editable path="ResourcePack/HBoxContainer/Delete"]
+[editable path="ResourcePack/HBoxContainer/DeleteConfirm"]
+[editable path="ResourcePack/HBoxContainer/OpenAutosaves"]
+[editable path="Blueprint/HBoxContainer/Play"]
+[editable path="Blueprint/HBoxContainer/Edit"]
+[editable path="Blueprint/HBoxContainer/Delete"]
+[editable path="Blueprint/HBoxContainer/DeleteConfirm"]
+[editable path="Blueprint/HBoxContainer/OpenAutosaves"]

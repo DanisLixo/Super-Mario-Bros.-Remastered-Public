@@ -89,10 +89,11 @@ func get_resource(json_file: JSON) -> Resource:
 			current_resource_pack = i
 		resource_path = new_path
 	
-	source_json = JSON.parse_string(FileAccess.open(resource_path, FileAccess.READ).get_as_text())
-	if source_json == null:
-		Global.log_error("Error parsing " + resource_path + "!")
-		return
+	source_json = JSONParser.parse_json_to_dict(resource_path)
+	if source_json.is_empty():
+		if (!resource_path.to_lower().contains("res://assets/themes")):
+			Global.log_error("Error parsing " + resource_path + "!")
+			return
 	var json = source_json.duplicate()
 	var source_resource_path = ""
 	var finished = false
@@ -104,7 +105,7 @@ func get_resource(json_file: JSON) -> Resource:
 				if json.get("source") is String:
 					source_resource_path = json_file.resource_path.replace(json_file.resource_path.get_file(), json.source)
 			elif mode != ResourceMode.THEME:
-				Global.log_error("Error getting variations! " + resource_path)
+				Global.log_error("Error getting variations! " + resource_path + ". Set a default key if this was not intended.")
 				return
 			if json.has("flags"):
 				for i in json["flags"]:
@@ -323,7 +324,7 @@ func get_variation_json(json := {}) -> Dictionary:
 		else:
 			json = get_variation_json(json[game_mode])
 	
-	var chara = "Character:" + Player.CHARACTERS[int(Global.player_characters[0])]
+	var chara = "Character:" + CharactersHandler.CHARACTERS[int(Global.player_characters[0])]
 	if json.has(chara) == false:
 		chara = "Character:default"
 	if json.has(chara):
@@ -368,15 +369,14 @@ func get_variation_json(json := {}) -> Dictionary:
 	return json
 
 func get_config_file(resource_pack := "") -> void:
-	if FileAccess.file_exists(Global.config_path.path_join("resource_packs/" + resource_pack + "/config.json")):
-		config_to_use = JSON.parse_string(FileAccess.open(Global.config_path.path_join("resource_packs/" + resource_pack + "/config.json"), FileAccess.READ).get_as_text())
-		if config_to_use == null:
+	if FileAccess.file_exists(ModsLoader.resource_packs_path.path_join(resource_pack + "/config.json")):
+		config_to_use = JSONParser.parse_json_to_dict(ModsLoader.resource_packs_path.path_join(resource_pack + "/config.json"))
+		if config_to_use.is_empty():
 			Global.log_error("Error parsing Config File! (" + resource_pack + ")")
-			config_to_use = {}
 
 func get_resource_pack_path(res_path := "", resource_pack := "") -> String:
-	var user_path := res_path.replace("res://Assets", Global.config_path.path_join("resource_packs/" + resource_pack))
-	user_path = user_path.replace(Global.config_path.path_join("custom_characters"), Global.config_path.path_join("resource_packs/" + resource_pack + "/Sprites/Players/CustomCharacters/"))
+	var user_path := res_path.replace("res://Assets", ModsLoader.resource_packs_path.path_join(resource_pack))
+	user_path = user_path.replace(ModsLoader.characters_path, ModsLoader.resource_packs_path.path_join(resource_pack + "/Sprites/Players/CustomCharacters/"))
 	if FileAccess.file_exists(user_path):
 		return user_path
 	else:

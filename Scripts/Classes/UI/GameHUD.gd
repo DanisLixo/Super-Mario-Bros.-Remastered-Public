@@ -3,8 +3,6 @@ extends CanvasLayer
 
 var current_chara := 0
 
-static var character_icons := [preload("res://Assets/Sprites/Players/Mario/LifeIcon.json"),preload("res://Assets/Sprites/Players/Luigi/LifeIcon.json"), preload("res://Assets/Sprites/Players/Toad/LifeIcon.json"), preload("res://Assets/Sprites/Players/Toadette/LifeIcon.json")]
-
 const RANK_COLOURS := {"F": Color.DIM_GRAY, "D": Color.WEB_MAROON, "C": Color.PALE_GREEN, "B": Color.DODGER_BLUE, "A": Color.RED, "S": Color.GOLD, "P": Color.PURPLE}
 
 var delta_time := 0.0
@@ -65,8 +63,8 @@ func handle_main_hud() -> void:
 		handle_speedrun_timer()
 
 func update_character_info() -> void:
-	%CharacterName.text = tr(Player.CHARACTER_NAMES[int(Global.player_characters[0])])
-	%CharacterIcon.get_node("ResourceSetterNew").resource_json = (character_icons[int(Global.player_characters[0])])
+	%CharacterName.text = tr(CharactersHandler.CHARACTER_NAMES[int(Global.player_characters[0])])
+	%CharacterIcon.get_node("ResourceSetterNew").resource_json = (CharactersHandler.CHARACTER_ICONS[int(Global.player_characters[0])])
 	current_chara = Global.player_characters[0]
 
 func handle_modern_hud() -> void:

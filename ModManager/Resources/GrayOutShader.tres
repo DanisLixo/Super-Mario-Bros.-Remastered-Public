@@ -1,0 +1,27 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b03y8ia0o6vhi"]
+
+[sub_resource type="Shader" id="Shader_cm8p3"]
+code = "//Gray out effect, we need those with the current gamers we have.
+shader_type canvas_item;
+
+uniform bool enabled = false;
+uniform vec3 gray_luminosity;
+
+vec4 gray_effect(sampler2D tex, vec2 uv) {
+	vec4 tex_color = texture(tex, uv);
+		
+	float gray = dot(tex_color.rgb, gray_luminosity);
+	
+	return vec4(vec3(gray), tex_color.a);
+}
+
+void fragment() {
+	if (enabled) {
+		COLOR = gray_effect(TEXTURE, UV);
+	}
+}"
+
+[resource]
+shader = SubResource("Shader_cm8p3")
+shader_parameter/enabled = false
+shader_parameter/gray_luminosity = Vector3(0.2, 0.1, 0.41)

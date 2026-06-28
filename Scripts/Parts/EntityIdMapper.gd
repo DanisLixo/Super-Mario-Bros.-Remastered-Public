@@ -18,7 +18,7 @@ func _ready() -> void:
 		update_map()
 
 static func load_entity_map(modded := false) -> void:
-	map = JSON.parse_string(FileAccess.open(MAP_PATH, FileAccess.READ).get_as_text())
+	map = JSONParser.parse_json_to_dict(MAP_PATH)
 	if modded:
 		map.merge(LevelEditor.level_file["Mods"])
 		print(str(map))

@@ -2,7 +2,7 @@
 
 [ext_resource type="StyleBox" uid="uid://comkghpj0djcl" path="res://Resources/UI/Panel.tres" id="1_hb2fw"]
 [ext_resource type="StyleBox" uid="uid://dlbdmqmnl30sq" path="res://Resources/UI/PanelSelected.tres" id="2_i7nao"]
-[ext_resource type="Script" uid="uid://bd15pgl1xyxsj" path="res://Scripts/UI/LevelPackContainer.gd" id="3_vv5r4"]
+[ext_resource type="Script" uid="uid://bd15pgl1xyxsj" path="res://ModManager/Scripts/Manager/Containers/LevelPackContainer.gd" id="3_vv5r4"]
 [ext_resource type="Texture2D" uid="uid://bdfacnvuppo3u" path="res://Assets/Sprites/UI/LevelPackIconEmpty.png" id="4_hb2fw"]
 [ext_resource type="Script" uid="uid://cbal8ms2oe1ik" path="res://Scripts/Classes/Components/ResourceSetterNew.gd" id="9_bw0b5"]
 [ext_resource type="JSON" path="res://Assets/Sprites/UI/Cursor.json" id="10_sy0fx"]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://lggi3b4310yl"]
 
-[ext_resource type="Script" uid="uid://cbc02k2pmw13p" path="res://Scripts/UI/ResourcePackContainer.gd" id="1_dm3ff"]
+[ext_resource type="Script" uid="uid://cbc02k2pmw13p" path="res://ModManager/Scripts/Manager/Containers/ResourcePackContainer.gd" id="1_dm3ff"]
 [ext_resource type="Texture2D" uid="uid://3p2l7rec0gh5" path="res://Assets/Sprites/UI/Cursor.png" id="1_fcw43"]
 [ext_resource type="Texture2D" uid="uid://uh7uhdkv3e6s" path="res://Assets/Sprites/Blocks/QuestionBlock.png" id="2_7ke7c"]
 [ext_resource type="Script" uid="uid://cbal8ms2oe1ik" path="res://Scripts/Classes/Components/ResourceSetterNew.gd" id="3_fwtyy"]

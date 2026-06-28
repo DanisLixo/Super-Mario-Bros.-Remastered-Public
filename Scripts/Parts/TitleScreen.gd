@@ -286,3 +286,7 @@ func check_for_unlocked_achievements() -> void:
 		has_achievements_to_unlock = true
 		%AchievementUnlock.show_popup(new_achievements)
 	AchievementMenu.unlocked_achievements = Global.achievements
+
+
+func go_to_mod_manager() -> void:
+	Global.transition_to_scene("res://ModManager/Scenes/ModsMenu.tscn")

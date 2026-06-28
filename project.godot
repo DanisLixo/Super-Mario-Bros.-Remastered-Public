@@ -19,7 +19,7 @@ config/name="SMB1R"
 config/tags=PackedStringArray("mario")
 run/main_scene="uid://bn66tnn8nlpi7"
 config/use_custom_user_dir=true
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 boot_splash/stretch_mode=0
@@ -42,7 +42,7 @@ SaveManager="*res://Scripts/Classes/Singletons/SaveManager.gd"
 DiscordManager="*res://Scripts/Classes/Singletons/DiscordManager.gd"
 AudioManager="*res://Scenes/Prefabs/Autoload/AudioManager.tscn"
 BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
-GameBanana="*res://Scripts/Classes/Singletons/GameBananaManager.gd"
+GameBanana="*res://ModManager/Scripts/Browser/Gamebanana/GameBananaManager.gd"
 SpeedrunHandler="*res://Scripts/Classes/Singletons/SpeedrunHandler.gd"
 
 [debug]
@@ -84,14 +84,8 @@ folder_colors={
 "res://Assets/Sprites/Players/Toad/": "blue",
 "res://Assets/Sprites/Players/Toadette/": "pink",
 "res://Assets/Temp/": "gray",
+"res://ModManager/Resources/LevelPackTemplate/": "gray",
 "res://Resources/": "yellow",
-"res://Resources/LevelPackTemplate/": "gray",
-"res://Resources/SpriteFrames/": "purple",
-"res://Resources/SpriteFrames/Player/": "orange",
-"res://Resources/SpriteFrames/Player/Luigi/": "green",
-"res://Resources/SpriteFrames/Player/Mario/": "red",
-"res://Resources/SpriteFrames/Player/Toad/": "blue",
-"res://Resources/SpriteFrames/Player/Toadette/": "pink",
 "res://Scenes/Levels/SMB1/": "red",
 "res://Scenes/Levels/SMB1/World1/1-4.tscn": "orange",
 "res://Scenes/Levels/SMBANN/": "pink",

@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://rimg0vlsltw0"]
+
+[ext_resource type="StyleBox" uid="uid://comkghpj0djcl" path="res://Resources/UI/Panel.tres" id="1_l8emj"]
+[ext_resource type="StyleBox" uid="uid://dlbdmqmnl30sq" path="res://Resources/UI/PanelSelected.tres" id="2_m8vsa"]
+[ext_resource type="Script" uid="uid://bjm3mwmsv61lb" path="res://ModManager/Scripts/Manager/Containers/Class/ModContainer.gd" id="3_o7sy3"]
+[ext_resource type="Script" uid="uid://d63p6qr5a748" path="res://Scripts/UI/AutoScrollContainer.gd" id="4_s4re7"]
+[ext_resource type="Texture2D" uid="uid://3p2l7rec0gh5" path="res://Assets/Sprites/UI/Cursor.png" id="5_g6ffs"]
+[ext_resource type="Script" uid="uid://cbal8ms2oe1ik" path="res://Scripts/Classes/Components/ResourceSetterNew.gd" id="6_6fxq5"]
+[ext_resource type="JSON" path="res://Assets/Sprites/UI/Cursor.json" id="7_o0022"]
+[ext_resource type="Script" uid="uid://co6tjg3w6qpd8" path="res://Scripts/Parts/LabelFontChanger.gd" id="8_5y3vw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ikcf"]
+atlas = ExtResource("5_g6ffs")
+region = Rect2(0, 0, 8, 8)
+
+[node name="ModContainer" type="Button" unique_id=1572140822]
+custom_minimum_size = Vector2(0, 40)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_styles/normal = ExtResource("1_l8emj")
+theme_override_styles/pressed = ExtResource("1_l8emj")
+theme_override_styles/hover = ExtResource("2_m8vsa")
+theme_override_styles/focus = ExtResource("2_m8vsa")
+button_mask = 0
+script = ExtResource("3_o7sy3")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=871079259]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1739030616]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=582701347]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Info" type="VBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer" unique_id=456570900]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" unique_id=1828929825]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer" unique_id=1149291090]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+script = ExtResource("4_s4re7")
+
+[node name="Name" type="Label" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer/ScrollContainer" unique_id=987547531]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "Name"
+uppercase = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" unique_id=1462389349]
+layout_mode = 2
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer2" unique_id=1538947480]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+script = ExtResource("4_s4re7")
+
+[node name="Author" type="Label" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer2/ScrollContainer2" unique_id=720591774]
+unique_name_in_owner = true
+modulate = Color(0.47058824, 0.47058824, 0.47058824, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "Author"
+uppercase = true
+
+[node name="RightHalf" type="VBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer" unique_id=1323855834]
+layout_mode = 2
+alignment = 1
+
+[node name="Enabled" type="CheckBox" parent="MarginContainer/HBoxContainer/HBoxContainer/RightHalf" unique_id=969857188]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+button_pressed = true
+
+[node name="Cursor" type="TextureRect" parent="." unique_id=2090391159]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -4.0
+offset_right = -8.0
+offset_bottom = 4.0
+grow_vertical = 2
+texture = SubResource("AtlasTexture_1ikcf")
+
+[node name="ResourceSetterNew" type="Node" parent="Cursor" unique_id=753910969 node_paths=PackedStringArray("node_to_affect")]
+script = ExtResource("6_6fxq5")
+node_to_affect = NodePath("..")
+property_name = "texture"
+mode = 1
+resource_json = ExtResource("7_o0022")
+metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
+
+[node name="LabelFontChanger" type="Node" parent="." unique_id=111429646 node_paths=PackedStringArray("labels")]
+script = ExtResource("8_5y3vw")
+labels = [NodePath("../MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer/ScrollContainer/Name"), NodePath("../MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer2/ScrollContainer2/Author")]
+metadata/_custom_type_script = "uid://co6tjg3w6qpd8"
+
+[connection signal="focus_entered" from="." to="Cursor" method="show"]
+[connection signal="focus_entered" from="." to="." method="set_process" binds= [true]]
+[connection signal="focus_exited" from="." to="Cursor" method="hide"]
+[connection signal="focus_exited" from="." to="." method="set_process" binds= [false]]
+[connection signal="mouse_entered" from="." to="." method="grab_focus"]
+[connection signal="mouse_exited" from="." to="." method="release_focus"]

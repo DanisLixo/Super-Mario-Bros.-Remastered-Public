@@ -52,13 +52,18 @@ func _process(_delta: float) -> void:
 		close()
 
 func level_selected() -> void:
-	active = false
+	LevelEditor.level_file = JSONParser.parse_json_to_dict(file_path)
+	if (LevelEditor.level_file.is_empty()):
+		Global.log_error("Level is corrupted (how).")
 	
-	LevelEditor.level_file = JSON.parse_string(FileAccess.open(file_path, FileAccess.READ).get_as_text())
+	active = false
 	level_play.emit()
 
 func level_edited() -> void:
-	LevelEditor.level_file = JSON.parse_string(FileAccess.open(file_path, FileAccess.READ).get_as_text())
+	LevelEditor.level_file = JSONParser.parse_json_to_dict(file_path)
+	if (LevelEditor.level_file.is_empty()):
+		Global.log_error("Level is corrupted (how).")
+	
 	level_edit.emit()
 
 func close(back := true) -> void:

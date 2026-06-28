@@ -67,7 +67,6 @@ const LEVEL_THEMES := {
 	"SMBS": SMBS_LEVEL_THEMES
 }
 
-var custom_campaigns := []
 var custom_pack := ""
 var custom_level_idx := 0
 var current_custom_campaign := ""
@@ -202,8 +201,6 @@ var p_switch_timer_paused := false
 
 var debug_mode := false
 
-var custom_campaign_jsons := {}
-
 var level_sequence_captured := false
 
 var process_multibind_pressed_buttons: Dictionary[StringName, int] = {}
@@ -243,8 +240,6 @@ func setup_config_dirs() -> void:
 		"blueprints",
 		"mods",
 		
-		"custom_characters/.disabled",
-		"level_packs/.disabled",
 		"mods/.disabled",
 	]
 
@@ -586,14 +581,15 @@ func version_got(_result, response_code, _headers, body) -> void:
 var error_log_cooldown := false
 
 func log_error(msg := "", can_spam := true) -> void:
+	printerr(msg)
 	if error_log_cooldown and not can_spam:
 		return
-	var error_message = $CanvasLayer/VBoxContainer/ErrorMessage.duplicate()
+	var error_message = $Logs/VBoxContainer/ErrorMessage.duplicate()
 	error_message.text = "Error - " + msg
 	error_message.visible = true
 	if can_spam == false:
 		do_cooldown()
-	$CanvasLayer/VBoxContainer.add_child(error_message)
+	$Logs/VBoxContainer.add_child(error_message)
 	await get_tree().create_timer(10, false).timeout
 	error_message.queue_free()
 
@@ -603,18 +599,23 @@ func do_cooldown() -> void:
 	error_log_cooldown = false
 
 func log_warning(text) -> void:
-	var error_message: Label = $CanvasLayer/VBoxContainer/Warning.duplicate()
+	printwarning(text)
+	var error_message: Label = $Logs/VBoxContainer/Warning.duplicate()
 	error_message.text = "Warning - " + str(text)
 	error_message.visible = true
-	$CanvasLayer/VBoxContainer.add_child(error_message)
+	$Logs/VBoxContainer.add_child(error_message)
 	await get_tree().create_timer(10, false).timeout
 	error_message.queue_free()
-	
+
+func printwarning(text := "") -> void:
+	print_rich("[color=yellow]Warning: %sMessage[/color]" % text)
+
 func log_comment(text, timer := 2) -> void:
-	var error_message = $CanvasLayer/VBoxContainer/Comment.duplicate()
+	print(text)
+	var error_message = $Logs/VBoxContainer/Comment.duplicate()
 	error_message.text = str(text)
 	error_message.visible = true
-	$CanvasLayer/VBoxContainer.add_child(error_message)
+	$Logs/VBoxContainer.add_child(error_message)
 	await get_tree().create_timer(timer, false).timeout
 	error_message.queue_free()
 
@@ -651,7 +652,7 @@ func sanitize_string(string := "") -> String:
 	return string
 
 func get_base_asset_version() -> int:
-	var json = JSON.parse_string(FileAccess.open(config_path.path_join("BaseAssets/pack_info.json"), FileAccess.READ).get_as_text())
+	var json = JSONParser.parse_json_to_dict(config_path.path_join("BaseAssets/pack_info.json"))
 	var version = json.version
 	return get_version_num_int(version)
 
@@ -675,7 +676,7 @@ func create_translation_from_json(locale := "") -> void:
 	var locale_json := {}
 	for resource_pack in Settings.file.visuals.resource_packs:
 		var path = $ResourceSetterNew.get_resource_pack_path("res://Assets/Locale/" + locale + ".json", resource_pack)
-		var file_json = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
+		var file_json = JSONParser.parse_json_to_dict(path)
 		for i in file_json.keys():
 			var value = file_json[i]
 			if value is Dictionary:
@@ -700,7 +701,7 @@ func remove_cryllic_characters(message := "") -> String:
 	return message
 
 func create_gal_translation(en_json_path := "") -> void:
-	var en_json = JSON.parse_string(FileAccess.open(en_json_path, FileAccess.READ).get_as_text())
+	var en_json = JSONParser.parse_json_to_dict(en_json_path)
 	var translation = Translation.new()
 	for i in en_json.keys():
 		translation.add_message(i, convert_en_to_gal(en_json[i]))

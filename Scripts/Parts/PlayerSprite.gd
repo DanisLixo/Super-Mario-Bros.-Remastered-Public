@@ -15,7 +15,7 @@ func _ready() -> void:
 	update()
 
 func update() -> void:
-	character = Player.CHARACTERS[int(Global.player_characters[player_id])]
+	character = CharactersHandler.CHARACTERS[int(Global.player_characters[player_id])]
 	var power_state = Global.player_power_states[player_id]
 	if force_power_state != "":
 		power_state = force_power_state
@@ -23,8 +23,8 @@ func update() -> void:
 		character = force_character
 	if resource_setter != null:
 		var path = "res://Assets/Sprites/Players/" + character + "/" + Player.POWER_STATES[int(power_state)] + ".json"
-		if Player.CHARACTERS.find(character) > 3:
-			path = path.replace("res://Assets/Sprites/Players/", Global.config_path.path_join("custom_characters/"))
+		if CharactersHandler.CHARACTERS.find(character) > 3:
+			path = path.replace("res://Assets/Sprites/Players", ModsLoader.characters_path)
 		if FileAccess.file_exists(path) == false:
 			path = "res://Assets/Sprites/Players/Mario/Small.json"
 		var json = resource_setter.get_resource(load(path))

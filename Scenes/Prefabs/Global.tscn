@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://dsc21eiypsqnd" path="res://Assets/Audio/SFX/Score.wav" id="6_30rl1"]
 [ext_resource type="Script" uid="uid://hb401vacltfw" path="res://Scripts/Parts/VisualsSetter.gd" id="6_pamiy"]
 [ext_resource type="Script" uid="uid://cxkumlifwb0s6" path="res://Scripts/Parts/DifficultySetter.gd" id="7_3324c"]
+[ext_resource type="FontFile" uid="uid://djsv6aojrcuyg" path="res://Assets/Sprites/UI/Font.fnt" id="8_vfpkh"]
 [ext_resource type="Script" uid="uid://cqif1li7otvpl" path="res://Scripts/Parts/SpriteFramesToJsonConverter.gd" id="10_nptu4"]
 [ext_resource type="Script" uid="uid://cixtosud3mfaq" path="res://Scripts/Classes/Resources/CampaignResource.gd" id="13_30rl1"]
 [ext_resource type="PackedScene" uid="uid://btiev75x1wtvk" path="res://Scenes/Prefabs/Entities/PlayerGhost.tscn" id="14_6o310"]
@@ -153,6 +154,19 @@ _data = {
 &"FadeOut": SubResource("Animation_81m3w"),
 &"RESET": SubResource("Animation_pxe6i")
 }
+
+[sub_resource type="SystemFont" id="SystemFont_jflqi"]
+
+[sub_resource type="FontVariation" id="FontVariation_s6b5m"]
+fallbacks = Array[Font]([SubResource("SystemFont_jflqi")])
+base_font = ExtResource("8_vfpkh")
+variation_opentype = {
+0: 1
+}
+opentype_features = {
+1667329140: 0
+}
+spacing_glyph = -8
 
 [sub_resource type="Resource" id="Resource_6jmk5"]
 script = ExtResource("5_eyjoc")
@@ -321,6 +335,12 @@ region = Rect2(0, 0, 8, 8)
 process_mode = 3
 script = ExtResource("1_t23sr")
 
+[node name="PlayerGhost" parent="." unique_id=199709279 instance=ExtResource("14_6o310")]
+process_mode = 1
+visible = false
+z_index = 50
+z_as_relative = false
+
 [node name="LUIGIMODE" type="CanvasLayer" parent="." unique_id=2000491311]
 visible = false
 
@@ -332,6 +352,25 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GameHUD" parent="." unique_id=1073507466 instance=ExtResource("1_ctvpw")]
+layer = 1
+
+[node name="FPSCount" type="Label" parent="GameHUD" unique_id=1476489533]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -56.0
+offset_top = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "120FPS"
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="Transition" type="CanvasLayer" parent="." unique_id=637443556]
 layer = 128
@@ -399,24 +438,45 @@ script = SubResource("GDScript_mpjtu")
 libraries/ = SubResource("AnimationLibrary_77asf")
 speed_scale = 2.0
 
-[node name="GameHUD" parent="." unique_id=1073507466 instance=ExtResource("1_ctvpw")]
-layer = 1
+[node name="Logs" type="CanvasLayer" parent="." unique_id=1461227004]
+layer = 130
 
-[node name="FPSCount" type="Label" parent="GameHUD" unique_id=1476489533]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+[node name="VBoxContainer" type="VBoxContainer" parent="Logs" unique_id=851351030]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -56.0
-offset_top = -16.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "120FPS"
-horizontal_alignment = 2
-vertical_alignment = 2
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ErrorMessage" type="Label" parent="Logs/VBoxContainer" unique_id=1615437496]
+visible = false
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.121569, 0.121569, 0.121569, 1)
+theme_override_fonts/font = SubResource("FontVariation_s6b5m")
+text = "ERROR! PLEASE REPORT!"
+autowrap_mode = 1
+uppercase = true
+
+[node name="Warning" type="Label" parent="Logs/VBoxContainer" unique_id=1325052095]
+visible = false
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.121569, 0.121569, 0.121569, 1)
+theme_override_fonts/font = SubResource("FontVariation_s6b5m")
+text = "Warning!"
+autowrap_mode = 1
+uppercase = true
+
+[node name="Comment" type="Label" parent="Logs/VBoxContainer" unique_id=876225458]
+visible = false
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.121569, 0.121569, 0.121569, 1)
+theme_override_fonts/font = SubResource("FontVariation_s6b5m")
+text = "Comment"
+autowrap_mode = 1
+uppercase = true
 
 [node name="ScoreTally" type="AudioStreamPlayer" parent="." unique_id=1944532967]
 stream = ExtResource("3_vjpdy")
@@ -440,6 +500,13 @@ property_name = "stream"
 themed_resource = SubResource("Resource_l7dvb")
 metadata/_custom_type_script = "uid://cq6f682453q6o"
 
+[node name="Timer" type="Timer" parent="." unique_id=575987329]
+autostart = true
+
+[node name="Framerule" type="Timer" parent="." unique_id=862522390]
+wait_time = 0.351
+autostart = true
+
 [node name="SettingsApply" type="Node" parent="." unique_id=1563409455]
 
 [node name="Video" type="Node" parent="SettingsApply" unique_id=681253144]
@@ -454,60 +521,11 @@ script = ExtResource("6_pamiy")
 [node name="Difficulty" type="Node" parent="SettingsApply" unique_id=897875963]
 script = ExtResource("7_3324c")
 
-[node name="Timer" type="Timer" parent="." unique_id=575987329]
-autostart = true
-
-[node name="Framerule" type="Timer" parent="." unique_id=862522390]
-wait_time = 0.351
-autostart = true
-
 [node name="SpriteFramesToJSONConverter" type="Node" parent="." unique_id=1575571268]
 script = ExtResource("10_nptu4")
 resource = SubResource("Resource_qalov")
 json_file_path = "res://Assets/Sprites/Blocks/BrickDestructionParticles.json"
 metadata/_custom_type_script = "uid://cqif1li7otvpl"
-
-[node name="PlayerGhost" parent="." unique_id=199709279 instance=ExtResource("14_6o310")]
-process_mode = 1
-visible = false
-z_index = 50
-z_as_relative = false
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1461227004]
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=851351030]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="ErrorMessage" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=1615437496]
-visible = false
-modulate = Color(1, 0, 0, 1)
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0.121569, 0.121569, 0.121569, 1)
-text = "ERROR! PLEASE REPORT!"
-autowrap_mode = 1
-uppercase = true
-
-[node name="Warning" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=1325052095]
-visible = false
-modulate = Color(1, 1, 0, 1)
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0.121569, 0.121569, 0.121569, 1)
-text = "Warning!"
-autowrap_mode = 1
-uppercase = true
-
-[node name="Comment" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=876225458]
-visible = false
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0.121569, 0.121569, 0.121569, 1)
-text = "Comment"
-autowrap_mode = 1
-uppercase = true
 
 [node name="PanelSetter" type="Node" parent="." unique_id=1039533656]
 script = SubResource("GDScript_30rl1")
@@ -554,7 +572,7 @@ metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
 
 [node name="TextShadowColourChanger" type="Node" parent="." unique_id=1387042580 node_paths=PackedStringArray("labels")]
 script = ExtResource("19_l7dvb")
-labels = [NodePath("../CanvasLayer/VBoxContainer/ErrorMessage"), NodePath("../CanvasLayer/VBoxContainer/Comment"), NodePath("../CanvasLayer/VBoxContainer/Warning"), NodePath("../GameHUD/FPSCount")]
+labels = [NodePath("../Logs/VBoxContainer/ErrorMessage"), NodePath("../Logs/VBoxContainer/Comment"), NodePath("../Logs/VBoxContainer/Warning"), NodePath("../GameHUD/FPSCount")]
 metadata/_custom_type_script = "uid://dt2p68xl462v2"
 
 [node name="ScreenShaker" type="Node" parent="." unique_id=1052498364]

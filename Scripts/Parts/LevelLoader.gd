@@ -33,7 +33,7 @@ func clear_level() -> void:
 		editor.entity_tiles = [{}, {}, {}, {}, {}]
 
 func load_entity_map() -> void:
-	entity_map = JSON.parse_string(FileAccess.open(EntityIDMapper.MAP_PATH, FileAccess.READ).get_as_text())
+	entity_map = JSONParser.parse_json_to_dict(EntityIDMapper.MAP_PATH)
 
 func build_level() -> void:
 	if sub_level_file.is_empty():

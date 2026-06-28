@@ -90,7 +90,7 @@ region = Rect2(128, 32, 32, 32)
 [resource]
 animations = [{
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"Attack",
 "speed": 5.0
 }, {
@@ -101,7 +101,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hvl5q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Climb",
 "speed": 5.0
 }, {
@@ -109,7 +109,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n7di1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Crouch",
 "speed": 5.0
 }, {
@@ -117,12 +117,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1peph")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Die",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"FaceForward",
 "speed": 5.0
 }, {
@@ -130,7 +130,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lj1it")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Fall",
 "speed": 5.0
 }, {
@@ -141,7 +141,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jp3bj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Grow",
 "speed": 5.0
 }, {
@@ -149,7 +149,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_si2kc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 5.0
 }, {
@@ -157,7 +157,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cma5t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Jump",
 "speed": 5.0
 }, {
@@ -171,7 +171,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qy2u4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Move",
 "speed": 5.0
 }, {
@@ -185,17 +185,17 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qy2u4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Move_1",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"PipeWalk",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"Pose",
 "speed": 5.0
 }, {
@@ -203,7 +203,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nncln")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Skid",
 "speed": 5.0
 }, {
@@ -214,7 +214,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_phb7q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwimIdle",
 "speed": 5.0
 }, {
@@ -237,7 +237,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dtyhy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwimUp",
 "speed": 5.0
 }]

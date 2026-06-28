@@ -146,7 +146,7 @@ func play_sfx(stream_name = "", position := Vector2.ZERO, pitch := 1.0, can_over
 		var stream = stream_name
 		var is_custom = false
 		if stream_name is String:
-			is_custom = sfx_library[stream_name].contains(Global.config_path.path_join("custom_characters"))
+			is_custom = sfx_library[stream_name].contains(ModsLoader.characters_path)
 			var stream_path = sfx_library[stream_name]
 			if stream_path is Array:
 				stream_path = stream_path.pick_random()
@@ -313,7 +313,8 @@ func create_stream_from_json(json_path := "") -> AudioStream:
 	$ResourceSetterNew.clear_metadata()
 	path = ResourceSetter.get_pure_resource_path(json_path)
 	$ResourceSetterNew.current_resource_pack = ResourceGetter.get_resource_pack_from_path(path)
-	var final_json = $ResourceSetterNew.get_variation_json(JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text()).variations)
+	var json := JSONParser.parse_json_to_dict(path)
+	var final_json = $ResourceSetterNew.get_variation_json(json.variations)
 	#print(final_json)
 	var bgm_file = final_json.source
 	path = ResourceSetter.get_pure_resource_path(json_path.replace(json_path.get_file(), bgm_file))

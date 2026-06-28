@@ -55,11 +55,8 @@ func _ready() -> void:
 func load_save(campaign := "SMB1") -> Dictionary:
 	if FileAccess.file_exists(SAVE_DIR.replace("CAMPAIGN", campaign)) == false:
 		write_save(campaign)
-	var file = FileAccess.open(SAVE_DIR.replace("CAMPAIGN", campaign), FileAccess.READ)
-	var json = JSON.parse_string(file.get_as_text())
-	current_file = json
-	file.close()
-	return json
+	current_file = JSONParser.parse_json_to_dict(SAVE_DIR.replace("CAMPAIGN", campaign))
+	return current_file
 
 func verify_saves() -> void:
 	for campaign in Global.CAMPAIGNS:
@@ -75,9 +72,7 @@ func write_save(campaign: String = Global.current_campaign, force := false) -> v
 		campaign = Global.current_custom_campaign
 	var path = Global.config_path.path_join("saves/" + campaign + ".sav")
 	if FileAccess.file_exists(path):
-		save = FileAccess.open(path, FileAccess.READ)
-		save_json = JSON.parse_string(save.get_as_text())
-		save.close()
+		save_json = JSONParser.parse_json_to_dict(path)
 	else:
 		save_json = SAVE_TEMPLATE.duplicate(true)
 	match Global.current_game_mode:

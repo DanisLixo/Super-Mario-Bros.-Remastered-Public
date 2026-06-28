@@ -53,6 +53,9 @@ func refresh() -> void:
 func get_levels() -> void:
 	if (current_container == null):
 		return
+	
+	var removed_empty := false
+	
 	var path = Global.config_path.path_join("custom_levels/autosaves/%s" % current_container.level_name)
 	var idx := 0
 	for i in DirAccess.get_files_at(path):
@@ -61,13 +64,12 @@ func get_levels() -> void:
 		%AutosaveContainers.get_node("Label").hide()
 		var container = CUSTOM_LEVEL_CONTAINER.instantiate()
 		var file_path = path + "/" + i
-		var file = FileAccess.open(file_path, FileAccess.READ)
-		var json = JSON.parse_string(file.get_as_text())
-		file.close()
+		var json = JSONParser.parse_json_to_dict(file_path)
 		
-		if (AutosaveHandler.is_level_empty(json)):
+		if (json.is_empty() || AutosaveHandler.is_level_empty(json)):
 			DirAccess.remove_absolute(file_path)
-			return
+			removed_empty = true
+			continue
 		 
 		var data = json["Levels"][0]["Data"].split("=")
 		var info = json["Info"]
@@ -89,7 +91,10 @@ func get_levels() -> void:
 		%AutosaveContainers.add_child(container)
 		
 		idx += 1
-
+	
+	if removed_empty:
+		Global.log_error("Empty autosaves got deleted!")
+	
 const LEVEL_PACK_CONTAINER = preload("uid://buj10cxh15fnd")
 
 func update_show(level_name_check := "") -> void:

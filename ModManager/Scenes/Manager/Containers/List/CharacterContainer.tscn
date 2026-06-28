@@ -1,0 +1,196 @@
+[gd_scene format=3 uid="uid://wdw43kgtjt70"]
+
+[ext_resource type="PackedScene" uid="uid://rimg0vlsltw0" path="res://ModManager/Scenes/Manager/Containers/List/ModContainer.tscn" id="1_itwmc"]
+[ext_resource type="Texture2D" uid="uid://hu770pufown3" path="res://Assets/Sprites/UI/CharacterSelectSpotlight.png" id="2_m44sd"]
+[ext_resource type="Script" uid="uid://ca2k12jipu30o" path="res://ModManager/Scenes/Manager/Containers/List/CharacterContainer.gd" id="2_newny"]
+[ext_resource type="Material" uid="uid://b03y8ia0o6vhi" path="res://ModManager/Resources/GrayOutShader.tres" id="2_yp4gc"]
+[ext_resource type="Script" uid="uid://ca3bew33g45eq" path="res://Scripts/Classes/UI/PackTextureRect.gd" id="3_newny"]
+[ext_resource type="Script" uid="uid://dwtrmo82e12ud" path="res://Scripts/Parts/ColourPaletteSampler.gd" id="4_783q2"]
+[ext_resource type="Script" uid="uid://cbal8ms2oe1ik" path="res://Scripts/Classes/Components/ResourceSetterNew.gd" id="4_oy7ew"]
+[ext_resource type="JSON" path="res://Assets/Sprites/Players/Mario/CharacterInfo.json" id="6_p435a"]
+[ext_resource type="SpriteFrames" uid="uid://df4enjjl84mji" path="res://Resources/SpriteFrames/Player/Mario/Small.tres" id="7_1ikcf"]
+[ext_resource type="Script" uid="uid://b08qfwj5jk6g1" path="res://Scripts/Parts/PlayerSprite.gd" id="8_ucndm"]
+[ext_resource type="Script" uid="uid://dt2p68xl462v2" path="res://Scripts/Parts/TextShadowColourChanger.gd" id="9_m44sd"]
+[ext_resource type="Texture2D" uid="uid://bgckb78kobtx3" path="res://Assets/Sprites/Players/Mario/LifeIcon.png" id="10_p435a"]
+[ext_resource type="Script" uid="uid://d63p6qr5a748" path="res://Scripts/UI/AutoScrollContainer.gd" id="11_783q2"]
+
+[node name="CharacterContainer" unique_id=1572140822 instance=ExtResource("1_itwmc")]
+material = ExtResource("2_yp4gc")
+custom_minimum_size = Vector2(0, 56)
+custom_maximum_size = Vector2(-1, 56)
+offset_bottom = 56.0
+focus_neighbor_right = NodePath("MarginContainer/HBoxContainer/HBoxContainer/RightHalf/Enabled")
+mouse_filter = 1
+script = ExtResource("2_newny")
+
+[node name="MarginContainer" parent="." index="0" unique_id=871079259]
+use_parent_material = true
+offset_bottom = 56.0
+
+[node name="HBoxContainer" parent="MarginContainer" index="0" unique_id=1739030616]
+use_parent_material = true
+
+[node name="Spotlight" type="TextureRect" parent="MarginContainer/HBoxContainer" index="0" unique_id=458228092]
+use_parent_material = true
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("2_m44sd")
+stretch_mode = 2
+script = ExtResource("3_newny")
+metadata/_custom_type_script = "uid://ca3bew33g45eq"
+
+[node name="SpotlightColourPaletteSampler" type="Node" parent="MarginContainer/HBoxContainer/Spotlight" index="0" unique_id=1833649997 node_paths=PackedStringArray("node_to_affect")]
+unique_name_in_owner = true
+script = ExtResource("4_783q2")
+node_to_affect = NodePath("..")
+value_to_set = "self_modulate"
+metadata/_custom_type_script = "uid://dwtrmo82e12ud"
+
+[node name="PlayerColourTexture" type="Node" parent="MarginContainer/HBoxContainer/Spotlight/SpotlightColourPaletteSampler" index="0" unique_id=1506772017 node_paths=PackedStringArray("node_to_affect")]
+unique_name_in_owner = true
+script = ExtResource("4_oy7ew")
+node_to_affect = NodePath("..")
+property_name = "texture"
+mode = 1
+resource_json = ExtResource("6_p435a")
+metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
+
+[node name="Character" type="AnimatedSprite2D" parent="MarginContainer/HBoxContainer/Spotlight" index="1" unique_id=147440160 node_paths=PackedStringArray("resource_setter")]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(24, 46)
+sprite_frames = ExtResource("7_1ikcf")
+animation = &"SwimIdle"
+offset = Vector2(0, -16)
+script = ExtResource("8_ucndm")
+force_character = "Toad"
+resource_setter = NodePath("ResourceSetterNew")
+metadata/_custom_type_script = "uid://b08qfwj5jk6g1"
+
+[node name="ResourceSetterNew" type="Node" parent="MarginContainer/HBoxContainer/Spotlight/Character" index="0" unique_id=177626584 node_paths=PackedStringArray("node_to_affect")]
+script = ExtResource("4_oy7ew")
+node_to_affect = NodePath("..")
+use_cache = false
+metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
+
+[node name="HBoxContainer" parent="MarginContainer/HBoxContainer" index="1" unique_id=582701347]
+use_parent_material = true
+
+[node name="Info" parent="MarginContainer/HBoxContainer/HBoxContainer" index="0" unique_id=456570900]
+use_parent_material = true
+alignment = 1
+
+[node name="HBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" index="0" unique_id=1828929825]
+use_parent_material = true
+theme_override_constants/separation = 0
+
+[node name="Buffer" type="Control" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer" index="0" unique_id=291625438]
+custom_minimum_size = Vector2(4, 0)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="CharacterIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer" index="1" unique_id=2015621170]
+unique_name_in_owner = true
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("10_p435a")
+stretch_mode = 3
+
+[node name="ResourceSetterNew" type="Node" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer/CharacterIcon" index="0" unique_id=1221812909 node_paths=PackedStringArray("node_to_affect")]
+script = ExtResource("4_oy7ew")
+node_to_affect = NodePath("..")
+property_name = "texture"
+mode = 1
+metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
+
+[node name="ScrollContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer" index="2" unique_id=1149291090]
+is_active = true
+auto_connect_focus = false
+
+[node name="Name" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer/ScrollContainer" index="0" unique_id=987547531]
+use_parent_material = true
+size_flags_vertical = 2
+
+[node name="TextShadowColourChanger" type="Node" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer/ScrollContainer/Name" index="0" unique_id=1501424761 node_paths=PackedStringArray("labels")]
+unique_name_in_owner = true
+script = ExtResource("9_m44sd")
+labels = [NodePath("..")]
+metadata/_custom_type_script = "uid://dt2p68xl462v2"
+
+[node name="NameColourPaletteSampler" type="Node" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer/ScrollContainer/Name/TextShadowColourChanger" index="0" unique_id=1259544617 node_paths=PackedStringArray("node_to_affect")]
+unique_name_in_owner = true
+script = ExtResource("4_783q2")
+node_to_affect = NodePath("..")
+value_to_set = "override_shadow_colour"
+metadata/_custom_type_script = "uid://dwtrmo82e12ud"
+
+[node name="ScrollContainer2" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer2" parent_id_path=PackedInt32Array(1462389349) index="0" unique_id=1538947480]
+is_active = true
+auto_connect_focus = false
+
+[node name="Author" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer2/ScrollContainer2" index="0" unique_id=720591774]
+use_parent_material = true
+size_flags_vertical = 2
+
+[node name="RightHalf" parent="MarginContainer/HBoxContainer/HBoxContainer" index="1" unique_id=1323855834]
+clip_contents = true
+
+[node name="Enabled" parent="MarginContainer/HBoxContainer/HBoxContainer/RightHalf" index="0" unique_id=969857188]
+custom_minimum_size = Vector2(0, 24)
+size_flags_vertical = 6
+mouse_default_cursor_shape = 2
+
+[node name="ik what im doing" type="Control" parent="MarginContainer/HBoxContainer/HBoxContainer" index="2" unique_id=1819239787]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="ContentClipper" type="Control" parent="MarginContainer/HBoxContainer/HBoxContainer/ik what im doing" index="0" unique_id=716131735]
+custom_minimum_size = Vector2(0, 16)
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/ik what im doing/ContentClipper" index="0" unique_id=743288963]
+custom_minimum_size = Vector2(100, 16)
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+horizontal_scroll_mode = 3
+script = ExtResource("11_783q2")
+is_active = true
+auto_connect_focus = false
+auto_minimum_resize = true
+
+[node name="ID" type="Label" parent="MarginContainer/HBoxContainer/HBoxContainer/ik what im doing/ContentClipper/ScrollContainer2" index="0" unique_id=1188152351]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 1
+text = "CharacterID"
+horizontal_alignment = 2
+uppercase = true
+
+[node name="Cursor" parent="." index="1" unique_id=2090391159]
+anchors_preset = 4
+offset_left = -8.0
+offset_right = 0.0
+
+[node name="LabelFontChanger" parent="." index="2" unique_id=111429646 node_paths=PackedStringArray("labels")]
+labels = [NodePath("../MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer/ScrollContainer/Name"), NodePath("../MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer2/ScrollContainer2/Author"), NodePath("../MarginContainer/HBoxContainer/HBoxContainer/ik what im doing/ContentClipper/ScrollContainer2/ID")]

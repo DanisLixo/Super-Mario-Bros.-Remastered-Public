@@ -470,7 +470,6 @@ var animating_camera := false
 
 var can_uncrouch := false
 
-static var CHARACTERS := ["Mario", "Luigi", "Toad", "Toadette"]
 const POWER_STATES := ["Small", "Big", "Fire", "Superball"]
 
 signal moved
@@ -485,20 +484,10 @@ signal powered_up
 var is_dead := false
 var last_damage_source := ""
 
-static var CHARACTER_NAMES := ["CHAR_MARIO", "CHAR_LUIGI", "CHAR_TOAD", "CHAR_TOADETTE"]
-
-static var CHARACTER_COLOURS := [preload("res://Assets/Sprites/Players/Mario/CharacterColour.json"), preload("res://Assets/Sprites/Players/Luigi/CharacterColour.json"), preload("res://Assets/Sprites/Players/Toad/CharacterColour.json"), preload("res://Assets/Sprites/Players/Toadette/CharacterColour.json")]
 
 var can_timer_warn := true
 
 var colour_palette_texture: Texture = null
-
-static var CHARACTER_PALETTES := [
-	preload("res://Assets/Sprites/Players/Mario/ColourPalette.json"),
-	preload("res://Assets/Sprites/Players/Luigi/ColourPalette.json"),
-	preload("res://Assets/Sprites/Players/Toad/ColourPalette.json"),
-	preload("res://Assets/Sprites/Players/Toadette/ColourPalette.json")
-]
 
 #region Animation Fallbacks, these determine what animations will use as a back-up if they aren't present.
 static var ANIMATION_FALLBACKS: Dictionary = {
@@ -629,7 +618,7 @@ func _ready() -> void:
 	$Checkpoint/Label.text = str(player_id + 1)
 	$Checkpoint/Label.modulate = [Color("5050FF"), Color("F73910"), Color("1A912E"), Color("FFB762")][player_id]
 	$Checkpoint/Label.visible = Global.connected_players > 1
-	character = CHARACTERS[int(Global.player_characters[player_id])]
+	character = CharactersHandler.CHARACTERS[int(Global.player_characters[player_id])]
 	set_animation_fallbacks()
 	apply_character_physics()
 	apply_character_sfx_map()
@@ -715,9 +704,9 @@ func apply_character_physics() -> void:
 	var apply_gameplay_changes = true
 	var path = "res://Assets/Sprites/Players/" + character + "/CharacterInfo.json"
 	if int(Global.player_characters[player_id]) > 3:
-		path = path.replace("res://Assets/Sprites/Players", Global.config_path.path_join("custom_characters/"))
+		path = path.replace("res://Assets/Sprites/Players", ModsLoader.characters_path)
 	path = ResourceSetter.get_pure_resource_path(path)
-	var json = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
+	var json = JSONParser.parse_json_to_dict(path)
 	
 	# SkyanUltra: This section controls all CHARACTER PHYSICS values. This should be
 	# preventing physics changes to stop potential cheating in modes like You VS. Boo
@@ -738,7 +727,7 @@ func apply_character_physics() -> void:
 		physics_dict = PHYSICS_PARAMETERS if Settings.file.gameplay.physics_style else CLASSIC_PARAMETERS
 
 func apply_classic_physics() -> void:
-	var json = JSON.parse_string(FileAccess.open("res://Resources/ClassicPhysics.json", FileAccess.READ).get_as_text())
+	var json = JSONParser.parse_json_to_dict("res://Resources/ClassicPhysics.json")
 	for i in json:
 		set(i, json[i])
 
@@ -875,12 +864,12 @@ func apply_character_sfx_map() -> void:
 	var custom_character := false
 	if int(Global.player_characters[player_id]) > 3:
 		custom_character = true
-		path = path.replace("res://Assets/Sprites/Players", Global.config_path.path_join("custom_characters/"))
+		path = path.replace("res://Assets/Sprites/Players", ModsLoader.characters_path)
 	path = ResourceSetter.get_pure_resource_path(path)
 	if FileAccess.file_exists(path) == false:
 		AudioManager.load_sfx_map({})
 		return
-	var json = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
+	var json = JSONParser.parse_json_to_dict(path)
 	
 	for i in json:
 		var res_path = "res://Assets/Audio/SFX/" + json[i]
@@ -888,7 +877,7 @@ func apply_character_sfx_map() -> void:
 		if FileAccess.file_exists(res_path) == false or custom_character:
 			var directory = "res://Assets/Sprites/Players/" + character + "/" + json[i]
 			if int(Global.player_characters[player_id]) > 3:
-				directory = directory.replace("res://Assets/Sprites/Players", Global.config_path.path_join("custom_characters/"))
+				directory = directory.replace("res://Assets/Sprites/Players", ModsLoader.characters_path)
 			directory = ResourceSetter.get_pure_resource_path(directory)
 			if FileAccess.file_exists(directory):
 				json[i] = directory
@@ -1349,7 +1338,7 @@ func time_up() -> void:
 
 func set_power_state_frame() -> void:
 	colour_palette = ResourceSetter.get_resource(preload("uid://b0quveyqh25dn"))
-	$PlayerPalette/ResourceSetterNew.resource_json = (CHARACTER_PALETTES[int(Global.player_characters[player_id])])
+	$PlayerPalette/ResourceSetterNew.resource_json = (CharactersHandler.CHARACTER_PALETTES[int(Global.player_characters[player_id])])
 	if power_state != null:
 		$ResourceSetterNew.resource_json = load(get_character_sprite_path())
 		$ResourceSetterNew.update_resource()
@@ -1487,10 +1476,10 @@ func dispense_stored_item() -> void:
 	add_sibling(RESERVE_ITEM.instantiate())
 
 func get_character_sprite_path(power_stateto_use := power_state.state_name) -> String:
-	character = Player.CHARACTERS[Global.player_characters[player_id]]
+	character = CharactersHandler.CHARACTERS[Global.player_characters[player_id]]
 	var path = "res://Assets/Sprites/Players/" + character + "/" + power_stateto_use + ".json"
 	if int(Global.player_characters[player_id]) > 3:
-		path = path.replace("res://Assets/Sprites/Players", Global.config_path.path_join("custom_characters/"))
+		path = path.replace("res://Assets/Sprites/Players", ModsLoader.characters_path)
 		if FileAccess.file_exists(path) == false:
 			path = "res://Assets/Sprites/Players/Mario/" + power_stateto_use + ".json"
 			Global.log_error("No sprite found for: " + character + "/" + power_stateto_use  + "!")

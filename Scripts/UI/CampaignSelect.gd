@@ -18,13 +18,38 @@ var campaign_jsons := {}
 static var custom_pack := ""
 
 func _ready() -> void:
-	update()
 	Global.level_theme_changed.connect(update)
+	
+	import_level_packs()
+	
+	update()
 	get_starting_position()
 	handle_visuals()
-	get_level_packs()
+
+func import_level_packs() -> void:
+	LevelPacksHandler.get_level_packs()
+	
+	campaign.append_array(LevelPacksHandler.CUSTOM_CAMPAIGNS)
+	campaign_icons.append_array(LevelPacksHandler.CUSTOM_CAMPAIGN_ICONS)
+	
+	for pack_folder in LevelPacksHandler.CUSTOM_CAMPAIGN_JSONS:
+		var json = LevelPacksHandler.CUSTOM_CAMPAIGN_JSONS[pack_folder]
+		
+		var title: Label = %Custom.duplicate()
+		if (json.is_empty()):
+			Level.WORLD_COUNTS[pack_folder] = 1
+			
+			title.text = "ERROR!!!"
+		else:
+			Level.WORLD_COUNTS[pack_folder] = json.number_of_worlds
+			
+			title.text = json.name + "\nBy " + json.author
+			title.add_theme_color_override("font_shadow_color", Color(json.text_colour))
+		
+		%CampaignNames.add_child(title)
 
 func update() -> void:
+	
 	for icon in campaign_icons:
 		if icon is AtlasTexture:
 			icon.atlas = ResourceSetter.get_resource(load("res://Assets/Sprites/UI/CampaignIcons.png"), null, false, false)
@@ -33,23 +58,6 @@ func _process(_delta: float) -> void:
 	if active:
 		handle_input()
 		handle_visuals()
-
-func get_level_packs() -> void:
-	Global.custom_campaigns.clear()
-	for i in DirAccess.get_directories_at(Global.config_path.path_join("level_packs")):
-		var json = JSON.parse_string(FileAccess.open(Global.config_path.path_join("level_packs").path_join(i).path_join("pack_info.json"), FileAccess.READ).get_as_text())
-		if json == null:
-			Global.log_error("Error parsing pack info for: " + i)
-			continue
-		Global.custom_campaign_jsons[i] = json
-		Global.custom_campaigns.append(i)
-		Level.WORLD_COUNTS[i] = json.number_of_worlds
-		campaign.append(i)
-		campaign_icons.append(ImageTexture.create_from_image(Image.load_from_file(Global.config_path.path_join("level_packs/").path_join(i).path_join("icon.png"))))
-		var title: Label = %Custom.duplicate()
-		title.text = json.name + "\nBy " + json.author
-		title.add_theme_color_override("font_shadow_color", Color(json.text_colour))
-		%CampaignNames.add_child(title)
 
 func handle_visuals() -> void:
 	%Left.texture = campaign_icons[wrap(selected_index - 1, 0, campaign_icons.size())]
@@ -132,8 +140,8 @@ func select() -> void:
 		SpeedrunHandler.load_best_times()
 	Settings.save_settings()
 	if Global.in_custom_campaign():
-		if Global.custom_campaign_jsons[Global.current_custom_campaign].has("resource_pack"):
-			var pack = Global.custom_campaign_jsons[Global.current_custom_campaign].get("resource_pack", "")
+		if LevelPacksHandler.CUSTOM_CAMPAIGN_JSONS[Global.current_custom_campaign].has("resource_pack"):
+			var pack = LevelPacksHandler.CUSTOM_CAMPAIGN_JSONS[Global.current_custom_campaign].get("resource_pack", "")
 			if pack == null:
 				pack = ""
 			Global.custom_pack = pack
@@ -141,7 +149,7 @@ func select() -> void:
 			Global.custom_pack = ""
 		Global.current_game_mode = Global.GameMode.CAMPAIGN
 		if Global.custom_pack != "":
-			if DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(Global.config_path.path_join("resource_packs/" + Global.custom_pack))) == false:
+			if DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(ModsLoader.resource_packs_path.path_join(Global.custom_pack))) == false:
 				Global.log_error("Level Resource Pack not Found! Are you sure you installed it correctly?")
 			else:
 				Settings.file.visuals.resource_packs.push_front(Global.custom_pack)

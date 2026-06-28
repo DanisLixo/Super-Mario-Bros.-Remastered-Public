@@ -2,7 +2,6 @@ class_name CustomLevelMenu
 extends Node
 
 static var current_level_file := ""
-
 static var has_entered := false
 
 var selected_lvl_idx := 0
@@ -12,6 +11,8 @@ static var last_played_container = null
 
 static var saved_search_values := [-1, -1, -1]
 static var level_id := ""
+
+static var entered_from_mods_menu := false
 
 func _input(event: InputEvent) -> void:
 	if (event is InputEventKey):
@@ -104,7 +105,11 @@ func new_level() -> void:
 
 func back_to_title_screen() -> void:
 	clear_saved_stuff()
-	Global.transition_to_scene("res://Scenes/Levels/TitleScreen.tscn")
+	if (entered_from_mods_menu):
+		Global.transition_to_scene("res://ModManager/Scenes/ModsMenu.tscn")
+		entered_from_mods_menu = false
+	else:
+		Global.transition_to_scene("res://Scenes/Levels/TitleScreen.tscn")
 
 func edit_level() -> void:
 	clear_saved_stuff()

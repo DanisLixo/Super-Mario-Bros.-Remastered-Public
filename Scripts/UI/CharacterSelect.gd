@@ -17,7 +17,6 @@ var character_sprite_jsons := [
 
 const PLAYER_SCENE = "res://Scenes/Prefabs/Entities/Player.tscn"
 
-
 func _process(_delta: float) -> void:
 	if active:
 		handle_input()
@@ -25,62 +24,8 @@ func _process(_delta: float) -> void:
 func _ready() -> void:
 	update_sprites()
 
-func get_custom_characters() -> void:
-	Player.CHARACTERS = ["Mario", "Luigi", "Toad", "Toadette"]
-	Player.CHARACTER_NAMES = ["CHAR_MARIO", "CHAR_LUIGI", "CHAR_TOAD", "CHAR_TOADETTE"]
-	AudioManager.character_sfx_map.clear()
-	
-	var idx := 0
-	for i in Player.CHARACTERS:
-		var path = ResourceSetter.get_pure_resource_path("res://Assets/Sprites/Players/" + i + "/CharacterInfo.json")
-		if FileAccess.file_exists(path):
-			var json = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
-			Player.CHARACTER_NAMES[idx] = json.name
-		path = ResourceSetter.get_pure_resource_path("res://Assets/Sprites/Players/" + i + "/CharacterColour.json")
-		if FileAccess.file_exists(path):
-			Player.CHARACTER_COLOURS[idx] = load(path)
-		idx += 1
-	
-	var base_path = Global.config_path
-	var char_dir = base_path.path_join("custom_characters") 
-	for i in DirAccess.get_directories_at(char_dir):
-		var char_path = char_dir.path_join(i)
-		var char_info_path = char_path.path_join("CharacterInfo.json")
-		if FileAccess.file_exists(char_info_path):
-			var json = JSON.parse_string(FileAccess.open(char_path.path_join("CharacterInfo.json"), FileAccess.READ).get_as_text())
-			if json == null:
-				continue
-			if json.has("physics"):
-				if json.physics.has("PHYSICS_PARAMETERS") == false:
-					json = CustomCharacterUpdater.update_json(json)
-					Global.log_comment("Updated CharacterInfo for: " + i)
-					FileAccess.open(char_path.path_join("CharacterInfo.json"), FileAccess.WRITE).store_string((JSON.stringify(json, "\t", false)))
-			Player.CHARACTERS.append(i)
-			Player.CHARACTER_NAMES.append(json.name)
-			
-			if FileAccess.file_exists(char_path.path_join("CharacterColour.json")):
-				Player.CHARACTER_COLOURS.append(load(char_path.path_join("CharacterColour.json")))
-			else:
-				Player.CHARACTER_COLOURS.append(null)
-			
-			if FileAccess.file_exists(char_path.path_join("LifeIcon.json")):
-				GameHUD.character_icons.append(load(char_path.path_join("LifeIcon.json")))
-			else:
-				GameHUD.character_icons.append(null)
-				
-			if FileAccess.file_exists(char_path.path_join("ColourPalette.json")):
-				Player.CHARACTER_PALETTES.append(load(char_path.path_join("ColourPalette.json")))
-			else:
-				Player.CHARACTER_PALETTES.append(null)
-			
-			if FileAccess.file_exists(char_path.path_join("SFX.json")):
-				AudioManager.character_sfx_map[i] = JSON.parse_string(FileAccess.open(char_path.path_join("SFX.json"), FileAccess.READ).get_as_text())
-			else:
-				AudioManager.character_sfx_map[i] = {}
-
-
 func open() -> void:
-	get_custom_characters()
+	CharactersHandler.get_custom_characters()
 	show()
 	selected_index = int(Global.player_characters[player_id])
 	update_sprites()
@@ -90,18 +35,18 @@ func open() -> void:
 
 func handle_input() -> void:
 	if Global.multibind_action_just_pressed("ui_left"):
-		selected_index = wrap(selected_index - 1, 0, Player.CHARACTERS.size())
+		selected_index = wrap(selected_index - 1, 0, CharactersHandler.CHARACTERS.size())
 		update_sprites()
 		if Settings.file.audio.extra_sfx == 1:
 			AudioManager.play_global_sfx("menu_move")
 	elif Global.multibind_action_just_pressed("ui_right"):
-		selected_index = wrap(selected_index + 1, 0, Player.CHARACTERS.size())
+		selected_index = wrap(selected_index + 1, 0, CharactersHandler.CHARACTERS.size())
 		update_sprites()
 		if Settings.file.audio.extra_sfx == 1:
 			AudioManager.play_global_sfx("menu_move")
 	if Global.multibind_action_just_pressed("ui_accept"):
 		Global.player_characters[player_id] = (selected_index)
-		var characters := Global.player_characters
+		var characters = Global.player_characters
 		for i in characters:
 			if int(i) > 3:
 				characters = [0, 0, 0, 0]
@@ -114,16 +59,17 @@ func handle_input() -> void:
 		cancelled.emit()
 
 func update_sprites() -> void:
-	%Left.force_character = Player.CHARACTERS[wrap(selected_index - 1, 0, Player.CHARACTERS.size())]
-	%Selected.force_character = Player.CHARACTERS[wrap(selected_index, 0, Player.CHARACTERS.size())]
-	%Right.force_character = Player.CHARACTERS[wrap(selected_index + 1, 0, Player.CHARACTERS.size())]
+	%Left.force_character = CharactersHandler.CHARACTERS[wrap(selected_index - 1, 0, CharactersHandler.CHARACTERS.size())]
+	%Selected.force_character = CharactersHandler.CHARACTERS[wrap(selected_index, 0, CharactersHandler.CHARACTERS.size())]
+	%Right.force_character = CharactersHandler.CHARACTERS[wrap(selected_index + 1, 0, CharactersHandler.CHARACTERS.size())]
 	for i in [%Left, %Selected, %Right]:
 		i.update()
 		i.play("Pose" if i == %Selected else "FaceForward")
-	%PlayerColourTexture.resource_json = Player.CHARACTER_COLOURS[selected_index]
-	%CharacterName.text = tr(Player.CHARACTER_NAMES[selected_index])
+	%PlayerColourTexture.resource_json = CharactersHandler.CHARACTER_COLOURS[selected_index]
+	%CharacterName.text = tr(CharactersHandler.CHARACTER_NAMES[selected_index])
 	$Panel/MarginContainer/VBoxContainer/CharacterName/TextShadowColourChanger/ColourPaletteSampler.texture = %ColourPaletteSampler.texture
 	$Panel/MarginContainer/VBoxContainer/CharacterName/TextShadowColourChanger.handle_shadow_colours()
+
 func select() -> void:
 	selected.emit()
 	hide()

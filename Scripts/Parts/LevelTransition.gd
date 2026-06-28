@@ -84,9 +84,9 @@ func begin_transition_wait() -> void:
 				NewLevelBuilder.load_level(LevelEditor.level_file)
 			else:
 				var level_file_name = Global.custom_campaign_jsons[Global.current_custom_campaign].levels[Global.custom_level_idx]
-				var path = Global.config_path.path_join("level_packs").path_join(Global.current_custom_campaign).path_join(level_file_name)
+				var path = ModsLoader.level_packs_path.path_join(Global.current_custom_campaign).path_join(level_file_name)
 				Level.first_load = true
-				var json = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
+				var json = JSONParser.parse_json_to_dict(path)
 				NewLevelBuilder.load_level(json)
 		else:
 			$Timer.start()

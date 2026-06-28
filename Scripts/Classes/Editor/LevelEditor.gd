@@ -162,8 +162,6 @@ func _ready() -> void:
 	Global.get_node("GameHUD").hide()
 	OffScreenDespawner.editor_testing_safety = true
 	Global.can_time_tick = false
-	$CustomObjectsGetter.instantiate_selectors()
-	$CustomObjectsGetter.merge_customs_to_map()
 	
 	for i in get_tree().get_nodes_in_group("Selectors"):
 		tile_list.append(i)
@@ -935,8 +933,6 @@ func on_tile_selected(selector: EditorTileSelector) -> void:
 	current_tile_type = selector.type
 	current_entity_selector = selector
 	selected_tile_index = tile_list.find(selector)
-	if selector.is_mod:
-		CustomObjectsGetter.set_local_custom_id(selector)
 	if selector.type == 1:
 		current_entity_id = selector.entity_id
 		current_entity_scene = load(EntityIDMapper.map[current_entity_id][0])
@@ -1441,7 +1437,7 @@ func set_state(state := EditorState.IDLE) -> void:
 
 func save_blueprint() -> void:
 	var file_name = %BlueprintName.text.to_pascal_case() + ".mbp"
-	var file = FileAccess.open(Global.config_path.path_join("blueprints").path_join(file_name), FileAccess.WRITE)
+	var file = FileAccess.open(ModsLoader.blueprints_path.path_join(file_name), FileAccess.WRITE)
 	file.store_string($LevelSaver.compress_string(JSON.stringify(area_to_save)))
 	file.close()
 	Global.log_comment(file_name + " saved.")
@@ -1449,7 +1445,11 @@ func save_blueprint() -> void:
 
 func load_blueprint(blueprint_path := "") -> void:
 	var file = FileAccess.open(blueprint_path, FileAccess.READ).get_as_text()
-	var json = JSON.parse_string($LevelSaver.decompress_string(file))
+	var json = JSONParser.parse_string_to_dict($LevelSaver.decompress_string(file))
+	if (json.is_empty()):
+		Global.log_error("Blueprint is corrupted.")
+		return
+	
 	copied_area = json
 	pasting_area = true
 	var size_str = json["Size"].split(",", false)
@@ -1464,10 +1464,9 @@ const BLUEPRINT_CONTAINER = preload("uid://cgij8pg22drfx")
 func get_blueprints() -> void:
 	for i in %Blueprints.get_children():
 		i.queue_free()
-	var blueprint_path = Global.config_path.path_join("blueprints")
-	for i in DirAccess.get_files_at(blueprint_path):
+	for i in DirAccess.get_files_at(ModsLoader.blueprints_path):
 		var container = BLUEPRINT_CONTAINER.instantiate()
-		container.path = blueprint_path.path_join(i)
+		container.path = ModsLoader.blueprints_path.path_join(i)
 		%Blueprints.add_child(container)
 		container.blueprint_selected.connect(load_blueprint)
 

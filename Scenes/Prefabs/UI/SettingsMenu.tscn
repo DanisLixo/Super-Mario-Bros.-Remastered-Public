@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://co6tjg3w6qpd8" path="res://Scripts/Parts/LabelFontChanger.gd" id="13_iwu7d"]
 [ext_resource type="PackedScene" uid="uid://bqy0nm0h7f5sl" path="res://Scenes/Parts/DataDeletionNode.tscn" id="15_oh4w7"]
 [ext_resource type="PackedScene" uid="uid://bom2rstlk8fws" path="res://Scenes/Prefabs/UI/ResourcePackConfigMenu.tscn" id="16_78q3k"]
-[ext_resource type="Script" uid="uid://dcx77vdfvwq4y" path="res://Scripts/Parts/TemplateCreator.gd" id="19_k6yev"]
+[ext_resource type="Script" uid="uid://dcx77vdfvwq4y" path="res://ModManager/Scripts/Manager/TemplateCreator.gd" id="19_k6yev"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ksnto"]
 color = Color(1, 1, 1, 1)

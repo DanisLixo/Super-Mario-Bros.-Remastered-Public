@@ -217,7 +217,6 @@
 [ext_resource type="JSON" path="res://Assets/Sprites/Items/WingItem.json" id="221_o0k3u"]
 [ext_resource type="JSON" path="res://Assets/Sprites/Items/LuckyStar.json" id="224_vjdbd"]
 [ext_resource type="Script" uid="uid://0h04dap8ddvf" path="res://Scripts/Parts/AutosaveHandler.gd" id="225_s60en"]
-[ext_resource type="Script" uid="uid://chrc8xyasm540" path="res://Scripts/Classes/Components/CustomObjects/CustomObjectsGetter.gd" id="227_2blp1"]
 [ext_resource type="JSON" path="res://Assets/Sprites/Items/Key.json" id="229_u1728"]
 [ext_resource type="Texture2D" uid="uid://d3km1t0r7dcg3" path="res://Assets/Sprites/Editor/VineWarp.png" id="235_d5512"]
 [ext_resource type="Texture2D" uid="uid://duxkbhsbnmrvs" path="res://Assets/Sprites/Editor/Darkness.png" id="236_i73lv"]
@@ -7525,9 +7524,6 @@ script = ExtResource("225_s60en")
 process_callback = 0
 wait_time = 300.0
 one_shot = true
-
-[node name="CustomObjectsGetter" type="Node" parent="." unique_id=835828670]
-script = ExtResource("227_2blp1")
 
 [connection signal="connection_node_found" from="." to="CanvasLayer/TileModifierMenu" method="connect_signal"]
 [connection signal="open_scene_ref_tile_menu" from="CanvasLayer/TileModifierMenu" to="." method="open_tile_selection_menu_scene_ref"]

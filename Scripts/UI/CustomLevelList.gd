@@ -56,9 +56,8 @@ func get_levels(path : String = "", type := CustomLevelContainer.Type.ALL) -> vo
 		%LevelContainers.get_node("Label").hide()
 		var container = CUSTOM_LEVEL_CONTAINER.instantiate()
 		var file_path = path + "/" + i
-		var file = FileAccess.open(file_path, FileAccess.READ)
-		var json = JSON.parse_string(file.get_as_text())
-		file.close()
+		var json = JSONParser.parse_json_to_dict(file_path)
+		
 		var data = json["Levels"][0]["Data"].split("=")
 		var info = json["Info"]
 		container.is_downloaded = path.contains("downloaded")
@@ -81,7 +80,7 @@ func get_levels(path : String = "", type := CustomLevelContainer.Type.ALL) -> vo
 		%LevelContainers.add_child(container)
 		%LevelContainers.move_child(container, [%SavedLevels, %DownloadedLevels][type - 1].get_index() + 1)
 		idx += 1
-		
+
 const LEVEL_PACK_CONTAINER = preload("uid://buj10cxh15fnd")
 
 func update_show(new_type := 0) -> void:

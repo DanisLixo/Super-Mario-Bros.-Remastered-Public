@@ -67,8 +67,8 @@ func send_to_cache(resource_path := "", resource_to_cache: Resource = null) -> v
 
 func get_resource_path(resource_path := "") -> String:
 	for i in Settings.file.visuals.resource_packs:
-		var test = resource_path.replace("res://Assets/", Global.config_path.path_join("resource_packs/" + i + "/"))
-		test = test.replace(Global.config_path.path_join("custom_characters"), Global.config_path.path_join("resource_packs/" + test + "/Sprites/Players/CustomCharacters/"))
+		var test = resource_path.replace("res://Assets/", ModsLoader.resource_packs_path.path_join(i + "/"))
+		test = test.replace(ModsLoader.characters_path, ModsLoader.resource_packs_path.path_join(test + "/Sprites/Players/CustomCharacters/"))
 		if FileAccess.file_exists(test):
 			return test
 	return resource_path

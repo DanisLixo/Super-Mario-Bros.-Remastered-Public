@@ -4,6 +4,9 @@
 
 [resource]
 base_font = ExtResource("1_6xssw")
+variation_opentype = {
+0: 1
+}
 opentype_features = {
 1667329140: 0
 }
