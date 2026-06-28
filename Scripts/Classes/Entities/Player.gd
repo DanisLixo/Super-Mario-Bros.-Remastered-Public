@@ -610,6 +610,8 @@ var teleporting := false
 var on_ice := false
 var cooldown := false
 
+var swim_stroke := false
+
 var simulated_velocity := Vector2.ZERO
 
 func _ready() -> void:
@@ -1340,8 +1342,7 @@ func set_power_state_frame() -> void:
 	colour_palette = ResourceSetter.get_resource(preload("uid://b0quveyqh25dn"))
 	$PlayerPalette/ResourceSetterNew.resource_json = (CharactersHandler.CHARACTER_PALETTES[int(Global.player_characters[player_id])])
 	if power_state != null:
-		$ResourceSetterNew.resource_json = load(get_character_sprite_path())
-		$ResourceSetterNew.update_resource()
+		$ResourceSetterNew.json_path = (get_character_sprite_path())
 	var frames = %Sprite.sprite_frames
 	if frames:
 		can_pose_anim = frames.has_animation("PoseDoor")

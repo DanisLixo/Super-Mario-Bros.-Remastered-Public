@@ -52,7 +52,7 @@ var ROM_POINTER_PATH = config_path.path_join("rom_pointer.smb")
 var ROM_PATH = config_path.path_join("baserom.nes")
 var ROM_ASSETS_PATH = config_path.path_join("resource_packs/BaseAssets")
 const ROM_PACK_NAME := "BaseAssets"
-const ROM_ASSETS_VERSION := 7
+const ROM_ASSETS_VERSION := 8
 
 var server_version := -1
 var current_version := -1
@@ -115,7 +115,9 @@ var coins := 0:
 var time := 300
 var inf_time := false
 var lives := 3
-var world_num := 1
+var world_num := 1:
+	set(value):
+		world_num = value
 
 var level_num := 1
 var disco_mode := false
@@ -463,6 +465,7 @@ func reset_values() -> void:
 	GlobalCounter.amounts = {}
 	Level.start_level_path = Level.get_scene_string(world_num, level_num)
 	LevelPersistance.reset_states()
+	OffScreenDespawner.editor_testing_safety = false
 	Level.first_load = true
 	Level.can_set_time = true
 	Level.in_vine_level = false
@@ -509,15 +512,6 @@ func transition_to_scene(scene_path = "") -> void:
 		$Transition.hide()
 	transitioning_scene = false
 	transition_finished.emit()
-
-func reload_editor() -> void:
-	$Transition/TransitionBlock/EditorLoading/PlayerSprite.update()
-	$Transition/TransitionBlock/EditorLoading/PlayerSprite.animation = "Jump"
-	$Transition/TransitionBlock/EditorLoading.show()
-	
-	transition_to_scene("res://Scenes/Levels/LevelEditor.tscn")
-	await get_tree().create_timer(0.5).timeout
-	$Transition/TransitionBlock/EditorLoading.hide()
 
 func do_fake_transition(duration := 0.2) -> void:
 	if fade_transition:

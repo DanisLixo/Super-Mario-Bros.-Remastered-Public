@@ -243,6 +243,10 @@ func _physics_process(delta: float) -> void:
 	if current_state == EditorState.TILE_MENU && $TileMenu.visible:
 		handle_shortcuts()
 
+func _exit_tree() -> void:
+	Global.level_editor = null
+	OffScreenDespawner.editor_testing_safety = false
+
 func handle_player_trail() -> void:
 	$PlayerTrail.modulate.a = int(current_state != EditorState.PLAYTESTING)
 	if current_state == EditorState.PLAYTESTING:
@@ -259,10 +263,11 @@ func handle_hud() -> void:
 	%Tools.visible = not playing_level
 
 func handle_shortcuts() -> void:
-	for i in 7:
-		if (Global.multibind_action_just_pressed("editor_open_section_" + str(i+1))):
-			$TileMenu/MarginContainer/VBoxContainer/TabButtons.get_child(i).focus_entered.emit()
-			$TileMenu/MarginContainer/VBoxContainer/TabButtons.get_child(i).emit_signal("pressed")
+	if get_viewport().gui_get_focus_owner() == null:
+		for i in 7:
+			if (Global.multibind_action_just_pressed("editor_open_section_" + str(i+1))):
+				$TileMenu/MarginContainer/VBoxContainer/TabButtons.get_child(i).focus_entered.emit()
+				$TileMenu/MarginContainer/VBoxContainer/TabButtons.get_child(i).emit_signal("pressed")
 
 func quit_editor() -> void:
 	%QuitDialog.show()
@@ -373,8 +378,13 @@ func play_level() -> void:
 	OffScreenDespawner.editor_testing_safety = false
 
 func return_to_editor() -> void:
-	Global.reload_editor()
-	
+	Global.get_node("%EditorLoading").show()
+	await get_tree().physics_frame
+	load_level(sub_level_id)
+	Global.get_node("%EditorLoading").hide()
+	%Camera.make_current()
+	current_state = EditorState.IDLE
+	%Camera.enabled = true
 	AudioManager.stop_all_music()
 	OffScreenDespawner.editor_testing_safety = true
 	recorded_trail = saved_trail.size() > 0
@@ -538,8 +548,9 @@ func handle_tile_cursor() -> void:
 				if entity_tiles[current_layer][tile_position].get_node_or_null("SignalExposer") != null:
 					if entity_tiles[current_layer][tile_position].get_node("SignalExposer").can_input:
 						connection_node_found.emit(entity_tiles[current_layer][tile_position])
-						current_state = EditorState.MODIFYING_TILE
-						current_connecting_node = null
+						if Input.is_action_pressed("editor_inspect") == false:
+							current_state = EditorState.MODIFYING_TILE
+							current_connecting_node = null
 		if Global.multibind_action_just_pressed("mb_right") or Global.multibind_action_just_pressed("editor_open_menu"):
 			%TileModifierMenu.cancel_connection()
 	
@@ -1161,17 +1172,14 @@ func transition_to_sublevel(sub_lvl_idx := 0) -> void:
 	
 	Global.can_pause = false
 	if Global.level_editor_is_playtesting():
-		Global.do_fake_transition()
-		for i in 2:
-			await get_tree().physics_frame
+		Global.do_fake_transition(0.25)
+		await get_tree().create_timer(0.5).timeout
 		load_level(sub_lvl_idx)
 	else:
-		Global.reload_editor()
-		
 		save_current_level()
+		load_level(sub_lvl_idx)
 		Global.reset_values()
 		PipeArea.exiting_pipe_id = -1
-
 		sub_level_id = sub_lvl_idx
 		selecting_room = true
 	
@@ -1245,6 +1253,7 @@ func load_level(level_id := 0) -> void:
 		node.process_mode = ProcessMode.PROCESS_MODE_PAUSABLE
 		await get_tree().physics_frame
 		get_tree().call_group("Players", "editor_level_start")
+	update_menu_values()
 
 func convert_scenes_to_nodes() -> void:
 	pass

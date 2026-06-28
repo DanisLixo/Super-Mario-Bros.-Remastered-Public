@@ -4,12 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://icwo58h0rdb5" path="res://addons/mod_tool/interface/global/input_string.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://dyunxqcmy4esi" path="res://addons/mod_tool/interface/global/input_options.tscn" id="3"]
 
-[node name="CreateMod" type="Window" unique_id=2026744060]
+[node name="CreateMod" type="Window" unique_id=2072472954]
 oversampling_override = 1.0
 position = Vector2i(0, 36)
 script = ExtResource("1")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=355295470]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1860590790]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,22 +20,22 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Settings" type="VBoxContainer" parent="MarginContainer" unique_id=2119104830]
+[node name="Settings" type="VBoxContainer" parent="MarginContainer" unique_id=1035733778]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 
-[node name="Scroll" type="ScrollContainer" parent="MarginContainer/Settings" unique_id=1817855449]
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer/Settings" unique_id=22351212]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer/Settings/Scroll" unique_id=328321976]
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/Settings/Scroll" unique_id=1341889778]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
-[node name="Namespace" parent="MarginContainer/Settings/Scroll/VBox" unique_id=661452864 instance=ExtResource("2")]
+[node name="Namespace" parent="MarginContainer/Settings/Scroll/VBox" unique_id=1254375228 instance=ExtResource("2")]
 unique_name_in_owner = true
 layout_mode = 2
 input_placeholder = "Namespace"
@@ -43,7 +43,7 @@ is_required = true
 key = "namespace"
 label_text = "Namespace ( Author Name )"
 
-[node name="ModName" parent="MarginContainer/Settings/Scroll/VBox" unique_id=1579326839 instance=ExtResource("2")]
+[node name="ModName" parent="MarginContainer/Settings/Scroll/VBox" unique_id=1626531944 instance=ExtResource("2")]
 unique_name_in_owner = true
 layout_mode = 2
 input_placeholder = "ModName"
@@ -51,7 +51,7 @@ is_required = true
 key = "name"
 label_text = "Mod Name"
 
-[node name="ModId" parent="MarginContainer/Settings/Scroll/VBox" unique_id=1140443102 instance=ExtResource("2")]
+[node name="ModId" parent="MarginContainer/Settings/Scroll/VBox" unique_id=980452209 instance=ExtResource("2")]
 unique_name_in_owner = true
 layout_mode = 2
 is_editable = false
@@ -60,24 +60,24 @@ is_required = true
 key = "mod_id"
 label_text = "Mod ID"
 
-[node name="Space" type="Control" parent="MarginContainer/Settings/Scroll/VBox" unique_id=904102140]
+[node name="Space" type="Control" parent="MarginContainer/Settings/Scroll/VBox" unique_id=682056992]
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
-[node name="ModTemplate" parent="MarginContainer/Settings/Scroll/VBox" unique_id=1885791856 instance=ExtResource("3")]
+[node name="ModTemplate" parent="MarginContainer/Settings/Scroll/VBox" unique_id=1528120337 instance=ExtResource("3")]
 unique_name_in_owner = true
 layout_mode = 2
 is_required = true
 key = "mod_template"
 label_text = "Template"
 
-[node name="Buttons" type="PanelContainer" parent="MarginContainer/Settings" unique_id=1433869763]
+[node name="Buttons" type="PanelContainer" parent="MarginContainer/Settings" unique_id=2091224788]
 layout_mode = 2
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer/Settings/Buttons" unique_id=1116453085]
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/Settings/Buttons" unique_id=2127010038]
 layout_mode = 2
 
-[node name="btn_create_mod" type="Button" parent="MarginContainer/Settings/Buttons/VBox" unique_id=2090102705]
+[node name="btn_create_mod" type="Button" parent="MarginContainer/Settings/Buttons/VBox" unique_id=829247097]
 layout_mode = 2
 text = "Create"
 
