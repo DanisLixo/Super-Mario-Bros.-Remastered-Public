@@ -4,11 +4,13 @@ extends VBoxContainer
 enum ModListing {
 	CHARACTERS, RESOURCE_PACKS, LEVEL_PACKS, GML, BLUEPRINTS, SCREENSHOTS
 }
+
+##InChain
 const LIST_CONTAINERS = [
 	preload("res://ModManager/Scenes/Manager/Containers/List/CharacterContainer.tscn"),
-	null, #preload(""), # Level Packs
+	null, #preload(""), # Resource Packs
 	preload("res://ModManager/Scenes/Manager/Containers/List/LevelPackContainer.tscn"),
-	null, #preload("res://ModManager/Scenes/Manager/Containers/GMLModContainer.tscn"),
+	preload("res://ModManager/Scenes/Manager/Containers/List/GMLContainer.tscn"),
 	null, #preload(""), # Blueprints
 	null, #preload(""), # Screenshots
 ]
@@ -43,11 +45,10 @@ var current_content_idx := ModListing.CHARACTERS
 var selected_idx := -1
 var search_check := ""
 
-@onready var current_list := %ListContainers
+@onready var current_list = %Containers
 @export_enum("List", "Grid") var listing_mode := 0: set = set_listing_mode
 
 func _ready() -> void:
-	set_listing_mode(listing_mode)
 	set_process(false)
 
 func _process(_delta: float) -> void:
@@ -56,52 +57,77 @@ func _process(_delta: float) -> void:
 
 func set_listing_mode(value := 0) -> void:
 	listing_mode = value
-	current_list = %ListContainers if listing_mode == 0 else %GridContainers
+	current_list = %Containers if listing_mode == 0 else [%EnabledGrid, %DisabledGrid]
 	containers_arr = LIST_CONTAINERS if listing_mode == 0 else GRID_CONTAINERS
 
 func refresh() -> void:
-	current_list.get_node("Label").show()
-	for i in current_list.get_children():
-		if i is ModContainer:
-			i.queue_free()
+	%NoModsLabel.show()
+	%Enabled.hide()
+	%Disabled.hide()
+	
+	if (current_list is Array):
+		for grid in current_list:
+			for cont in grid.get_children():
+				if cont is ModContainer:
+					cont.queue_free()
+			grid.hide()
+	else:
+		for cont in current_list.get_children():
+			if cont is ModContainer:
+				cont.queue_free()
 	containers.clear()
 	
 	create_list(%ModsLoader.get_mods(current_content_idx), current_content_idx)
 
-func create_list(content_array := [], type := ModListing.CHARACTERS) -> void:
+func create_list(content_dict := ModsLoader.DEFAULT_MODS_DICT.duplicate(), type := ModListing.CHARACTERS) -> void:
 	var idx := 0
-	for i in content_array:
-		var container := create_container(idx, i, type)
+	for mod_id in content_dict.all:
+		var disabled_mod = content_dict.disabled.has(mod_id)
+		
+		var container := create_container(idx, mod_id, type, disabled_mod)
 		if (container == null):
 			continue
-		if (idx == 0):
-			current_list.get_node("Label").hide()
+		%NoModsLabel.hide()
 		
 		containers.append(container)
 		container.selected.connect(container_selected)
-		current_list.add_child(container)
+		
+		var current_category: Label = [%Enabled, %Disabled][int(content_dict.has(mod_id))]
+		if (listing_mode == 0):
+			
+			current_category.show()
+			current_list.move_child(container, current_category.get_index() + 1)
+			current_list.add_child(container)
+		elif (listing_mode == 1):
+			var current_grid: Label = current_list[int(content_dict.has(mod_id))]
+			
+			current_category.show()
+			current_grid.show()
+			current_grid.add_child(container)
+			current_grid.add_child(container)
 		
 		idx += 1
 
-func create_container(idx := -1, content := "", type := ModListing.CHARACTERS) -> ModContainer:
+func create_container(idx := -1, mod_id := "", type := ModListing.CHARACTERS, disabled := false) -> ModContainer:
 	var path = FOLDER_PATHS[current_content_idx]
-	var file_path = path.path_join(content)
+	var file_path = path.path_join(mod_id)
 	
 	var container: ModContainer = containers_arr[type].instantiate()
-	##In Chain
+	
+	container.enabled = !disabled
+	container.idx = idx
+	container.file_path = file_path
+	container.mod_id = mod_id
+	##InChain
 	match(type):
 		ModListing.CHARACTERS:
-			container.idx = idx + CharactersHandler.DEFAULT_CHARACTERS.size() # I lowkey don't care if it's already a fixed size.
-			container.file_path = file_path
-			container.mod_id = content
-			
+			# I lowkey don't care if it's already a fixed size.
+			container.idx += CharactersHandler.DEFAULT_CHARACTERS.size()
 			container.json = JSONParser.parse_json_to_dict(file_path.path_join("CharacterInfo.json"))
 		ModListing.LEVEL_PACKS:
-			container.idx = idx
-			container.file_path = file_path
-			container.mod_id = content
-			
-			container.json = JSONParser.parse_json_to_dict(file_path.path_join("pack_info.json"))
+			container.json = LevelPacksHandler.CUSTOM_CAMPAIGN_JSONS[mod_id]
+		ModListing.GML:
+			container.json = GMLHandler.GML_MOD_JSONS[mod_id]
 	return container
 
 func open(mode := ModListing.CHARACTERS, refresh_list := true) -> void:

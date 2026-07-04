@@ -1,11 +1,18 @@
 extends VBoxContainer
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	set_process(false)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func open(container: CustomLevelContainer = null) -> void:
+	if container != null:
+		for i in ["file_path", "mod_id", "json", "idx"]:
+			%SelectedCharacter.set(i, container.get(i))
+	%SelectedCharacter.update_visuals()
+	
+	%Description.text = tr(container.json.get("description", "MODS_NO_DESCRIPTION"))
+	
+	
+	if (CharactersHandler.has_custom_physics()):
+		%CharacterPhysics.text = tr("MODS_CHARACTER_HAS_PHYSICS")
+	else:
+		%CharacterPhysics.text = tr("MODS_CHARACTER_NO_PHYSICS")

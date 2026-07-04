@@ -1340,7 +1340,7 @@ func time_up() -> void:
 
 func set_power_state_frame() -> void:
 	colour_palette = ResourceSetter.get_resource(preload("uid://b0quveyqh25dn"))
-	$PlayerPalette/ResourceSetterNew.resource_json = (CharactersHandler.CHARACTER_PALETTES[int(Global.player_characters[player_id])])
+	$PlayerPalette/ResourceSetterNew.json_path = (CharactersHandler.CHARACTER_PALETTES[int(Global.player_characters[player_id])])
 	if power_state != null:
 		$ResourceSetterNew.json_path = (get_character_sprite_path())
 	var frames = %Sprite.sprite_frames

@@ -3,11 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://rimg0vlsltw0" path="res://ModManager/Scenes/Manager/Containers/List/ModContainer.tscn" id="1_itwmc"]
 [ext_resource type="Texture2D" uid="uid://hu770pufown3" path="res://Assets/Sprites/UI/CharacterSelectSpotlight.png" id="2_m44sd"]
 [ext_resource type="Script" uid="uid://ca2k12jipu30o" path="res://ModManager/Scenes/Manager/Containers/List/CharacterContainer.gd" id="2_newny"]
-[ext_resource type="Material" uid="uid://b03y8ia0o6vhi" path="res://ModManager/Resources/GrayOutShader.tres" id="2_yp4gc"]
 [ext_resource type="Script" uid="uid://ca3bew33g45eq" path="res://Scripts/Classes/UI/PackTextureRect.gd" id="3_newny"]
 [ext_resource type="Script" uid="uid://dwtrmo82e12ud" path="res://Scripts/Parts/ColourPaletteSampler.gd" id="4_783q2"]
 [ext_resource type="Script" uid="uid://cbal8ms2oe1ik" path="res://Scripts/Classes/Components/ResourceSetterNew.gd" id="4_oy7ew"]
-[ext_resource type="JSON" path="res://Assets/Sprites/Players/Mario/CharacterInfo.json" id="6_p435a"]
 [ext_resource type="SpriteFrames" uid="uid://df4enjjl84mji" path="res://Resources/SpriteFrames/Player/Mario/Small.tres" id="7_1ikcf"]
 [ext_resource type="Script" uid="uid://b08qfwj5jk6g1" path="res://Scripts/Parts/PlayerSprite.gd" id="8_ucndm"]
 [ext_resource type="Script" uid="uid://dt2p68xl462v2" path="res://Scripts/Parts/TextShadowColourChanger.gd" id="9_m44sd"]
@@ -15,12 +13,10 @@
 [ext_resource type="Script" uid="uid://d63p6qr5a748" path="res://Scripts/UI/AutoScrollContainer.gd" id="11_783q2"]
 
 [node name="CharacterContainer" unique_id=1572140822 instance=ExtResource("1_itwmc")]
-material = ExtResource("2_yp4gc")
 custom_minimum_size = Vector2(0, 56)
 custom_maximum_size = Vector2(-1, 56)
 offset_bottom = 56.0
 focus_neighbor_right = NodePath("MarginContainer/HBoxContainer/HBoxContainer/RightHalf/Enabled")
-mouse_filter = 1
 script = ExtResource("2_newny")
 
 [node name="MarginContainer" parent="." index="0" unique_id=871079259]
@@ -54,7 +50,6 @@ script = ExtResource("4_oy7ew")
 node_to_affect = NodePath("..")
 property_name = "texture"
 mode = 1
-resource_json = ExtResource("6_p435a")
 metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
 
 [node name="Character" type="AnimatedSprite2D" parent="MarginContainer/HBoxContainer/Spotlight" index="1" unique_id=147440160 node_paths=PackedStringArray("resource_setter")]

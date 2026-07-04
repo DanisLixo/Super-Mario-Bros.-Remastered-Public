@@ -279,4 +279,4 @@ func on_gib_about_to_spawn() -> void:
 		$GibSpawner.gib_type = 0
 	# guzlad: ugly but it'll have to do until we move the metadata stuff to actual variables
 	if ((Global.current_game_mode == Global.GameMode.CUSTOM_LEVEL) or (Global.current_game_mode == Global.GameMode.LEVEL_EDITOR)) and !is_real:
-		$SpriteScaleJoint/DeathSprite/ResourceSetterNew.resource_json = load("res://Assets/Sprites/Enemies/Goomba.json")
+		$SpriteScaleJoint/DeathSprite/ResourceSetterNew.json_path = ("res://Assets/Sprites/Enemies/Goomba.json")

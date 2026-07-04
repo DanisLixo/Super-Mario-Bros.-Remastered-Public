@@ -80,3 +80,9 @@ func update_visuals() -> void:
 		%LevelAuthor.text = "By " + (level_author if level_author != "" else "Player")
 	
 	%CampaignIcon.region_rect = CAMPAIGN_RECTS[game_style]
+	
+	var idx := 0
+	for i in %DifficultyStars.get_children():
+		i.region_rect.position.x = 32 if idx > difficulty else [0, 8, 8, 16, 24][difficulty]
+		idx += 1
+	

@@ -1,5 +1,10 @@
 class_name ModsLoader extends Node
 
+const DEFAULT_MODS_DICT := {
+	"all": [], 
+	"disabled": []
+}
+
 static var config_path := get_config_path()
 
 static var characters_path = config_path.path_join("custom_characters")
@@ -31,43 +36,54 @@ static func get_config_path() -> String:
 			push_warning("Portable flag found but exe directory is not writeable. Falling back to user://")
 	return "user://"
 
-func get_mods(mode := ModsList.ModListing.CHARACTERS) -> Array:
-	var arr := []
-	
-	##In Chain
+func get_mods(mode := ModsList.ModListing.CHARACTERS) -> Dictionary:
+	##InChain
 	match(mode):
 		ModsList.ModListing.CHARACTERS:
-			arr = get_custom_characters()
+			return get_custom_characters()
 		ModsList.ModListing.RESOURCE_PACKS:
-			arr = get_resource_packs()
+			return get_resource_packs()
 		ModsList.ModListing.LEVEL_PACKS:
-			arr = get_level_packs()
+			return get_level_packs()
 		ModsList.ModListing.GML:
-			pass
+			return get_gml_mods()
 		ModsList.ModListing.BLUEPRINTS:
-			pass
+			return DEFAULT_MODS_DICT.duplicate()
 		ModsList.ModListing.SCREENSHOTS:
-			pass
-	
-	return arr
+			return DEFAULT_MODS_DICT.duplicate()
+		_:
+			return DEFAULT_MODS_DICT.duplicate()
 
-func get_custom_characters() -> Array:
+func get_custom_characters() -> Dictionary:
 	CharactersHandler.get_custom_characters(true)
 	
-	var arr := CharactersHandler.CHARACTERS.duplicate(true)
+	var dict := DEFAULT_MODS_DICT.duplicate()
+	
+	dict.all = CharactersHandler.CHARACTERS.duplicate(true)
 	for i in CharactersHandler.DEFAULT_CHARACTERS:
-		arr.erase(i)
+		dict.all.erase(i)
+	dict.disabled = CharactersHandler.disabled_mods
 	
-	return arr
+	return dict
 
-func get_resource_packs() -> Array:
+func get_resource_packs() -> Dictionary:
 	var resource_packs = []
-	for i in DirAccess.get_directories_at(resource_packs_path):
-		resource_packs.append(i)
-	
 	return resource_packs
 
-func get_level_packs() -> Array:
+func get_level_packs() -> Dictionary:
 	LevelPacksHandler.get_level_packs(true)
 	
-	return LevelPacksHandler.CUSTOM_CAMPAIGNS
+	var dict := DEFAULT_MODS_DICT.duplicate()
+	dict.all = LevelPacksHandler.CUSTOM_CAMPAIGNS.duplicate(true)
+	dict.disabled = LevelPacksHandler.disabled_mods
+	
+	return dict
+
+func get_gml_mods() -> Dictionary:
+	GMLHandler.get_gml_mods(true)
+	
+	var dict := DEFAULT_MODS_DICT.duplicate()
+	dict.all = GMLHandler.GML_MODS.duplicate(true)
+	dict.disabled = GMLHandler.disabled_mods
+	
+	return dict

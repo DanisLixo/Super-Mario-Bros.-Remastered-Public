@@ -1,5 +1,4 @@
 extends ModContainer
-class_name GMLModContainer
 
 var current_activeness := true
 

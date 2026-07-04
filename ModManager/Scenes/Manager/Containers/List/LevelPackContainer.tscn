@@ -8,7 +8,8 @@
 [ext_resource type="Script" uid="uid://xem6lai3ufyj" path="res://Scripts/Classes/UI/PackNinePatch.gd" id="4_bhtkf"]
 
 [node name="LevelPackContainer" unique_id=1572140822 instance=ExtResource("1_awukx")]
-offset_bottom = 59.0
+custom_minimum_size = Vector2(0, 76)
+offset_bottom = 56.0
 script = ExtResource("2_bhtkf")
 
 [node name="MarginContainer" parent="." index="0" unique_id=871079259]
@@ -23,10 +24,13 @@ layout_mode = 2
 texture = ExtResource("2_3y504")
 stretch_mode = 3
 
-[node name="HBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" parent_id_path=PackedInt32Array(456570900) index="0" unique_id=1828929825]
+[node name="Info" parent="MarginContainer/HBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(582701347) index="1" unique_id=456570900]
+alignment = 1
+
+[node name="HBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" index="0" unique_id=1828929825]
 theme_override_constants/separation = 0
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" parent_id_path=PackedInt32Array(456570900) index="2" unique_id=1032480703]
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" index="2" unique_id=1032480703]
 layout_mode = 2
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer3" index="0" unique_id=2098945600]
@@ -45,8 +49,30 @@ mouse_filter = 1
 text = "Total Levels:"
 uppercase = true
 
-[node name="Enabled" parent="MarginContainer/HBoxContainer/HBoxContainer/RightHalf" parent_id_path=PackedInt32Array(1323855834) index="0" unique_id=969857188]
-size_flags_vertical = 6
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" index="3" unique_id=1109838028]
+layout_mode = 2
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer4" index="0" unique_id=272463635]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+script = ExtResource("3_bhtkf")
+
+[node name="ResourcePack" type="Label" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer4/ScrollContainer2" index="0" unique_id=510680491]
+unique_name_in_owner = true
+modulate = Color(0.47058824, 0.47058824, 0.47058824, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "Resource Pack: "
+uppercase = true
+
+[node name="RightHalf" parent="MarginContainer/HBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(582701347) index="2" unique_id=1323855834]
+alignment = 2
+
+[node name="Enabled" parent="MarginContainer/HBoxContainer/HBoxContainer/RightHalf" index="0" unique_id=969857188]
+size_flags_vertical = 4
 
 [node name="Control" type="Control" parent="MarginContainer/HBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(582701347) index="3" unique_id=525691160]
 layout_mode = 2

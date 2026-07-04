@@ -12,7 +12,6 @@ signal level_building_complete
 func load_level(temp_level_file := {}) -> void:
 	building = true
 	
-	CustomObjectsGetter.find_objects()
 	EntityIDMapper.load_entity_map(LevelEditor.level_file.has("Mods"))
 	
 	for i in 5:

@@ -15,6 +15,8 @@ var json := {}
 @export var idx := 0
 
 func _ready() -> void:
+	%Enabled.set_pressed_no_signal(enabled)
+	
 	set_process(false)
 	update_visuals()
 	
@@ -27,11 +29,12 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	handle_mod_activeness()
 
+func update_visuals() -> void:
+	%Enabled.visible = !info_only
+	mouse_filter = Control.MOUSE_FILTER_STOP if info_only else Control.MOUSE_FILTER_IGNORE
+
 func handle_visuals() -> void:
 	pass
 
 func handle_mod_activeness() -> void:
 	pass
-
-func update_visuals() -> void:
-	%Enabled.visible = !info_only

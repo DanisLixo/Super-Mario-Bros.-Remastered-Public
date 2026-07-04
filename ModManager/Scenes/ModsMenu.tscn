@@ -15,9 +15,7 @@
 [ext_resource type="StyleBox" uid="uid://comkghpj0djcl" path="res://Resources/UI/Panel.tres" id="9_mnppw"]
 [ext_resource type="Script" uid="uid://b67cmngbq71s5" path="res://ModManager/Scenes/ModsList.gd" id="9_td8sl"]
 [ext_resource type="Script" uid="uid://d63p6qr5a748" path="res://Scripts/UI/AutoScrollContainer.gd" id="9_uprsb"]
-[ext_resource type="Texture2D" uid="uid://hg5ql8d3dck7" path="res://Assets/Sprites/UI/CustomLevelActionIcon.png" id="13_ajikn"]
 [ext_resource type="Script" uid="uid://cbal8ms2oe1ik" path="res://Scripts/Classes/Components/ResourceSetterNew.gd" id="14_tuvgv"]
-[ext_resource type="JSON" path="res://Assets/Sprites/UI/Cursor.json" id="15_2cmyn"]
 [ext_resource type="PackedScene" uid="uid://bmn81e10obpjv" path="res://Scenes/Parts/SelectableLabel.tscn" id="16_pv5de"]
 [ext_resource type="Script" uid="uid://bxh3lk7758q8v" path="res://ModManager/Scenes/ModsGetter.gd" id="17_4ncgm"]
 [ext_resource type="Texture2D" uid="uid://3p2l7rec0gh5" path="res://Assets/Sprites/UI/Cursor.png" id="18_16i2r"]
@@ -25,14 +23,13 @@
 [ext_resource type="Script" uid="uid://dsoqhjtv0wd3e" path="res://ModManager/Scenes/CharacterInfo.gd" id="20_1rovx"]
 [ext_resource type="PackedScene" uid="uid://ufyrhwdt81u5" path="res://Scenes/Prefabs/UI/CustomLineEdit.tscn" id="20_3upca"]
 [ext_resource type="PackedScene" uid="uid://wdw43kgtjt70" path="res://ModManager/Scenes/Manager/Containers/List/CharacterContainer.tscn" id="21_3eaed"]
-[ext_resource type="PackedScene" uid="uid://ckc73w2p3cdvj" path="res://Scenes/Parts/CustomMenuButton.tscn" id="24_ua511"]
-[ext_resource type="Texture2D" uid="uid://bnv2ocqgws3p7" path="res://Assets/Sprites/UI/Panel.png" id="25_sqeco"]
+[ext_resource type="SpriteFrames" uid="uid://do1ac4iicukox" path="res://Resources/SpriteFrames/Player/Toadette/Big.tres" id="24_4ncgm"]
+[ext_resource type="Script" uid="uid://b08qfwj5jk6g1" path="res://Scripts/Parts/PlayerSprite.gd" id="25_2o61y"]
 [ext_resource type="Texture2D" uid="uid://jqtt6s0dbkix" path="res://Assets/Temp/screenshot_1777397153.png" id="27_uiooj"]
 [ext_resource type="PackedScene" uid="uid://bom2rstlk8fws" path="res://Scenes/Prefabs/UI/ResourcePackConfigMenu.tscn" id="28_3tqog"]
 [ext_resource type="Script" uid="uid://dcx77vdfvwq4y" path="res://ModManager/Scripts/Manager/TemplateCreator.gd" id="29_qyvk2"]
 [ext_resource type="Script" uid="uid://co6tjg3w6qpd8" path="res://Scripts/Parts/LabelFontChanger.gd" id="34_pvrep"]
 [ext_resource type="AudioStream" uid="uid://lwyvpothl3lv" path="res://Assets/Audio/BGM/CustomLevel.mp3" id="35_d7hr0"]
-[ext_resource type="JSON" path="res://Assets/Audio/BGM/CustomLevel.json" id="36_ujs4t"]
 
 [sub_resource type="Shader" id="Shader_u8fen"]
 code = "shader_type canvas_item;
@@ -106,46 +103,10 @@ grow_end = 8.0
 atlas = ExtResource("18_16i2r")
 region = Rect2(0, 0, 8, 8)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wl6qh"]
-texture = ExtResource("25_sqeco")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
-modulate_color = Color(1, 1, 0, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_38tt4"]
-atlas = ExtResource("13_ajikn")
-region = Rect2(0, 0, 12, 12)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uk0td"]
-texture = ExtResource("25_sqeco")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
-modulate_color = Color(1, 0, 0, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ybo48"]
-atlas = ExtResource("13_ajikn")
-region = Rect2(12, 0, 12, 12)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m538p"]
-texture = ExtResource("25_sqeco")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
-modulate_color = Color(0, 0.5281222, 1, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d0n6y"]
-atlas = ExtResource("13_ajikn")
-region = Rect2(36, 0, 12, 12)
-
 [node name="ModsMenu" type="Node" unique_id=1151792999]
 script = ExtResource("1_4ncgm")
 
-[node name="BG2" type="TextureRect" parent="." unique_id=137738265]
+[node name="Main" type="TextureRect" parent="." unique_id=137738265]
 show_behind_parent = true
 material = SubResource("ShaderMaterial_lfefu")
 anchors_preset = 15
@@ -158,7 +119,7 @@ stretch_mode = 1
 script = ExtResource("7_4moru")
 metadata/_custom_type_script = "uid://ca3bew33g45eq"
 
-[node name="Border" type="NinePatchRect" parent="BG2" unique_id=2147282935]
+[node name="Border" type="NinePatchRect" parent="Main" unique_id=2147282935]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -175,7 +136,7 @@ axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 script = ExtResource("4_vqpep")
 
-[node name="Mods" type="MarginContainer" parent="BG2/Border" unique_id=335581734]
+[node name="Mods" type="MarginContainer" parent="Main/Border" unique_id=335581734]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -187,10 +148,10 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BG2/Border/Mods" unique_id=1348720502]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/Border/Mods" unique_id=1348720502]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer" unique_id=1905396441]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer" unique_id=1905396441]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
@@ -198,7 +159,7 @@ size_flags_horizontal = 0
 text = "./.../.../..."
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/Title" unique_id=1060029401]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/Title" unique_id=1060029401]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -207,20 +168,20 @@ offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="SectionSelector" type="VBoxContainer" parent="BG2/Border/Mods/VBoxContainer" unique_id=1431354049]
+[node name="SectionSelector" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer" unique_id=1431354049]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 script = ExtResource("6_e0u8s")
 
-[node name="Button" type="Button" parent="BG2/Border/Mods/VBoxContainer/SectionSelector" unique_id=918201837]
+[node name="Button" type="Button" parent="Main/Border/Mods/VBoxContainer/SectionSelector" unique_id=918201837]
 custom_minimum_size = Vector2(208, 43)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button" unique_id=57541408]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button" unique_id=57541408]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -229,26 +190,26 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button/MarginContainer" unique_id=929364301]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button/MarginContainer" unique_id=929364301]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button/MarginContainer/VBoxContainer" unique_id=485760098]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button/MarginContainer/VBoxContainer" unique_id=485760098]
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 2
 texture = SubResource("AtlasTexture_qyvk2")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button/MarginContainer/VBoxContainer" unique_id=1616851440]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button/MarginContainer/VBoxContainer" unique_id=1616851440]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "MOD MANAGER"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button/MarginContainer/VBoxContainer/Title" unique_id=75847996]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button/MarginContainer/VBoxContainer/Title" unique_id=75847996]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -258,13 +219,13 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="Button2" type="Button" parent="BG2/Border/Mods/VBoxContainer/SectionSelector" unique_id=1019306784]
+[node name="Button2" type="Button" parent="Main/Border/Mods/VBoxContainer/SectionSelector" unique_id=1019306784]
 custom_minimum_size = Vector2(208, 43)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button2" unique_id=1010010914]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button2" unique_id=1010010914]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -273,26 +234,26 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button2/MarginContainer" unique_id=1126599651]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button2/MarginContainer" unique_id=1126599651]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button2/MarginContainer/VBoxContainer" unique_id=428699842]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button2/MarginContainer/VBoxContainer" unique_id=428699842]
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 2
 texture = SubResource("AtlasTexture_3tqog")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button2/MarginContainer/VBoxContainer" unique_id=1706182734]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button2/MarginContainer/VBoxContainer" unique_id=1706182734]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "MOD BROWSER"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Button2/MarginContainer/VBoxContainer/Title" unique_id=1067546249]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Button2/MarginContainer/VBoxContainer/Title" unique_id=1067546249]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -302,13 +263,13 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="Wiki" type="Button" parent="BG2/Border/Mods/VBoxContainer/SectionSelector" unique_id=1844393428]
+[node name="Wiki" type="Button" parent="Main/Border/Mods/VBoxContainer/SectionSelector" unique_id=1844393428]
 custom_minimum_size = Vector2(208, 43)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Wiki" unique_id=1856605088]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Wiki" unique_id=1856605088]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -317,26 +278,26 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Wiki/MarginContainer" unique_id=2007910261]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Wiki/MarginContainer" unique_id=2007910261]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Wiki/MarginContainer/VBoxContainer" unique_id=1583050328]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Wiki/MarginContainer/VBoxContainer" unique_id=1583050328]
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 2
 texture = SubResource("AtlasTexture_ws153")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Wiki/MarginContainer/VBoxContainer" unique_id=1245092826]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Wiki/MarginContainer/VBoxContainer" unique_id=1245092826]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "OFFICIAL WIKI"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/SectionSelector/Wiki/MarginContainer/VBoxContainer/Title" unique_id=567095059]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/SectionSelector/Wiki/MarginContainer/VBoxContainer/Title" unique_id=567095059]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -346,26 +307,33 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="ModManager" type="Control" parent="BG2/Border/Mods/VBoxContainer" unique_id=1039638489]
+[node name="ModManager" type="Control" parent="Main/Border/Mods/VBoxContainer" unique_id=1039638489]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("7_uprsb")
 
-[node name="ManagerSelector" type="VBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager" unique_id=1285896036]
+[node name="ManagerSelector" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager" unique_id=1285896036]
 unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_right = 208.0
-offset_bottom = 193.0
+custom_minimum_size = Vector2(208, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("8_3eaed")
 
-[node name="CustomLevels" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=60185876]
+[node name="CustomLevels" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=60185876]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels" unique_id=2059399164]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels" unique_id=2059399164]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -373,24 +341,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels/MarginContainer" unique_id=1972587878]
+[node name="VBoxContainer" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels/MarginContainer" unique_id=1972587878]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels/MarginContainer/VBoxContainer" unique_id=295812308]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels/MarginContainer/VBoxContainer" unique_id=295812308]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_4ncgm")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels/MarginContainer/VBoxContainer" unique_id=1335327528]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels/MarginContainer/VBoxContainer" unique_id=1335327528]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 text = "Custom Levels"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels/MarginContainer/VBoxContainer/Title" unique_id=1124113073]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels/MarginContainer/VBoxContainer/Title" unique_id=1124113073]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -399,12 +367,12 @@ offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="Characters" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=1421760164]
+[node name="Characters" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=1421760164]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters" unique_id=740340841]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters" unique_id=740340841]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -412,24 +380,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters/MarginContainer" unique_id=50801907]
+[node name="VBoxContainer" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters/MarginContainer" unique_id=50801907]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters/MarginContainer/VBoxContainer" unique_id=1351466335]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters/MarginContainer/VBoxContainer" unique_id=1351466335]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_5j4o3")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters/MarginContainer/VBoxContainer" unique_id=1429180527]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters/MarginContainer/VBoxContainer" unique_id=1429180527]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 text = "Characters"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters/MarginContainer/VBoxContainer/Title" unique_id=1043501569]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters/MarginContainer/VBoxContainer/Title" unique_id=1043501569]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -438,12 +406,12 @@ offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="ResourcePacks" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=152960402]
+[node name="ResourcePacks" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=152960402]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks" unique_id=574280900]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks" unique_id=574280900]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -451,24 +419,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks/MarginContainer" unique_id=1352774001]
+[node name="VBoxContainer" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks/MarginContainer" unique_id=1352774001]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks/MarginContainer/VBoxContainer" unique_id=399821304]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks/MarginContainer/VBoxContainer" unique_id=399821304]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_uiooj")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks/MarginContainer/VBoxContainer" unique_id=1353316039]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks/MarginContainer/VBoxContainer" unique_id=1353316039]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 text = "Resource Packs"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks/MarginContainer/VBoxContainer/Title" unique_id=1321541245]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks/MarginContainer/VBoxContainer/Title" unique_id=1321541245]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -477,12 +445,12 @@ offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="LevelPacks" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=1073778841]
+[node name="LevelPacks" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=1073778841]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks" unique_id=1762268912]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks" unique_id=1762268912]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -490,24 +458,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks/MarginContainer" unique_id=998553929]
+[node name="VBoxContainer" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks/MarginContainer" unique_id=998553929]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks/MarginContainer/VBoxContainer" unique_id=1779406618]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks/MarginContainer/VBoxContainer" unique_id=1779406618]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_impr4")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks/MarginContainer/VBoxContainer" unique_id=1135731722]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks/MarginContainer/VBoxContainer" unique_id=1135731722]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 text = "Level Packs"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks/MarginContainer/VBoxContainer/Title" unique_id=1767108090]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks/MarginContainer/VBoxContainer/Title" unique_id=1767108090]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -516,12 +484,12 @@ offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="GMLMods" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=272054307]
+[node name="GMLMods" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=272054307]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods" unique_id=1478314920]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods" unique_id=1478314920]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -529,24 +497,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods/MarginContainer" unique_id=1730661364]
+[node name="VBoxContainer" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods/MarginContainer" unique_id=1730661364]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods/MarginContainer/VBoxContainer" unique_id=1402698572]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods/MarginContainer/VBoxContainer" unique_id=1402698572]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_ng08k")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods/MarginContainer/VBoxContainer" unique_id=1623415544]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods/MarginContainer/VBoxContainer" unique_id=1623415544]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 text = "GML MODS"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods/MarginContainer/VBoxContainer/Title" unique_id=948966471]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods/MarginContainer/VBoxContainer/Title" unique_id=948966471]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -555,17 +523,17 @@ offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=1974497039]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=1974497039]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/separator = SubResource("StyleBoxLine_hk4o1")
 
-[node name="Blueprints" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=2123738204]
+[node name="Blueprints" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=2123738204]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints" unique_id=1419652340]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints" unique_id=1419652340]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -573,24 +541,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints/MarginContainer" unique_id=1569886430]
+[node name="VBoxContainer" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints/MarginContainer" unique_id=1569886430]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints/MarginContainer/VBoxContainer" unique_id=1993097580]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints/MarginContainer/VBoxContainer" unique_id=1993097580]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_7gcq3")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints/MarginContainer/VBoxContainer" unique_id=1954727780]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints/MarginContainer/VBoxContainer" unique_id=1954727780]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 text = "Blueprints"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints/MarginContainer/VBoxContainer/Title" unique_id=20854500]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints/MarginContainer/VBoxContainer/Title" unique_id=20854500]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -599,12 +567,12 @@ offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="Screenshots" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=286933317]
+[node name="Screenshots" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" unique_id=286933317]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots" unique_id=874452681]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots" unique_id=874452681]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -612,24 +580,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots/MarginContainer" unique_id=1412502016]
+[node name="VBoxContainer" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots/MarginContainer" unique_id=1412502016]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots/MarginContainer/VBoxContainer" unique_id=419529082]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots/MarginContainer/VBoxContainer" unique_id=419529082]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_hk4o1")
 stretch_mode = 3
 
-[node name="Title" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots/MarginContainer/VBoxContainer" unique_id=1050650756]
+[node name="Title" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots/MarginContainer/VBoxContainer" unique_id=1050650756]
 custom_minimum_size = Vector2(0, 19)
 layout_mode = 2
 text = "Screenshots"
 uppercase = true
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots/MarginContainer/VBoxContainer/Title" unique_id=571652179]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots/MarginContainer/VBoxContainer/Title" unique_id=571652179]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -638,7 +606,7 @@ offset_bottom = 16.0
 grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
-[node name="GeneralList" type="VBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager" unique_id=773970306]
+[node name="GeneralList" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager" unique_id=773970306]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -650,15 +618,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("9_td8sl")
 
-[node name="VBoxContainer" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=258445308]
+[node name="VBoxContainer" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=258445308]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer" unique_id=220574699]
+[node name="Button" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer" unique_id=220574699]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button" unique_id=1221991569]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button" unique_id=1221991569]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -666,7 +634,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AutoScrollContainer" type="ScrollContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button/MarginContainer" unique_id=1777329013]
+[node name="AutoScrollContainer" type="ScrollContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button/MarginContainer" unique_id=1777329013]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -677,15 +645,15 @@ script = ExtResource("9_uprsb")
 auto_connect_focus = false
 metadata/_custom_type_script = "uid://d63p6qr5a748"
 
-[node name="SelectableLabel" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button/MarginContainer/AutoScrollContainer" unique_id=1424008125 instance=ExtResource("16_pv5de")]
+[node name="SelectableLabel" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button/MarginContainer/AutoScrollContainer" unique_id=1424008125 instance=ExtResource("16_pv5de")]
 layout_mode = 2
 text = "EDITOR_MAIN_OPEN_FOLDER"
 
-[node name="Button2" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer" unique_id=1604426027]
+[node name="Button2" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer" unique_id=1604426027]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button2" unique_id=1555493870]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button2" unique_id=1555493870]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -693,7 +661,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AutoScrollContainer2" type="ScrollContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button2/MarginContainer" unique_id=1566713264]
+[node name="AutoScrollContainer2" type="ScrollContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button2/MarginContainer" unique_id=1566713264]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -704,15 +672,15 @@ script = ExtResource("9_uprsb")
 auto_connect_focus = false
 metadata/_custom_type_script = "uid://d63p6qr5a748"
 
-[node name="SelectableLabel2" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button2/MarginContainer/AutoScrollContainer2" unique_id=265241081 instance=ExtResource("16_pv5de")]
+[node name="SelectableLabel2" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button2/MarginContainer/AutoScrollContainer2" unique_id=265241081 instance=ExtResource("16_pv5de")]
 layout_mode = 2
 text = "EDITOR_MAIN_REFRESH"
 
-[node name="Button3" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer" unique_id=18328942]
+[node name="Button3" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer" unique_id=18328942]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button3" unique_id=1969372611]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button3" unique_id=1969372611]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -720,7 +688,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AutoScrollContainer3" type="ScrollContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button3/MarginContainer" unique_id=2046872799]
+[node name="AutoScrollContainer3" type="ScrollContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button3/MarginContainer" unique_id=2046872799]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -731,15 +699,15 @@ script = ExtResource("9_uprsb")
 auto_connect_focus = false
 metadata/_custom_type_script = "uid://d63p6qr5a748"
 
-[node name="SelectableLabel3" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button3/MarginContainer/AutoScrollContainer3" unique_id=849967971 instance=ExtResource("16_pv5de")]
+[node name="SelectableLabel3" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button3/MarginContainer/AutoScrollContainer3" unique_id=849967971 instance=ExtResource("16_pv5de")]
 layout_mode = 2
 text = "EDITOR_MAIN_APPLY"
 
-[node name="Button4" type="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer" unique_id=554906964]
+[node name="Button4" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer" unique_id=554906964]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button4" unique_id=1851188787]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button4" unique_id=1851188787]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -747,7 +715,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AutoScrollContainer4" type="ScrollContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button4/MarginContainer" unique_id=2022995243]
+[node name="AutoScrollContainer4" type="ScrollContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button4/MarginContainer" unique_id=2022995243]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -758,22 +726,22 @@ script = ExtResource("9_uprsb")
 auto_connect_focus = false
 metadata/_custom_type_script = "uid://d63p6qr5a748"
 
-[node name="SelectableLabel4" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button4/MarginContainer/AutoScrollContainer4" unique_id=1846027017 instance=ExtResource("16_pv5de")]
+[node name="SelectableLabel4" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button4/MarginContainer/AutoScrollContainer4" unique_id=1846027017 instance=ExtResource("16_pv5de")]
 layout_mode = 2
 text = "TEMPLATE_CREATE"
 
-[node name="HSeparator" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=1815239064]
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=1815239064]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wgcm7")
 
-[node name="Search" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=321961853]
+[node name="Search" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=321961853]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search" unique_id=279438490]
+[node name="Control" type="Control" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search" unique_id=279438490]
 custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
 
-[node name="Cursor" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/Control" unique_id=1254013707]
+[node name="Cursor" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/Control" unique_id=1254013707]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -784,36 +752,35 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_f5g2b")
 stretch_mode = 3
 
-[node name="ResourceSetter" type="Node" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/Control/Cursor" unique_id=620948338 node_paths=PackedStringArray("node_to_affect")]
+[node name="ResourceSetter" type="Node" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/Control/Cursor" unique_id=620948338 node_paths=PackedStringArray("node_to_affect")]
 script = ExtResource("14_tuvgv")
 node_to_affect = NodePath("..")
 property_name = "texture"
 mode = 1
-resource_json = ExtResource("15_2cmyn")
 metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
 
-[node name="TextureRect" type="TextureRect" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search" unique_id=396363867]
+[node name="TextureRect" type="TextureRect" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search" unique_id=396363867]
 layout_mode = 2
 texture = ExtResource("19_ir1x0")
 stretch_mode = 3
 
-[node name="CustomLineEdit" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search" unique_id=1033507793 instance=ExtResource("20_3upca")]
+[node name="CustomLineEdit" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search" unique_id=1033507793 instance=ExtResource("20_3upca")]
 layout_mode = 2
 size_flags_horizontal = 3
 text_overrun_behavior = 3
 
-[node name="HSeparator3" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=368126585]
+[node name="HSeparator3" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=368126585]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wgcm7")
 
-[node name="MarginContainer" type="MarginContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=241367372]
+[node name="MarginContainer" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=241367372]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = -8
 theme_override_constants/margin_bottom = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer" unique_id=797672064]
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer" unique_id=797672064]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -821,52 +788,82 @@ size_flags_vertical = 3
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="ListContainers" type="VBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer" unique_id=1496221430]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer" unique_id=69277288]
+layout_mode = 2
+
+[node name="NoModsLabel" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1264050413]
 unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/ListContainers" unique_id=1597753620]
-layout_mode = 2
-text = "EDITOR_MAIN_LIST_NOMODS"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="GridContainers" type="GridContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer" unique_id=1571559141]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/GridContainers" unique_id=1332871149]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "EDITOR_MAIN_LIST_NOMODS"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="HSeparator2" type="HSeparator" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=478083324]
+[node name="Containers" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1496221430]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Enabled" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer/Containers" unique_id=1641135070]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+text = "EDITOR_MAIN_LIST_ENABLED"
+uppercase = true
+
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer/Containers/Enabled" unique_id=1377033611]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
+
+[node name="EnabledGrid" type="GridContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer/Containers" unique_id=1571559141]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Disabled" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer/Containers" unique_id=1713946179]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+text = "EDITOR_MAIN_LIST_DISABLED"
+uppercase = true
+
+[node name="HSeparator" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer/Containers/Disabled" unique_id=1500882901]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
+
+[node name="DisabledGrid" type="GridContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer/Containers" unique_id=1893145114]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSeparator2" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=478083324]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wgcm7")
 
-[node name="ModsLoader" type="Node" parent="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=710210154]
+[node name="ModsLoader" type="Node" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=710210154]
 unique_name_in_owner = true
 script = ExtResource("17_4ncgm")
 
-[node name="ModsInfoSection" type="Control" parent="BG2/Border/Mods/VBoxContainer/ModManager" unique_id=1536521758]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-
-[node name="Character" type="VBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection" unique_id=720319555]
+[node name="CharacterInfo" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager" unique_id=720319555]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -877,18 +874,19 @@ size_flags_vertical = 3
 theme_override_constants/separation = 4
 script = ExtResource("20_1rovx")
 
-[node name="ModContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character" unique_id=1572140822 instance=ExtResource("21_3eaed")]
+[node name="SelectedCharacter" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo" unique_id=1572140822 instance=ExtResource("21_3eaed")]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Panel" type="PanelContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character" unique_id=172557176]
+[node name="Panel" type="PanelContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo" unique_id=172557176]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("9_mnppw")
 
-[node name="AutoScrollContainer" type="ScrollContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/Panel" unique_id=395996229]
+[node name="AutoScrollContainer" type="ScrollContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/Panel" unique_id=395996229]
 layout_mode = 2
 mouse_filter = 0
-scroll_vertical = 41
+scroll_vertical = 43
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 script = ExtResource("9_uprsb")
@@ -897,12 +895,13 @@ is_active = true
 auto_connect_focus = false
 metadata/_custom_type_script = "uid://d63p6qr5a748"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/Panel/AutoScrollContainer" unique_id=1372754195]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/Panel/AutoScrollContainer" unique_id=1372754195]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Description" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/Panel/AutoScrollContainer/VBoxContainer" unique_id=1392551399]
+[node name="CharacterDescription" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/Panel/AutoScrollContainer/VBoxContainer" unique_id=1392551399]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -910,7 +909,8 @@ text = "this is text, isnt it so cool. WOWOWOWOWOWW"
 autowrap_mode = 2
 uppercase = true
 
-[node name="Physics" type="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/Panel/AutoScrollContainer/VBoxContainer" unique_id=351123915]
+[node name="CharacterPhysics" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/Panel/AutoScrollContainer/VBoxContainer" unique_id=351123915]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -918,78 +918,55 @@ text = "HAS CUSTOM PHYSICS"
 autowrap_mode = 2
 uppercase = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character" unique_id=1843541575]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo" unique_id=1843541575]
 layout_mode = 2
 alignment = 1
 
-[node name="Play" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer" unique_id=1666328455 instance=ExtResource("24_ua511")]
+[node name="Enable" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer" unique_id=178040501]
 layout_mode = 2
-focus_neighbor_right = NodePath("../Edit")
 
-[node name="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Play" index="2" unique_id=1354378166]
-text = "EDITOR_MAIN_LEVEL_PLAY"
-
-[node name="Edit" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer" unique_id=903392325 instance=ExtResource("24_ua511")]
+[node name="Button" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer/Enable" unique_id=771420664]
 layout_mode = 2
-focus_neighbor_right = NodePath("../Delete")
 
-[node name="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Edit" index="0" unique_id=47319333]
-theme_override_styles/pressed = SubResource("StyleBoxTexture_wl6qh")
-theme_override_styles/focus = SubResource("StyleBoxTexture_wl6qh")
-
-[node name="Icon" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Edit" index="1" unique_id=1961946869]
-texture = SubResource("AtlasTexture_38tt4")
-
-[node name="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Edit" index="2" unique_id=1354378166]
-text = "EDITOR_MAIN_LEVEL_EDIT"
-
-[node name="Delete" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer" unique_id=995543874 instance=ExtResource("24_ua511")]
+[node name="Label" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer/Enable" unique_id=1249049653]
 layout_mode = 2
-focus_neighbor_left = NodePath("../Edit")
+text = "Enable"
+uppercase = true
 
-[node name="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Delete" index="0" unique_id=47319333]
-theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
-theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
-
-[node name="Icon" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Delete" index="1" unique_id=1961946869]
-texture = SubResource("AtlasTexture_ybo48")
-
-[node name="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Delete" index="2" unique_id=1354378166]
-text = "EDITOR_MAIN_LEVEL_DELETE"
-
-[node name="DeleteConfirm" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer" unique_id=1108750482 instance=ExtResource("24_ua511")]
-visible = false
+[node name="View" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer" unique_id=1343226544]
 layout_mode = 2
-focus_neighbor_left = NodePath("../Edit")
-focus_previous = NodePath("../Edit")
 
-[node name="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/DeleteConfirm" index="0" unique_id=47319333]
-theme_override_styles/pressed = SubResource("StyleBoxTexture_uk0td")
-theme_override_styles/focus = SubResource("StyleBoxTexture_uk0td")
-
-[node name="Icon" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/DeleteConfirm" index="1" unique_id=1961946869]
-texture = SubResource("AtlasTexture_ybo48")
-
-[node name="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/DeleteConfirm" index="2" unique_id=1354378166]
-text = "EDITOR_MAIN_LEVEL_CONFIRM"
-
-[node name="OpenAutosaves" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer" unique_id=739814622 instance=ExtResource("24_ua511")]
+[node name="Button" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer/View" unique_id=570386812]
 layout_mode = 2
-focus_neighbor_right = NodePath("../Edit")
 
-[node name="Button" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/OpenAutosaves" index="0" unique_id=47319333]
-theme_override_styles/pressed = SubResource("StyleBoxTexture_m538p")
-theme_override_styles/hover = SubResource("StyleBoxTexture_m538p")
-theme_override_styles/focus = SubResource("StyleBoxTexture_m538p")
+[node name="Label" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer/View" unique_id=1798165265]
+layout_mode = 2
+text = "View animations"
+uppercase = true
 
-[node name="Icon" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/OpenAutosaves" index="1" unique_id=1961946869]
-texture = SubResource("AtlasTexture_d0n6y")
+[node name="Edit" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer" unique_id=459535045]
+layout_mode = 2
 
-[node name="Label" parent="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/OpenAutosaves" index="2" unique_id=1354378166]
-text = "EDITOR_MAIN_AUTOSAVES"
+[node name="Button" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer/Edit" unique_id=1192839906]
+layout_mode = 2
 
-[node name="BG" type="NinePatchRect" parent="." unique_id=437782379]
-visible = false
+[node name="Label" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer/Edit" unique_id=587260701]
+layout_mode = 2
+text = "Edit info"
+uppercase = true
+
+[node name="Delete" type="MarginContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer" unique_id=1233257516]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer/Delete" unique_id=1997826928]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/HBoxContainer/Delete" unique_id=1179537139]
+layout_mode = 2
+text = "Delete"
+uppercase = true
+
+[node name="SideViewers" type="NinePatchRect" parent="." unique_id=437782379]
 texture_repeat = 2
 anchors_preset = 15
 anchor_right = 1.0
@@ -1004,7 +981,7 @@ axis_stretch_vertical = 1
 script = ExtResource("4_vqpep")
 metadata/_custom_type_script = "uid://xem6lai3ufyj"
 
-[node name="ScreenshotPreview" type="Control" parent="BG" unique_id=1109771502]
+[node name="CharacterPreview" type="Control" parent="SideViewers" unique_id=1904415757]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1012,7 +989,217 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="BG/ScreenshotPreview" unique_id=31474976]
+[node name="MarginContainer" type="MarginContainer" parent="SideViewers/CharacterPreview" unique_id=1818005392]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer" unique_id=1120545122]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer" unique_id=1223735178]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="MarginContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=781324835]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Button" type="Button" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2/Play" unique_id=2113386234]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2/Play" unique_id=1735896181]
+layout_mode = 2
+text = "Play Animation"
+uppercase = true
+
+[node name="Play2" type="MarginContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=864077518]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Button" type="Button" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2/Play2" unique_id=1609811431]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2/Play2" unique_id=497402041]
+layout_mode = 2
+text = "Loop: true"
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer" unique_id=847059105]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer" unique_id=776861400]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1785417147]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Animation:"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1563212727]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="LeftArrow" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=371719425]
+layout_mode = 2
+text = "◄"
+uppercase = true
+
+[node name="AutoScrollContainer" type="ScrollContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=2137577891]
+layout_mode = 2
+size_flags_horizontal = 3
+scroll_horizontal = 72
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+script = ExtResource("9_uprsb")
+is_active = true
+auto_minimum_resize = true
+metadata/_custom_type_script = "uid://d63p6qr5a748"
+
+[node name="CurrentAnimation" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/AutoScrollContainer" unique_id=560243183]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "shitting brocks"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="RightArrow" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=657243978]
+layout_mode = 2
+text = "►"
+uppercase = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer" unique_id=732345353]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1625395541]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Power State:"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer2" type="VBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=374024966]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="UpArrow" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=711496934]
+layout_mode = 2
+text = "▲"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="AutoScrollContainer" type="ScrollContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=98944927]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+script = ExtResource("9_uprsb")
+is_active = true
+auto_minimum_resize = true
+metadata/_custom_type_script = "uid://d63p6qr5a748"
+
+[node name="CurrentAnimation" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2/AutoScrollContainer" unique_id=483451330]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Small"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="DownArrow" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=1997573107]
+layout_mode = 2
+text = "▼"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="SpritePosition" type="Control" parent="SideViewers/CharacterPreview/MarginContainer" unique_id=2041878876]
+custom_maximum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="SideViewers/CharacterPreview/MarginContainer/SpritePosition" unique_id=1652796115 node_paths=PackedStringArray("resource_setter")]
+sprite_frames = ExtResource("24_4ncgm")
+animation = &"Jump"
+script = ExtResource("25_2o61y")
+resource_setter = NodePath("ResourceSetterNew")
+metadata/_custom_type_script = "uid://b08qfwj5jk6g1"
+
+[node name="ResourceSetterNew" type="Node" parent="SideViewers/CharacterPreview/MarginContainer/SpritePosition/PlayerSprite" unique_id=3249092]
+script = ExtResource("14_tuvgv")
+metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer" unique_id=2036177485]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer" unique_id=1677269704]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_constants/separation = -8
+
+[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer/HBoxContainer2" unique_id=835367071]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "ZOOM: "
+uppercase = true
+
+[node name="Zoom" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer/HBoxContainer2" unique_id=2082703818]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "1.0x"
+uppercase = true
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer" unique_id=434592950]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_constants/separation = -8
+alignment = 2
+
+[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=1278019501]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Speed: "
+uppercase = true
+
+[node name="Speed" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=1665206970]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "1.0x"
+uppercase = true
+
+[node name="ScreenshotPreview" type="Control" parent="SideViewers" unique_id=1109771502]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="SideViewers/ScreenshotPreview" unique_id=31474976]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1024,12 +1211,14 @@ texture = ExtResource("27_uiooj")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="ResourcePackConfigMenu" parent="BG" unique_id=135459987 instance=ExtResource("28_3tqog")]
+[node name="ResourcePackConfigMenu" parent="SideViewers" unique_id=135459987 instance=ExtResource("28_3tqog")]
+visible = false
 layout_mode = 1
 anchor_left = 0.05
 anchor_top = 0.05
 anchor_right = 0.95
 anchor_bottom = 0.95
+script = null
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1413540263]
 stream = ExtResource("35_d7hr0")
@@ -1040,7 +1229,6 @@ script = ExtResource("14_tuvgv")
 node_to_affect = NodePath("..")
 property_name = "stream"
 mode = 2
-resource_json = ExtResource("36_ujs4t")
 metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
 
 [node name="LabelFontChanger" type="Node" parent="." unique_id=762005581]
@@ -1050,34 +1238,22 @@ metadata/_custom_type_script = "uid://co6tjg3w6qpd8"
 [node name="TemplateCreator" type="Node" parent="." unique_id=162085890]
 script = ExtResource("29_qyvk2")
 
-[connection signal="closed" from="BG2/Border/Mods/VBoxContainer/SectionSelector" to="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" method="open"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/SectionSelector/Button" to="BG2/Border/Mods/VBoxContainer/SectionSelector" method="close"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/SectionSelector/Wiki" to="BG2/Border/Mods/VBoxContainer/SectionSelector" method="wiki_pressed"]
-[connection signal="opened" from="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" to="BG2/Border/Mods/VBoxContainer/ModManager" method="show"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels" to="." method="go_to_custom_levels_menu"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [0]]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [1]]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [2]]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [3]]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [4]]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [5]]
-[connection signal="closed" from="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" to="BG2/Border/Mods/VBoxContainer/ModManager/ManagerSelector" method="open"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button/MarginContainer/AutoScrollContainer/SelectableLabel" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open_folder"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button2/MarginContainer/AutoScrollContainer2/SelectableLabel2" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="refresh"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button3/MarginContainer/AutoScrollContainer3/SelectableLabel3" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="close"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button4/MarginContainer/AutoScrollContainer4/SelectableLabel4" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="close"]
-[connection signal="focus_entered" from="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/CustomLineEdit" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/Control/Cursor" method="show"]
-[connection signal="focus_exited" from="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/CustomLineEdit" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/Control/Cursor" method="hide"]
-[connection signal="text_submitted" from="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/CustomLineEdit" to="BG2/Border/Mods/VBoxContainer/ModManager/GeneralList" method="search_submitted"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Play/Button" to="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character" method="level_selected"]
-[connection signal="focus_entered" from="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Edit" to="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Delete" method="show"]
-[connection signal="focus_entered" from="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Edit" to="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/DeleteConfirm" method="hide"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Edit/Button" to="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character" method="level_edited"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Delete/Button" to="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Delete" method="hide"]
-[connection signal="pressed" from="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Delete/Button" to="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/DeleteConfirm" method="grab_focus"]
-
-[editable path="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Play"]
-[editable path="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Edit"]
-[editable path="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/Delete"]
-[editable path="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/DeleteConfirm"]
-[editable path="BG2/Border/Mods/VBoxContainer/ModManager/ModsInfoSection/Character/HBoxContainer/OpenAutosaves"]
+[connection signal="closed" from="Main/Border/Mods/VBoxContainer/SectionSelector" to="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" method="open"]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/SectionSelector/Button" to="Main/Border/Mods/VBoxContainer/SectionSelector" method="close"]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/SectionSelector/Wiki" to="Main/Border/Mods/VBoxContainer/SectionSelector" method="wiki_pressed"]
+[connection signal="opened" from="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" to="Main/Border/Mods/VBoxContainer/ModManager" method="show"]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/CustomLevels" to="." method="go_to_custom_levels_menu"]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Characters" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [0]]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/ResourcePacks" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [1]]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/LevelPacks" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [2]]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/GMLMods" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [3]]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Blueprints" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [4]]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector/Screenshots" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open" binds= [5]]
+[connection signal="closed" from="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" to="Main/Border/Mods/VBoxContainer/ModManager/ManagerSelector" method="open"]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button/MarginContainer/AutoScrollContainer/SelectableLabel" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="open_folder"]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button2/MarginContainer/AutoScrollContainer2/SelectableLabel2" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="refresh"]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button3/MarginContainer/AutoScrollContainer3/SelectableLabel3" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="close"]
+[connection signal="pressed" from="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/VBoxContainer/Button4/MarginContainer/AutoScrollContainer4/SelectableLabel4" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="close"]
+[connection signal="focus_entered" from="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/CustomLineEdit" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/Control/Cursor" method="show"]
+[connection signal="focus_exited" from="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/CustomLineEdit" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/Control/Cursor" method="hide"]
+[connection signal="text_submitted" from="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/Search/CustomLineEdit" to="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" method="search_submitted"]

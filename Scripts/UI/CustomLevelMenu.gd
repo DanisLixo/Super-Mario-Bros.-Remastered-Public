@@ -97,7 +97,6 @@ func new_level() -> void:
 	LevelEditor.difficulty = 0
 	LevelEditor.level_file = LevelEditor.BLANK_FILE.duplicate(true)
 	
-	CustomObjectsGetter.find_objects()
 	EntityIDMapper.load_entity_map(LevelEditor.level_file.has("Mods"))
 	
 	Global.current_game_mode = Global.GameMode.LEVEL_EDITOR

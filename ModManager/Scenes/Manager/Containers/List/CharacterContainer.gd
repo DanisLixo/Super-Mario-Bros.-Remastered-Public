@@ -22,9 +22,9 @@ func update_sprites() -> void:
 	%Character.update()
 	%Character.play("FaceForward")
 	
-	%CharacterIcon.get_node("ResourceSetterNew").resource_json = (CharactersHandler.CHARACTER_ICONS[idx])
+	%CharacterIcon.get_node("ResourceSetterNew").json_path = (CharactersHandler.CHARACTER_ICONS[idx])
 	
-	%PlayerColourTexture.resource_json = CharactersHandler.CHARACTER_COLOURS[idx]
+	%PlayerColourTexture.json_path = CharactersHandler.CHARACTER_COLOURS[idx]
 	%NameColourPaletteSampler.texture = %SpotlightColourPaletteSampler.texture
 
 func handle_mod_activeness() -> void:
@@ -32,7 +32,8 @@ func handle_mod_activeness() -> void:
 	
 	enabled = %Enabled.button_pressed
 	
-	material.set_shader_parameter("enabled", !enabled)
+	if (material != null):
+		material.set_shader_parameter("enabled", !enabled)
 
 func handle_focus() -> void:
 	if (has_focus() && enabled):

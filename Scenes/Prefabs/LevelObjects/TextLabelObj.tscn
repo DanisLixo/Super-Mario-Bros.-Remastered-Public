@@ -25,7 +25,7 @@ func _ready() -> void:
 	start()
 
 func clean_text(text := \"\") -> String:
-	text = text.replace(\"{CHARACTER}\", Player.CHARACTER_NAMES[Global.player_characters[0]])
+	text = text.replace(\"{CHARACTER}\", CharactersHandler.CHARACTER_NAMES[Global.player_characters[0]])
 	return text
 
 func start() -> void:

@@ -23,7 +23,6 @@ theme_override_styles/hover = ExtResource("2_wmblk")
 theme_override_styles/focus = ExtResource("2_wmblk")
 button_mask = 0
 script = ExtResource("3_t47t0")
-mod_type = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=871079259]
 layout_mode = 1

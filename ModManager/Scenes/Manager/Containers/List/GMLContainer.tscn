@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cpvh63uqu73dl"]
+
+[ext_resource type="PackedScene" uid="uid://rimg0vlsltw0" path="res://ModManager/Scenes/Manager/Containers/List/ModContainer.tscn" id="1_ycvur"]
+[ext_resource type="Script" uid="uid://bkt0k7584atng" path="res://ModManager/Scenes/Manager/Containers/List/GMLContainer.gd" id="2_gqpuo"]
+[ext_resource type="Texture2D" uid="uid://bdfacnvuppo3u" path="res://Assets/Sprites/UI/LevelPackIconEmpty.png" id="2_smb3r"]
+
+[node name="GMLContainer" unique_id=1572140822 instance=ExtResource("1_ycvur")]
+custom_minimum_size = Vector2(0, 42)
+offset_bottom = 42.0
+script = ExtResource("2_gqpuo")
+
+[node name="MarginContainer" parent="." index="0" unique_id=871079259]
+anchors_preset = 15
+anchor_bottom = 1.0
+offset_bottom = 0.0
+grow_vertical = 2
+
+[node name="Thumbnail" type="TextureRect" parent="MarginContainer/HBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(582701347) index="0" unique_id=1103827949]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_smb3r")
+expand_mode = 2

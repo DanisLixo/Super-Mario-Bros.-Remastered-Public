@@ -26,26 +26,27 @@ static func move_mods_to_new_path(arr := []) -> void:
 		move_file(i, new_path.path_join(i.get_file()))
 		
 	if moved:
-		Global.log_warning("All GML mods are now at your local files. Restart the game for the mods to work!")
+		if (Global.config_path.contains("user://")):
+			Global.log_warning("GML_TRANSFER_WARNING") # "All GML mods are now at your appdata folder. Restart the game for the mods to work!"
 
-static func move_file(path := "", move_to := "") -> void:
-	var source := FileAccess.open(path, FileAccess.READ)
+static func move_file(path_from := "", move_to := "") -> void:
+	var source := FileAccess.open(path_from, FileAccess.READ)
 
 	if (source == null):
-		Global.log_error("A GML mod was not located: " + path)
+		Global.log_error("A GML mod was not located: " + path_from)
 		return
 
-	var pasted := FileAccess.open(move_to, FileAccess.WRITE)
+	var paste := FileAccess.open(move_to, FileAccess.WRITE)
 	
-	var success := pasted.store_buffer(source.get_buffer(source.get_length()))
+	var success := paste.store_buffer(source.get_buffer(source.get_length()))
 	
 	if not success:
-		Global.log_error("Couldn't move file \"%s\" to: %s" % [path.get_file(), move_to])
+		Global.log_error("Couldn't move file \"%s\" to: %s" % [path_from.get_file(), move_to])
 		return
 	
 	source.close()
-	pasted.close()
+	paste.close()
 	
 	if success:
-		print("Succesfully moved \"%s\"" % path.get_file())
-		DirAccess.remove_absolute(path)
+		print("Succesfully moved \"%s\"" % path_from.get_file())
+		DirAccess.remove_absolute(path_from)

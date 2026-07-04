@@ -575,6 +575,7 @@ func version_got(_result, response_code, _headers, body) -> void:
 var error_log_cooldown := false
 
 func log_error(msg := "", can_spam := true) -> void:
+	msg = tr(msg)
 	printerr(msg)
 	if error_log_cooldown and not can_spam:
 		return
@@ -593,6 +594,7 @@ func do_cooldown() -> void:
 	error_log_cooldown = false
 
 func log_warning(text) -> void:
+	text = tr(text)
 	printwarning(text)
 	var error_message: Label = $Logs/VBoxContainer/Warning.duplicate()
 	error_message.text = "Warning - " + str(text)
@@ -605,6 +607,7 @@ func printwarning(text := "") -> void:
 	print_rich("[color=yellow]Warning: %sMessage[/color]" % text)
 
 func log_comment(text, timer := 2) -> void:
+	text = tr(text)
 	print(text)
 	var error_message = $Logs/VBoxContainer/Comment.duplicate()
 	error_message.text = str(text)
