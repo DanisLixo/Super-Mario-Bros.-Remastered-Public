@@ -151,11 +151,6 @@ func value_changed(property, new_value) -> void:
 	undo_redo.add_undo_method(set_value.bind(editing_node, property.tile_property_name, old_value))
 	undo_redo.commit_action(true)
 	
-	Global.level_editor.save_to_undoredo("Edited Node!%s" % get_path(),
-		[editing_node.get_path(), property.tile_property_name, new_value],
-		[editing_node.get_path(), property.tile_property_name, old_value],
-	)
-	
 	Global.level_editor.something_changed = true
 
 func set_value(node: Variant, value_name := "", value = null) -> void:

@@ -41,17 +41,14 @@ func save_subarea(level: CustomLevel = null) -> Dictionary:
 	return sub_level_file
 
 func write_file(json := {}, lvl_file_name := "") -> void:
-	for i in "<>:?!/":
-		lvl_file_name = lvl_file_name.replace(i, "")
-	var file = FileAccess.open(Global.config_path.path_join("custom_levels/" + lvl_file_name), FileAccess.WRITE)
-	file.store_string(JSON.stringify(json, "", false))
-	file.close()
-	print("Saved Level: " + Global.config_path.path_join("custom_levels/" + lvl_file_name))
+	lvl_file_name = LevelEditor.set_level_file(lvl_file_name)
+	var path = Global.config_path.path_join("custom_levels/" + lvl_file_name)
+	
+	JSONParser.save_to_file(json, path)
+	print("Saved Level: " + path)
 
 func write_temp_file(level_name := "", json := {}, lvl_file_name := "", save_time := "") -> void:
 	var path = Global.config_path.path_join("custom_levels/autosaves/" + level_name)
-	for i in "<>:?!/":
-		lvl_file_name = lvl_file_name.replace(i, "")
 	
 	json["Info"]["SaveTime"] = save_time
 	

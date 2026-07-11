@@ -52,7 +52,6 @@ func _ready() -> void:
 	LevelEditor.sub_areas = [null, null, null, null, null]
 	LevelEditor.sub_level_id = 0
 	LevelEditor.selected_tile_index = 0
-	LevelEditor.last_camera_position = Vector2(-128, -88)
 	
 	Checkpoint.sublevel_id = 0
 	%LevelList.open(true)
@@ -91,7 +90,7 @@ func _exit_tree() -> void:
 
 func new_level() -> void:
 	LevelEditor.load_play = false
-	LevelEditor.level_name = LevelEditor.set_stack_level_name("UNNAMED LEVEL")
+	LevelEditor.level_name = LevelEditor.stack_level_name("UNNAMED LEVEL")
 	LevelEditor.level_author = "PLAYER"
 	LevelEditor.level_desc = ""
 	LevelEditor.difficulty = 0

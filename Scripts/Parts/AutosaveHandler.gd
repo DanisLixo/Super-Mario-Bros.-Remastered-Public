@@ -53,21 +53,24 @@ func autosave_tick() -> void:
 func start_autosave() -> void:
 	var level_name := level_editor.level_name
 	var save_time := Time.get_datetime_string_from_system()
-	var file_name = level_name.to_pascal_case() + "_" + save_time + ".lvl"
+	var file_name = LevelEditor.set_level_file(level_name, save_time)
 	
-	var temp_level_file: Dictionary = $"../LevelSaver".save_level(level_name, level_editor.level_author, level_editor.level_desc, level_editor.difficulty)
 	var message := ""
-	
 	var path = Global.config_path.path_join("custom_levels/").path_join(level_name.to_pascal_case() + ".lvl")
 	if (!FileAccess.file_exists(path)):
-		message = tr("EDITOR_AUTOSAVE_SAVE_LEVEL_FIRST")
-	elif (is_level_empty(temp_level_file)):
-		message = tr("EDITOR_AUTOSAVE_FAIL_EMPTY")
+		message = "EDITOR_AUTOSAVE_SAVE_LEVEL_FIRST"
 	elif (!level_editor.something_changed):
-		message = tr("EDITOR_AUTOSAVE_FAIL_CHANGES")
+		message = "EDITOR_AUTOSAVE_FAIL_CHANGES"
 	if (message != ""):
 		Global.log_warning(message)
 		return
+	var temp_level_file: Dictionary = $"../LevelSaver".save_level(level_name, level_editor.level_author, level_editor.level_desc, level_editor.difficulty)
+	
+	if (is_level_empty(temp_level_file)):
+		message = "EDITOR_AUTOSAVE_FAIL_EMPTY"
+		Global.log_warning(message)
+		return
+	
 	$"../LevelSaver".write_temp_file(level_name, temp_level_file, file_name, save_time)
 	
 	last_section_time = 60.0 * Settings.file.editor.autosave_min_timer

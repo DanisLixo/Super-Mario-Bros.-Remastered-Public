@@ -17,11 +17,11 @@ func open(container: CustomLevelContainer = null) -> void:
 		for i in ["level_name", "level_author", "level_theme", "game_style", "level_time", "difficulty", "is_downloaded", "level_id", "thumbnail"]:
 			%SelectedLevel.set(i, container.get(i))
 	%SelectedLevel.update_visuals()
-	LevelEditor.level_name = container.level_name
-	CustomLevelMenu.current_level_file = container.file_path
-	LevelEditor.level_author = container.level_author
 	file_path = container.file_path
+	LevelEditor.level_name = container.level_name
+	LevelEditor.level_author = container.level_author
 	LevelEditor.level_desc = container.level_desc
+	CustomLevelMenu.current_level_file = container.file_path
 	%Description.text = container.level_desc
 	%AutosaveTime.visible = container.autosave_time != ""
 	%OpenAutosaves.visible = container.autosave_time == ""

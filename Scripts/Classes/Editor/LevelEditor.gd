@@ -127,31 +127,49 @@ const BOUNDARY_CONNECT_TILE := Vector2i.ZERO
 static var play_pipe_transition := false
 static var play_door_transition := false
 
-static var selecting_room := false
-static var recorded_trail := false
+var selecting_room := false
+var recorded_trail := false
 
-static var last_camera_position := Vector2(-128, 88)
-static var saved_trail := []
+var last_camera_position := Vector2(-128, 88)
+var saved_trail := []
 
 var undo_redo = UndoRedo.new()
-static var undoredo_history := []
-static var last_commit := -1
 
 var commit_buffer := 0.0
 var holding_commit := false
-var something_changed := false
+var something_changed := false:
+	set(value):
+		something_changed = value
+		if (something_changed):
+			saved_last_change = false
+var saved_last_change := true
 
-static func set_stack_level_name(new_level_name := "") -> String:
-	var path = Global.config_path.path_join("custom_levels/autosaves/" + new_level_name)
+static func set_level_file(level_name := "", save_time := "") -> String:
+	var file_name: String = level_name.to_pascal_case()
+	for i in "<>:?!/":
+		file_name = file_name.replace(i, "")
 	
-	var idx := 0
-	while DirAccess.dir_exists_absolute(path):
-		new_level_name = "%s(%s)" % [new_level_name, str(idx)]
+	if (save_time != ""):
+		file_name += "_%s" % save_time
+	
+	file_name += ".lvl"
+	
+	return file_name
+
+static func stack_level_name(level_name := "") -> String:
+	var file_name := LevelEditor.set_level_file(level_name)
+	
+	var path: String = Global.config_path.path_join("custom_levels/" + file_name)
+	var idx := -1
+	while FileAccess.file_exists(path):
 		idx += 1
 		
-		path = Global.config_path.path_join("custom_levels/autosaves/" + new_level_name)
-		
-	return new_level_name
+		file_name = level_name.to_pascal_case() + "(%s).lvl" % str(idx)
+		path = Global.config_path.path_join("custom_levels/" + file_name)
+	
+	if (idx != -1):
+		level_name = "%s(%s)" % [level_name, str(idx)]
+	return level_name
 
 func _ready() -> void:
 	Global.level_editor = self
@@ -174,8 +192,6 @@ func _ready() -> void:
 	
 	load_level(sub_level_id)
 	await get_tree().process_frame
-	if (!LevelEditor.selecting_room):
-		recreate_undoredo()
 	Level.start_level_path = scene_file_path
 	var layer_idx := 0
 	for i in entity_layer_nodes:
@@ -188,18 +204,17 @@ func _ready() -> void:
 	%LevelName.text = level_name
 	%LevelAuthor.text = level_author
 	%Description.text = level_desc
+	%DifficultySlider.value = difficulty
+	
 	if Settings.file.editor.seen_guide == false:
 		open_bindings_menu()
 		Settings.file.editor.seen_guide = true
 		Settings.save_settings()
-	if (LevelEditor.selecting_room):
-		$TileMenu/MarginContainer/VBoxContainer/TabButtons/Level.tab_clicked()
-		LevelEditor.selecting_room = false
-		open_tile_menu()
+	if (selecting_room):
 		last_camera_position = Vector2(-128, -88)
-	if (LevelEditor.recorded_trail):
+	if (recorded_trail):
 		create_player_trail()
-		LevelEditor.recorded_trail = false
+		recorded_trail = false
 	
 	selected_tile_index = wrap(selected_tile_index, 0, tile_list.size())
 	on_tile_selected(tile_list[selected_tile_index])
@@ -263,14 +278,18 @@ func handle_hud() -> void:
 	%Tools.visible = not playing_level
 
 func handle_shortcuts() -> void:
-	if get_viewport().gui_get_focus_owner() == null:
-		for i in 7:
+	var current_focus = get_viewport().gui_get_focus_owner()
+	var available = current_focus is not LineEdit || !current_focus.is_editing()
+	if (available):
+		for i in $TileMenu/MarginContainer/VBoxContainer/TabButtons.get_children().size():
 			if (Global.multibind_action_just_pressed("editor_open_section_" + str(i+1))):
 				$TileMenu/MarginContainer/VBoxContainer/TabButtons.get_child(i).focus_entered.emit()
 				$TileMenu/MarginContainer/VBoxContainer/TabButtons.get_child(i).emit_signal("pressed")
-
 func quit_editor() -> void:
-	%QuitDialog.show()
+	if (!saved_last_change):
+		%QuitDialog.show()
+	else:
+		go_back_to_menu()
 
 signal level_saved
 
@@ -297,7 +316,6 @@ func save_level_before_exit() -> void:
 	go_back_to_menu()
 
 func go_back_to_menu() -> void:
-	clear_undoredo()
 	Global.transition_to_scene("res://Scenes/Levels/CustomLevelMenu.tscn")
 
 func open_bindings_menu() -> void:
@@ -382,13 +400,12 @@ func return_to_editor() -> void:
 	await get_tree().physics_frame
 	load_level(sub_level_id)
 	Global.get_node("%EditorLoading").hide()
+	%Camera.enabled = true
 	%Camera.make_current()
 	current_state = EditorState.IDLE
-	%Camera.enabled = true
 	AudioManager.stop_all_music()
 	OffScreenDespawner.editor_testing_safety = true
 	recorded_trail = saved_trail.size() > 0
-	last_commit = undo_redo.get_current_action()
 	last_camera_position = get_tree().get_first_node_in_group("Players").camera.global_position
 
 var zoom := 1.0
@@ -428,14 +445,17 @@ func save_level() -> void:
 	level_desc = %Description.text
 	level_name = %LevelName.text
 	difficulty = %DifficultySlider.value
-	var file_name = level_name.to_pascal_case() + ".lvl"
+	
 	%SaveLevelDialog.hide()
 	menu_open = false
 	save_current_level()
 	level_file = $LevelSaver.save_level(level_name, level_author, level_desc, difficulty)
-	$LevelSaver.write_file(level_file, file_name)
-	%SaveDialog.text = str("'") +  file_name + "'" + " Saved." 
+	$LevelSaver.write_file(level_file, level_name)
+	%SaveDialog.text = str("'") +  LevelEditor.set_level_file(level_name) + "'" + " Saved." 
 	%SaveAnimation.play("Show")
+	
+	something_changed = false
+	saved_last_change = true
 	current_state = EditorState.TILE_MENU
 	level_saved.emit()
 
@@ -591,11 +611,6 @@ func paste_area(tile_position := Vector2i.ZERO, area := copied_area, layer_num :
 		undo_redo.add_do_method(paste_area.bind(tile_position, area.duplicate_deep(), layer_num, bounds, false, delete_old))
 		undo_redo.add_undo_method(replace_area.bind(corner, layer_num, old_area.duplicate_deep()))
 		undo_redo.commit_action(false)
-		
-		save_to_undoredo("Paste Area", 
-			[tile_position, area.duplicate_deep(), layer_num, bounds, false, delete_old],
-			[corner, layer_num, old_area.duplicate_deep()]
-		)
 
 func pick_tile(tile_position := Vector2i.ZERO) -> void:
 	var tile = null
@@ -742,10 +757,6 @@ func mass_place(top_corner := Vector2i.ZERO, select_start := Vector2i.ZERO, sele
 		undo_redo.add_undo_method(replace_area.bind(top_corner, layer_num, area))
 		undo_redo.commit_action(false)
 		
-		save_to_undoredo("Mass Place", 
-			[top_corner, select_start, select_end, layer_num, thing_to_place, info, false, delete_old],
-			[top_corner, layer_num, area]
-		)
 
 func mass_remove(top_corner := Vector2i.ZERO, select_start := Vector2i.ZERO, select_end := Vector2i.ZERO, layer_num := current_layer, save_action := true) -> void:
 	var area := {}
@@ -761,10 +772,6 @@ func mass_remove(top_corner := Vector2i.ZERO, select_start := Vector2i.ZERO, sel
 		undo_redo.add_undo_method(replace_area.bind(top_corner, layer_num, area))
 		undo_redo.commit_action(false)
 		
-		save_to_undoredo("Mass Remove", 
-			[top_corner, select_start, select_end, layer_num, false],
-			[top_corner, layer_num, area]
-		)
 
 func get_area_bounds(top_corner := Vector2i.ZERO, select_start := Vector2i.ZERO, select_end := Vector2i.ZERO, layer_num := current_layer) -> Rect2i:
 	
@@ -1061,16 +1068,6 @@ func place_tile(tile_position := Vector2i.ZERO, layer_num := current_layer, tile
 			undo_redo.add_undo_method(place_tile.bind(tile_position, layer_num, old_tile, old_tile_info, false))
 		undo_redo.commit_action(false)
 		
-		var action_name := "Place Tile!null"
-		var undo_array := [tile_position, layer_num, false]
-		if (old_tile != null):
-			action_name = "Place Tile"
-			undo_array = [tile_position, layer_num, old_tile, old_tile_info, false]
-		
-		save_to_undoredo(action_name,
-			[tile_position, layer_num, redo_tile, redo_info, false],
-			undo_array
-		)
 
 	BetterTerrain.update_terrain_cell(tile_layer_nodes[layer_num], tile_position, true)
 	something_changed = true
@@ -1111,10 +1108,6 @@ func remove_tile(tile_position := Vector2i.ZERO, layer_num := current_layer, sav
 		undo_redo.add_undo_method(place_tile.bind(tile_position, layer_num, old_tile, info, false))
 		undo_redo.commit_action(false)
 		
-		save_to_undoredo("Remove Tile",
-			[tile_position, layer_num, false],
-			[tile_position, layer_num, old_tile, info, false]
-		)
 	
 	something_changed = true
 	return old_tile != null
@@ -1168,7 +1161,6 @@ func low_gravity_toggled(new_value := false) -> void:
 
 func transition_to_sublevel(sub_lvl_idx := 0) -> void:
 	clear_trail()
-	clear_undoredo()
 	
 	Global.can_pause = false
 	if Global.level_editor_is_playtesting():
@@ -1253,7 +1245,6 @@ func load_level(level_id := 0) -> void:
 		node.process_mode = ProcessMode.PROCESS_MODE_PAUSABLE
 		await get_tree().physics_frame
 		get_tree().call_group("Players", "editor_level_start")
-	update_menu_values()
 
 func convert_scenes_to_nodes() -> void:
 	pass
@@ -1325,75 +1316,6 @@ func redo() -> void:
 	holding_commit = true
 	if (commit_buffer == 0.0 || commit_buffer >= 0.5):
 		undo_redo.redo()
-
-func save_to_undoredo(action_name := "", redo_array := [], undo_array := []) -> void:
-	var curIdx := undo_redo.get_current_action()
-	var arr := [action_name, redo_array, undo_array]
-	if curIdx > undoredo_history.size() - 1:
-		undoredo_history.push_back(arr)
-	else:
-		undoredo_history[curIdx] = arr
-
-func recreate_undoredo() -> void:
-	if (undo_redo == null):
-		undo_redo = UndoRedo.new()
-	# Paste Area - do: paste_area undo: replace_area
-	# Mass Place - do: mass_place undo: replace_area
-	# Mass Remove - do: mass_remove undo: replace_area
-	# Place Tile - do: place_tile undo: remove_tile
-	# Place Tile (Old is null) - do: place_tile undo: place_tile
-	# Remove Tile - do: remove_tile undo: place_tile
-	
-	# This is needed so the undoredo object can refresh its history.
-	# Although without restarting the editor it works normally, this is just a test.
-	for i in LevelEditor.undoredo_history.size():
-		var split: PackedStringArray = LevelEditor.undoredo_history[i][0].split("!")
-		
-		var redoArgs: Array = LevelEditor.undoredo_history[i][1]
-		var undoArgs: Array = LevelEditor.undoredo_history[i][2]
-		
-		var actionName := split[0]
-		
-		undo_redo.create_action(actionName)
-		
-		match actionName:
-			("Paste Area"):
-				undo_redo.add_do_method(paste_area.bindv(redoArgs))
-				undo_redo.add_undo_method(replace_area.bindv(undoArgs))
-			("Mass Place"):
-				undo_redo.add_do_method(mass_place.bindv(redoArgs))
-				undo_redo.add_undo_method(replace_area.bindv(undoArgs))
-			("Mass Remove"):
-				undo_redo.add_do_method(mass_remove.bindv(redoArgs))
-				undo_redo.add_undo_method(replace_area.bindv(undoArgs))
-			("Remove Tile"):
-				undo_redo.add_do_method(remove_tile.bindv(redoArgs))
-				undo_redo.add_undo_method(place_tile.bindv(undoArgs))
-			("Place Tile"):
-				undo_redo.add_do_method(place_tile.bindv(redoArgs))
-				if (split.has("null")):
-					undo_redo.add_undo_method(remove_tile.bindv(undoArgs))
-				else:
-					undo_redo.add_undo_method(place_tile.bindv(undoArgs))
-			("Edited Node"):
-				var node := get_node_or_null(split[1])
-				if (node != null):
-					undo_redo.add_do_method(node.set_value.bindv(redoArgs))
-					undo_redo.add_undo_method(node.set_value.bindv(undoArgs))
-		
-		undo_redo.commit_action(i > last_commit)
-	
-	# Commiting or not commiting the action makes something that messes up
-	# UndoRedo actions so any undid actions is manually undone again.
-	for i in undo_redo.get_current_action() - last_commit:
-		undo()
-	
-	something_changed = false
-
-func clear_undoredo() -> void:
-	last_commit = -1
-	
-	LevelEditor.undoredo_history.clear()
 
 func on_mouse_exited() -> void:
 	cursor_in_toolbar = false
