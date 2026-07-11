@@ -57,13 +57,12 @@ func level_selected() -> void:
 		Global.log_error("Level is corrupted (how).")
 	
 	active = false
+	
+	LevelEditor.level_file = JSONParser.parse_to_dict(file_path)
 	level_play.emit()
 
 func level_edited() -> void:
-	LevelEditor.level_file = JSONParser.parse_json_to_dict(file_path)
-	if (LevelEditor.level_file.is_empty()):
-		Global.log_error("Level is corrupted (how).")
-	
+	LevelEditor.level_file = JSONParser.parse_to_dict(file_path)
 	level_edit.emit()
 
 func close(back := true) -> void:

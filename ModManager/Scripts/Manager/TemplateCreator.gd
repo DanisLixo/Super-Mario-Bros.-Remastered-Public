@@ -125,9 +125,8 @@ func create_template(mode := TemplateMode.RESOURCE_PACK) -> void:
 			template_pack_info = level_pack_base_info_json
 		
 		var pack_info_path = new_path.path_join("pack_info.json")
-		var file = FileAccess.open(pack_info_path, FileAccess.WRITE)
-		file.store_string(JSON.stringify(template_pack_info, "\t"))
-		file.close()
+		DirAccess.make_dir_recursive_absolute(pack_info_path.get_base_dir())
+	JSONParser.save_to_file(template_pack_info, pack_info_path)
 	
 	match(mode):
 		TemplateMode.CHARACTER:

@@ -150,7 +150,7 @@ func select() -> void:
 		Global.current_game_mode = Global.GameMode.CAMPAIGN
 		if Global.custom_pack != "":
 			if DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(ModsLoader.resource_packs_path.path_join(Global.custom_pack))) == false:
-				Global.log_error("Level Resource Pack not Found! Are you sure you installed it correctly?")
+				Global.log_error("Current campaign's resource pack was not found inside the resource packs folder.")
 			else:
 				Settings.file.visuals.resource_packs.push_front(Global.custom_pack)
 		custom_selected.emit()

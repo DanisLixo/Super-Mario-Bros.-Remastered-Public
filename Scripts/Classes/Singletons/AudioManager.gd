@@ -260,7 +260,7 @@ func handle_music() -> void:
 			music_player.stop()
 			handle_music_override()
 			return
-		var music := Global.current_level.music
+		var music: JSON = Global.current_level.music
 		if Level.extra_music != null && Settings.file.audio.extra_bgm == 1:
 			music = Level.extra_music
 		var override := ""
@@ -313,14 +313,13 @@ func create_stream_from_json(json_path := "") -> AudioStream:
 	$ResourceSetterNew.clear_metadata()
 	path = ResourceSetter.get_pure_resource_path(json_path)
 	$ResourceSetterNew.current_resource_pack = ResourceGetter.get_resource_pack_from_path(path)
-	var json := JSONParser.parse_json_to_dict(path)
-	var final_json = $ResourceSetterNew.get_variation_json(json.variations)
+	var final_json = $ResourceSetterNew.get_variation_json(JSONParser.parse_to_dict(path).variations)
 	#print(final_json)
 	var bgm_file = final_json.source
 	path = ResourceSetter.get_pure_resource_path(json_path.replace(json_path.get_file(), bgm_file))
 	var stream = null
 	if path.get_file().ends_with(".bgm"):
-		stream = generate_interactive_stream(JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text()))
+		stream = generate_interactive_stream(JSONParser.parse_to_dict(path))
 	else:
 		if path.begins_with("res://"):
 			stream = load(path)

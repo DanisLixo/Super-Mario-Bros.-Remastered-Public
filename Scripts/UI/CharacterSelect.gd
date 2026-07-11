@@ -46,7 +46,7 @@ func handle_input() -> void:
 			AudioManager.play_global_sfx("menu_move")
 	if Global.multibind_action_just_pressed("ui_accept"):
 		Global.player_characters[player_id] = (selected_index)
-		var characters = Global.player_characters
+		var characters: Array = Global.player_characters
 		for i in characters:
 			if int(i) > 3:
 				characters = [0, 0, 0, 0]
@@ -65,8 +65,9 @@ func update_sprites() -> void:
 	for i in [%Left, %Selected, %Right]:
 		i.update()
 		i.play("Pose" if i == %Selected else "FaceForward")
-	var json = CharactersHandler.CHARACTER_COLOURS[selected_index]
-	%PlayerColourTexture.json_path = CharactersHandler.CHARACTER_COLOURS[selected_index]
+	print(CharactersHandler.CHARACTER_COLOURS[selected_index])
+	if (CharactersHandler.CHARACTER_COLOURS[selected_index] != null):
+		%PlayerColourTexture.json_path = CharactersHandler.CHARACTER_COLOURS[selected_index]
 	%CharacterName.text = tr(CharactersHandler.CHARACTER_NAMES[selected_index])
 	$Panel/MarginContainer/VBoxContainer/CharacterName/TextShadowColourChanger/ColourPaletteSampler.texture = %ColourPaletteSampler.texture
 	$Panel/MarginContainer/VBoxContainer/CharacterName/TextShadowColourChanger.handle_shadow_colours()

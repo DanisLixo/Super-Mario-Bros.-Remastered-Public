@@ -56,8 +56,7 @@ func get_levels(path : String = "", type := CustomLevelContainer.Type.ALL) -> vo
 		%LevelContainers.get_node("Label").hide()
 		var container = CUSTOM_LEVEL_CONTAINER.instantiate()
 		var file_path = path + "/" + i
-		var json = JSONParser.parse_json_to_dict(file_path)
-		
+		var json = JSONParser.parse_to_dict(file_path)
 		var data = json["Levels"][0]["Data"].split("=")
 		var info = json["Info"]
 		container.is_downloaded = path.contains("downloaded")

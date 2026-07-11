@@ -64,7 +64,7 @@ func get_levels() -> void:
 		%AutosaveContainers.get_node("Label").hide()
 		var container = CUSTOM_LEVEL_CONTAINER.instantiate()
 		var file_path = path + "/" + i
-		var json = JSONParser.parse_json_to_dict(file_path)
+		var json := JSONParser.parse_to_dict(file_path)
 		
 		if (json.is_empty() || AutosaveHandler.is_level_empty(json)):
 			DirAccess.remove_absolute(file_path)

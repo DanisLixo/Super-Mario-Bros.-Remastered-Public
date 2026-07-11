@@ -42,6 +42,7 @@ func save_subarea(level: CustomLevel = null) -> Dictionary:
 
 func write_file(json := {}, lvl_file_name := "") -> void:
 	lvl_file_name = LevelEditor.set_level_file(lvl_file_name)
+	
 	var path = Global.config_path.path_join("custom_levels/" + lvl_file_name)
 	
 	JSONParser.save_to_file(json, path)
@@ -54,9 +55,7 @@ func write_temp_file(level_name := "", json := {}, lvl_file_name := "", save_tim
 	
 	if !DirAccess.dir_exists_absolute(path):
 		DirAccess.make_dir_absolute(path)
-	var file = FileAccess.open(path + "/" + lvl_file_name, FileAccess.WRITE)
-	file.store_string(JSON.stringify(json, "", false))
-	file.close()
+	JSONParser.save_to_file(json, path + "/" + lvl_file_name)
 	print("Saved Level: " + path + "/" + lvl_file_name)
 
 func get_tiles(level: CustomLevel = null) -> void:

@@ -20,20 +20,27 @@ static func find_mods_in_old_path() -> Array:
 static func move_mods_to_new_path(arr := []) -> void:
 	var new_path := _ModLoaderPath.get_local_folder_dir("mods")
 	
-	var moved := false
+	var success = false
 	for i: String in arr:
-		moved = true
+		success = true
 		move_file(i, new_path.path_join(i.get_file()))
 		
-	if moved:
-		if (Global.config_path.contains("user://")):
-			Global.log_warning("GML_TRANSFER_WARNING") # "All GML mods are now at your appdata folder. Restart the game for the mods to work!"
+	if success:
+		var stored_at := "Config folder" if Global.config_path != "user://" else "Appdata folder"
+		Global.log_warning("All GML mods are now at your %s." % stored_at)
+		
+		var exe_path := OS.get_executable_path()
+		var exe_dir  := exe_path.get_base_dir()
+		var old_path := exe_dir.path_join("mods")
+		
+		DirAccess.remove_absolute(old_path)
 
 static func move_file(path_from := "", move_to := "") -> void:
 	var source := FileAccess.open(path_from, FileAccess.READ)
 
 	if (source == null):
-		Global.log_error("A GML mod was not located: " + path_from)
+		var file_error := FileAccess.get_open_error()
+		Global.log_error("GML Mod: \"%s\" has not been moved due to an error! CODE: %s" % [path.get_file(), error_string(file_error)])
 		return
 
 	var paste := FileAccess.open(move_to, FileAccess.WRITE)
@@ -43,7 +50,8 @@ static func move_file(path_from := "", move_to := "") -> void:
 	if not success:
 		Global.log_error("Couldn't move file \"%s\" to: %s" % [path_from.get_file(), move_to])
 		return
-	
+
+	pasted.close()
 	source.close()
 	paste.close()
 	

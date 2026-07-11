@@ -105,12 +105,8 @@ func save_thumbnail() -> void:
 func play_level() -> void:
 	var file_path = Global.config_path.path_join("custom_levels/downloaded/" + level_id + ".lvl")
 	LevelEditor.level_file = JSONParser.parse_to_dict(file_path)
-	if (LevelEditor.level_file.is_empty()):
-		Global.log_error("Loading failed. Level is corrupted or unreachable...")
-		return
-	
 	set_process(false)
-	var info = file["Info"]
+	var info = LevelEditor.level_file["Info"]
 	LevelEditor.level_author = info["Author"]
 	LevelEditor.level_name = info["Name"]
 	level_play.emit()

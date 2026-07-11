@@ -270,6 +270,7 @@ func handle_player_trail() -> void:
 			return
 		var distance = last_placed_position.distance_to(target_player.global_position)
 		if distance >= 32:
+			print("recorded")
 			record_player_frame()
 
 func handle_hud() -> void:
@@ -407,6 +408,9 @@ func return_to_editor() -> void:
 	OffScreenDespawner.editor_testing_safety = true
 	recorded_trail = saved_trail.size() > 0
 	last_camera_position = get_tree().get_first_node_in_group("Players").camera.global_position
+	if (LevelEditor.saved_trail.size() > 1):
+		create_player_trail()
+		LevelEditor.recorded_trail = false
 
 var zoom := 1.0
 
@@ -1368,19 +1372,14 @@ func set_state(state := EditorState.IDLE) -> void:
 
 func save_blueprint() -> void:
 	var file_name = %BlueprintName.text.to_pascal_case() + ".mbp"
-	var file = FileAccess.open(ModsLoader.blueprints_path.path_join(file_name), FileAccess.WRITE)
-	file.store_string($LevelSaver.compress_string(JSON.stringify(area_to_save)))
-	file.close()
-	Global.log_comment(file_name + " saved.")
+	var err := JSONParser.save_to_file($LevelSaver.compress_string(JSON.stringify(area_to_save)), ModsLoader.blueprints_path.path_join(file_name))
+	if (err == OK):
+		Global.log_comment(file_name + " saved.")
 	area_to_save = {}
 
 func load_blueprint(blueprint_path := "") -> void:
 	var file = FileAccess.open(blueprint_path, FileAccess.READ).get_as_text()
-	var json = JSONParser.parse_string_to_dict($LevelSaver.decompress_string(file))
-	if (json.is_empty()):
-		Global.log_error("Blueprint is corrupted.")
-		return
-	
+	var json = JSONParser.parse_string(blueprint_path, $LevelSaver.decompress_string(file))
 	copied_area = json
 	pasting_area = true
 	var size_str = json["Size"].split(",", false)

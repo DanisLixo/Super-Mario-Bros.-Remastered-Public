@@ -25,9 +25,9 @@ func get_resource_packs() -> void:
 
 func create_container(resource_pack := "") -> void:
 	var container = RESOURCE_PACK_CONTAINER.instantiate()
-	container.pack_json = JSONParser.parse_json_to_dict(resource_pack + "/pack_info.json")
+	container.pack_json = JSONParser.parse_to_dict(resource_pack + "/pack_info.json")
 	if FileAccess.file_exists(resource_pack + "/config.json"):
-		container.config = JSONParser.parse_json_to_dict(resource_pack + "/config.json")
+		container.config = JSONParser.parse_to_dict(resource_pack + "/config.json")
 		container.config_path = resource_pack + "/config.json"
 	if FileAccess.file_exists(resource_pack + "/icon.png"):
 		var image = Image.new()
@@ -35,7 +35,7 @@ func create_container(resource_pack := "") -> void:
 		container.icon = ImageTexture.create_from_image(image)
 	elif FileAccess.file_exists(resource_pack + "/icon.gif"):
 		container.icon = GifManager.animated_texture_from_file(resource_pack + "/icon.gif")
-	container.pack_name = resource_pack.replace(ModsLoader.resource_packs_path, "").trim_prefix("/")
+	container.pack_id = resource_pack.replace(ModsLoader.resource_packs_path, "").trim_prefix("/")
 	$"../ScrollContainer/VBoxContainer".add_child(container)
 	containers.append(container)
 	container.add_to_group("Options")
