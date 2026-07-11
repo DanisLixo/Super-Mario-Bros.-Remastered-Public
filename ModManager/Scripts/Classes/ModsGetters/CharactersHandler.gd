@@ -158,31 +158,58 @@ static func get_custom_characters(deep := false) -> void:
 
 static func import_character(char_id := "", char_path := "", char_json := {}) -> void:
 	CHARACTERS.append(char_id)
+	
+	var character_doesnt_have := []
 	if (char_json.has("name")):
 		CHARACTER_NAMES.append(char_json.name)
 	else:
-		CHARACTER_NAMES.append("NAME NOT SET")
-	if (char_json.has("author")):
-		CHARACTER_AUTHORS.append(char_json.author)
+		CHARACTER_NAMES.append("???")
+		character_doesnt_have.append("name")
+	if (char_json.has("name")):
+		CHARACTER_AUTHORS.append(char_json.name)
 	else:
 		CHARACTER_AUTHORS.append("UNKNOWN")
-	
+		character_doesnt_have.append("author")
+
 	if FileAccess.file_exists(char_path.path_join("CharacterColour.json")):
-		CHARACTER_COLOURS.append((char_path.path_join("CharacterColour.json")))
+		CHARACTER_COLOURS.append(char_path.path_join("CharacterColour.json"))
 	else:
 		CHARACTER_COLOURS.append(null)
-	
+		character_doesnt_have.append("colour")
+
 	if FileAccess.file_exists(char_path.path_join("LifeIcon.json")):
-		CHARACTER_ICONS.append((char_path.path_join("LifeIcon.json")))
+		GameHUD.character_icons.append(char_path.path_join("LifeIcon.json"))
 	else:
-		CHARACTER_ICONS.append(null)
+		GameHUD.character_icons.append(null)
+		character_doesnt_have.append("icon")
 		
 	if FileAccess.file_exists(char_path.path_join("ColourPalette.json")):
-		CHARACTER_PALETTES.append((char_path.path_join("ColourPalette.json")))
+		CHARACTER_PALETTES.append(char_path.path_join("ColourPalette.json"))
 	else:
 		CHARACTER_PALETTES.append(null)
-	
-	AudioManager.character_sfx_map[char_id] = JSONParser.parse_json_to_dict(char_path.path_join("SFX.json"))
+		character_doesnt_have.append("palette")
+	if (!FileAccess.file_exists(char_path.path_join("CheckpointFlag.json"))):
+		character_doesnt_have.append("checkpoint flag")
+
+	AudioManager.character_sfx_map[i] = JSONParser.parse_to_dict(char_path.path_join("SFX.json"))
+
+	if (character_doesnt_have.size() != 0):
+		var final_list_str := ""
+		
+		var cur_idx := 0
+		for missing in character_doesnt_have:
+			if cur_idx != 0:
+				if (cur_idx == character_doesnt_have.size() - 1):
+					final_list_str += " and "
+				else:
+					final_list_str += ", "
+			
+			final_list_str += missing
+			cur_idx += 1
+
+		# DawnLR: Yeah, kind of unnecessary, but come on, at least it's cool!
+		Global.log_warning("Character: \"%s\" is missing: %s!" % [i, final_list_str])
+
 
 static func clear_characters_list() -> void:
 	CHARACTERS = DEFAULT_CHARACTERS.duplicate()
