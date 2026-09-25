@@ -40,7 +40,7 @@ func handle_main_hud() -> void:
 		update_character_info()
 	%CharacterIcon.get_node("Shadow").texture = %CharacterIcon.texture
 	# DawnLR: This can at the same time fallback to the Mario icon, it kinda does when it's still visible but yeah.
-	%CharacterIcon.visible = Global.current_game_mode != Global.GameMode.BOO_RACE && character_icons[int(current_chara)] != null
+	%CharacterIcon.visible = Global.current_game_mode != Global.GameMode.BOO_RACE && CharactersHandler.CHARACTER_ICONS[int(current_chara)] != null
 	%ModernLifeCount.visible = Global.current_game_mode != Global.GameMode.BOO_RACE
 	var world_num := str(Global.world_num)
 	if int(world_num) >= 10:

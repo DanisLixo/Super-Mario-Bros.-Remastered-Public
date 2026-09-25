@@ -23,9 +23,8 @@
 [ext_resource type="Script" uid="uid://dsoqhjtv0wd3e" path="res://ModManager/Scenes/CharacterInfo.gd" id="20_1rovx"]
 [ext_resource type="PackedScene" uid="uid://ufyrhwdt81u5" path="res://Scenes/Prefabs/UI/CustomLineEdit.tscn" id="20_3upca"]
 [ext_resource type="PackedScene" uid="uid://wdw43kgtjt70" path="res://ModManager/Scenes/Manager/Containers/List/CharacterContainer.tscn" id="21_3eaed"]
-[ext_resource type="SpriteFrames" uid="uid://do1ac4iicukox" path="res://Resources/SpriteFrames/Player/Toadette/Big.tres" id="24_4ncgm"]
-[ext_resource type="Script" uid="uid://b08qfwj5jk6g1" path="res://Scripts/Parts/PlayerSprite.gd" id="25_2o61y"]
-[ext_resource type="Texture2D" uid="uid://jqtt6s0dbkix" path="res://Assets/Temp/screenshot_1777397153.png" id="27_uiooj"]
+[ext_resource type="PackedScene" uid="uid://dostibjq6c7n1" path="res://ModManager/Scenes/SubScenes/CharacterPreview.tscn" id="24_td8sl"]
+[ext_resource type="PackedScene" uid="uid://52ay2e62cni7" path="res://ModManager/Scenes/SubScenes/ScreenshotPreview.tscn" id="25_4ncgm"]
 [ext_resource type="PackedScene" uid="uid://bom2rstlk8fws" path="res://Scenes/Prefabs/UI/ResourcePackConfigMenu.tscn" id="28_3tqog"]
 [ext_resource type="Script" uid="uid://dcx77vdfvwq4y" path="res://ModManager/Scripts/Manager/TemplateCreator.gd" id="29_qyvk2"]
 [ext_resource type="Script" uid="uid://co6tjg3w6qpd8" path="res://Scripts/Parts/LabelFontChanger.gd" id="34_pvrep"]
@@ -170,6 +169,7 @@ theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
 [node name="SectionSelector" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer" unique_id=1431354049]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
@@ -308,13 +308,13 @@ mouse_filter = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
 [node name="ModManager" type="Control" parent="Main/Border/Mods/VBoxContainer" unique_id=1039638489]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("7_uprsb")
 
 [node name="ManagerSelector" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager" unique_id=1285896036]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(208, 0)
 layout_mode = 1
 anchors_preset = 13
@@ -608,7 +608,6 @@ theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
 [node name="GeneralList" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager" unique_id=773970306]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -790,6 +789,9 @@ horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer" unique_id=69277288]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="NoModsLabel" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1264050413]
 unique_name_in_owner = true
@@ -828,6 +830,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="Disabled" type="Label" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList/MarginContainer/ScrollContainer/VBoxContainer/Containers" unique_id=1713946179]
 unique_name_in_owner = true
@@ -852,6 +855,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="HSeparator2" type="HSeparator" parent="Main/Border/Mods/VBoxContainer/ModManager/GeneralList" unique_id=478083324]
 layout_mode = 2
@@ -886,7 +890,7 @@ theme_override_styles/panel = ExtResource("9_mnppw")
 [node name="AutoScrollContainer" type="ScrollContainer" parent="Main/Border/Mods/VBoxContainer/ModManager/CharacterInfo/Panel" unique_id=395996229]
 layout_mode = 2
 mouse_filter = 0
-scroll_vertical = 43
+scroll_vertical = 19
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 script = ExtResource("9_uprsb")
@@ -967,6 +971,7 @@ text = "Delete"
 uppercase = true
 
 [node name="SideViewers" type="NinePatchRect" parent="." unique_id=437782379]
+visible = false
 texture_repeat = 2
 anchors_preset = 15
 anchor_right = 1.0
@@ -981,235 +986,11 @@ axis_stretch_vertical = 1
 script = ExtResource("4_vqpep")
 metadata/_custom_type_script = "uid://xem6lai3ufyj"
 
-[node name="CharacterPreview" type="Control" parent="SideViewers" unique_id=1904415757]
+[node name="CharacterPreview" parent="SideViewers" unique_id=2055482123 instance=ExtResource("24_td8sl")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="SideViewers/CharacterPreview" unique_id=1818005392]
+[node name="ScreenshotPreview" parent="SideViewers" unique_id=1787035830 instance=ExtResource("25_4ncgm")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer" unique_id=1120545122]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer" unique_id=1223735178]
-layout_mode = 2
-alignment = 1
-
-[node name="Play" type="MarginContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=781324835]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Button" type="Button" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2/Play" unique_id=2113386234]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2/Play" unique_id=1735896181]
-layout_mode = 2
-text = "Play Animation"
-uppercase = true
-
-[node name="Play2" type="MarginContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=864077518]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Button" type="Button" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2/Play2" unique_id=1609811431]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer2/Play2" unique_id=497402041]
-layout_mode = 2
-text = "Loop: true"
-uppercase = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer" unique_id=847059105]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_constants/separation = 0
-alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer" unique_id=776861400]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1785417147]
-layout_mode = 2
-size_flags_vertical = 0
-text = "Animation:"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1563212727]
-layout_mode = 2
-theme_override_constants/separation = 0
-alignment = 1
-
-[node name="LeftArrow" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=371719425]
-layout_mode = 2
-text = "◄"
-uppercase = true
-
-[node name="AutoScrollContainer" type="ScrollContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=2137577891]
-layout_mode = 2
-size_flags_horizontal = 3
-scroll_horizontal = 72
-horizontal_scroll_mode = 3
-vertical_scroll_mode = 0
-script = ExtResource("9_uprsb")
-is_active = true
-auto_minimum_resize = true
-metadata/_custom_type_script = "uid://d63p6qr5a748"
-
-[node name="CurrentAnimation" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/AutoScrollContainer" unique_id=560243183]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-text = "shitting brocks"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="RightArrow" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=657243978]
-layout_mode = 2
-text = "►"
-uppercase = true
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer" unique_id=732345353]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1625395541]
-layout_mode = 2
-size_flags_vertical = 0
-text = "Power State:"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="HBoxContainer2" type="VBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=374024966]
-layout_mode = 2
-theme_override_constants/separation = 0
-alignment = 1
-
-[node name="UpArrow" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=711496934]
-layout_mode = 2
-text = "▲"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="AutoScrollContainer" type="ScrollContainer" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=98944927]
-layout_mode = 2
-size_flags_horizontal = 3
-horizontal_scroll_mode = 3
-vertical_scroll_mode = 0
-script = ExtResource("9_uprsb")
-is_active = true
-auto_minimum_resize = true
-metadata/_custom_type_script = "uid://d63p6qr5a748"
-
-[node name="CurrentAnimation" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2/AutoScrollContainer" unique_id=483451330]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-text = "Small"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="DownArrow" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=1997573107]
-layout_mode = 2
-text = "▼"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="SpritePosition" type="Control" parent="SideViewers/CharacterPreview/MarginContainer" unique_id=2041878876]
-custom_maximum_size = Vector2(0, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="PlayerSprite" type="AnimatedSprite2D" parent="SideViewers/CharacterPreview/MarginContainer/SpritePosition" unique_id=1652796115 node_paths=PackedStringArray("resource_setter")]
-sprite_frames = ExtResource("24_4ncgm")
-animation = &"Jump"
-script = ExtResource("25_2o61y")
-resource_setter = NodePath("ResourceSetterNew")
-metadata/_custom_type_script = "uid://b08qfwj5jk6g1"
-
-[node name="ResourceSetterNew" type="Node" parent="SideViewers/CharacterPreview/MarginContainer/SpritePosition/PlayerSprite" unique_id=3249092]
-script = ExtResource("14_tuvgv")
-metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer" unique_id=2036177485]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer" unique_id=1677269704]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_constants/separation = -8
-
-[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer/HBoxContainer2" unique_id=835367071]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-text = "ZOOM: "
-uppercase = true
-
-[node name="Zoom" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer/HBoxContainer2" unique_id=2082703818]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-text = "1.0x"
-uppercase = true
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer" unique_id=434592950]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_constants/separation = -8
-alignment = 2
-
-[node name="Label" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=1278019501]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-text = "Speed: "
-uppercase = true
-
-[node name="Speed" type="Label" parent="SideViewers/CharacterPreview/MarginContainer/HBoxContainer/HBoxContainer3" unique_id=1665206970]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-text = "1.0x"
-uppercase = true
-
-[node name="ScreenshotPreview" type="Control" parent="SideViewers" unique_id=1109771502]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="SideViewers/ScreenshotPreview" unique_id=31474976]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-texture = ExtResource("27_uiooj")
-expand_mode = 5
-stretch_mode = 5
 
 [node name="ResourcePackConfigMenu" parent="SideViewers" unique_id=135459987 instance=ExtResource("28_3tqog")]
 visible = false

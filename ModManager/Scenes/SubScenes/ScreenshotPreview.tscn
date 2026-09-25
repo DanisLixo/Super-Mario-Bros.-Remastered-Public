@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://52ay2e62cni7"]
+
+[ext_resource type="Texture2D" uid="uid://jqtt6s0dbkix" path="res://Assets/Temp/screenshot_1777397153.png" id="1_hl8mf"]
+
+[node name="ScreenshotPreview" type="Control" unique_id=1787035830]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1315413215]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+texture = ExtResource("1_hl8mf")
+expand_mode = 5
+stretch_mode = 5

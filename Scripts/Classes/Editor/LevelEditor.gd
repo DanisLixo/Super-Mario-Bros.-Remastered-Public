@@ -408,9 +408,9 @@ func return_to_editor() -> void:
 	OffScreenDespawner.editor_testing_safety = true
 	recorded_trail = saved_trail.size() > 0
 	last_camera_position = get_tree().get_first_node_in_group("Players").camera.global_position
-	if (LevelEditor.saved_trail.size() > 1):
+	if (saved_trail.size() > 1):
 		create_player_trail()
-		LevelEditor.recorded_trail = false
+		recorded_trail = false
 
 var zoom := 1.0
 

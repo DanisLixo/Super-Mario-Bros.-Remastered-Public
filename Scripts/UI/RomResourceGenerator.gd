@@ -18,8 +18,6 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	Global.get_node("GameHUD").show()
 
-
-
 func done() -> void:
 	if not Settings.file.visuals.resource_packs.has(Global.ROM_PACK_NAME):
 		Settings.file.visuals.resource_packs.insert(0, Global.ROM_PACK_NAME)

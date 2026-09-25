@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b81cs6y73qe56"]
+
+[ext_resource type="PackedScene" uid="uid://rimg0vlsltw0" path="res://ModManager/Scenes/Manager/Containers/List/ModContainer.tscn" id="1_tb7pm"]
+[ext_resource type="Script" uid="uid://mkto5fatun" path="res://ModManager/Scenes/Manager/Containers/List/BlueprintContainer.gd" id="2_7573b"]
+
+[node name="BlueprintContainer" unique_id=1572140822 instance=ExtResource("1_tb7pm")]
+script = ExtResource("2_7573b")
+info_only = true
+
+[node name="RightHalf" parent="MarginContainer/HBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(582701347) index="1" unique_id=1323855834]
+visible = false

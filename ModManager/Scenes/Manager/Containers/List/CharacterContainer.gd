@@ -27,13 +27,11 @@ func update_sprites() -> void:
 	%PlayerColourTexture.json_path = CharactersHandler.CHARACTER_COLOURS[idx]
 	%NameColourPaletteSampler.texture = %SpotlightColourPaletteSampler.texture
 
-func handle_mod_activeness() -> void:
+func handle_toggle() -> void:
 	super()
 	
-	enabled = %Enabled.button_pressed
-	
 	if (material != null):
-		material.set_shader_parameter("enabled", !enabled)
+		set_instance_shader_parameter("enabled", !enabled)
 
 func handle_focus() -> void:
 	if (has_focus() && enabled):

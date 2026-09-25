@@ -55,14 +55,14 @@ func get_mods(mode := ModsList.ModListing.CHARACTERS) -> Dictionary:
 			return DEFAULT_MODS_DICT.duplicate()
 
 func get_custom_characters() -> Dictionary:
-	CharactersHandler.get_custom_characters(true)
+	CharactersHandler.import_custom_characters(true)
 	
 	var dict := DEFAULT_MODS_DICT.duplicate()
 	
 	dict.all = CharactersHandler.CHARACTERS.duplicate(true)
 	for i in CharactersHandler.DEFAULT_CHARACTERS:
 		dict.all.erase(i)
-	dict.disabled = CharactersHandler.disabled_mods
+	dict.disabled = Settings.file.mods.disabled_characters
 	
 	return dict
 
@@ -75,7 +75,7 @@ func get_level_packs() -> Dictionary:
 	
 	var dict := DEFAULT_MODS_DICT.duplicate()
 	dict.all = LevelPacksHandler.CUSTOM_CAMPAIGNS.duplicate(true)
-	dict.disabled = LevelPacksHandler.disabled_mods
+	dict.disabled = Settings.file.mods.disabled_level_packs
 	
 	return dict
 
@@ -84,6 +84,6 @@ func get_gml_mods() -> Dictionary:
 	
 	var dict := DEFAULT_MODS_DICT.duplicate()
 	dict.all = GMLHandler.GML_MODS.duplicate(true)
-	dict.disabled = GMLHandler.disabled_mods
+	dict.disabled = GMLHandler.disabled_mods.duplicate()
 	
 	return dict

@@ -82,7 +82,7 @@ func refresh() -> void:
 func create_list(content_dict := ModsLoader.DEFAULT_MODS_DICT.duplicate(), type := ModListing.CHARACTERS) -> void:
 	var idx := 0
 	for mod_id in content_dict.all:
-		var disabled_mod = content_dict.disabled.has(mod_id)
+		var disabled_mod = content_dict.has(mod_id)
 		
 		var container := create_container(idx, mod_id, type, disabled_mod)
 		if (container == null):
@@ -94,16 +94,15 @@ func create_list(content_dict := ModsLoader.DEFAULT_MODS_DICT.duplicate(), type 
 		
 		var current_category: Label = [%Enabled, %Disabled][int(content_dict.has(mod_id))]
 		if (listing_mode == 0):
-			
 			current_category.show()
 			current_list.move_child(container, current_category.get_index() + 1)
 			current_list.add_child(container)
+		
 		elif (listing_mode == 1):
 			var current_grid: Label = current_list[int(content_dict.has(mod_id))]
 			
 			current_category.show()
 			current_grid.show()
-			current_grid.add_child(container)
 			current_grid.add_child(container)
 		
 		idx += 1
@@ -123,7 +122,7 @@ func create_container(idx := -1, mod_id := "", type := ModListing.CHARACTERS, di
 		ModListing.CHARACTERS:
 			# I lowkey don't care if it's already a fixed size.
 			container.idx += CharactersHandler.DEFAULT_CHARACTERS.size()
-			container.json = JSONParser.parse_json_to_dict(file_path.path_join("CharacterInfo.json"))
+			container.json = JSONParser.parse_to_dict(file_path.path_join("CharacterInfo.json"))
 		ModListing.LEVEL_PACKS:
 			container.json = LevelPacksHandler.CUSTOM_CAMPAIGN_JSONS[mod_id]
 		ModListing.GML:
@@ -164,3 +163,16 @@ func container_selected(container: CustomLevelContainer) -> void:
 func open_folder() -> void:
 	var mods_path = FOLDER_PATHS[current_content_idx]
 	OS.shell_show_in_file_manager(ProjectSettings.globalize_path(mods_path))
+
+func get_type_as_string(type := ModListing.CHARACTERS, disabled := false) -> String:
+	var disabled_str := "disabled_" if disabled else ""
+	match type:
+		ModListing.CHARACTERS:
+			return disabled_str + "characters"
+		ModListing.LEVEL_PACKS:
+			return disabled_str + "level_packs"
+		ModListing.GML:
+			return disabled_str + "mods"
+		ModListing.RESOURCE_PACKS:
+			return "resource_packs"
+	return ""

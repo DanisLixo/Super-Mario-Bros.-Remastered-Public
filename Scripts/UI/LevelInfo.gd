@@ -52,7 +52,7 @@ func _process(_delta: float) -> void:
 		close()
 
 func level_selected() -> void:
-	LevelEditor.level_file = JSONParser.parse_json_to_dict(file_path)
+	LevelEditor.level_file = JSONParser.parse_to_dict(file_path)
 	if (LevelEditor.level_file.is_empty()):
 		Global.log_error("Level is corrupted (how).")
 	

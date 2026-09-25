@@ -60,8 +60,8 @@ func _enter_tree() -> void:
 		update_resource()
 
 func safety_check() -> void:
-	if Settings.file.visuals.resource_packs.has(Global.ROM_PACK_NAME) == false:
-		Settings.file.visuals.resource_packs.append(Global.ROM_PACK_NAME)
+	if Settings.file.mods.resource_packs.has(Global.ROM_PACK_NAME) == false:
+		Settings.file.mods.resource_packs.append(Global.ROM_PACK_NAME)
 
 func update_resource() -> void:
 	randomize()
@@ -102,7 +102,7 @@ func get_resource(json_file: JSON) -> Resource:
 	var resource_path = json_file.resource_path
 	config_to_use = {}
 	current_resource_pack = ""
-	for i in Settings.file.visuals.resource_packs:
+	for i in Settings.file.mods.resource_packs:
 		if (ignore_resource_from.has(i) && i != "BaseAssets"):
 			continue
 		var new_path = get_resource_pack_path(resource_path, i)
@@ -139,7 +139,7 @@ func get_resource(json_file: JSON) -> Resource:
 					json = get_variation_json(source_json)
 				finished = false
 		finished = true
-	for i in Settings.file.visuals.resource_packs:
+	for i in Settings.file.mods.resource_packs:
 		if (ignore_resource_from.has(i) && i != "BaseAssets"):
 			continue
 		source_resource_path = get_resource_pack_path(source_resource_path, i)

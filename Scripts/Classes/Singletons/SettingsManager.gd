@@ -69,7 +69,6 @@ var file := {
 	"visuals":
 	{
 		"parallax_style": 2,
-		"resource_packs": [Global.ROM_PACK_NAME],
 		"modern_hud": 0,
 		"rainbow_style": 0,
 		"extra_bgs": 1,
@@ -105,6 +104,15 @@ var file := {
 		"flagpole_lives": 0,
 		"game_over_behaviour": 0,
 		"extra_checkpoints": 0,
+	},
+	"mods":
+	{
+		"resource_packs": [Global.ROM_PACK_NAME],
+		# Different from resource packs, having new content means 
+		# wanting the content to automatically appears...
+		# ... sooooo...
+		"disabled_characters": [],
+		"disabled_level_packs": []
 	}
 }
 
@@ -122,9 +130,9 @@ func save_settings() -> void:
 	var cfg_file = ConfigFile.new()
 	var file_to_save = file.duplicate_deep()
 	var idx := 0
-	for i in file_to_save.visuals.resource_packs:
+	for i in file_to_save.mods.resource_packs:
 		if i == Global.custom_pack:
-			file_to_save.visuals.resource_packs.remove_at(idx)
+			file_to_save.mods.resource_packs.remove_at(idx)
 		idx += 1
 	for section in file_to_save.keys():
 		for key in file_to_save[section].keys():
@@ -147,8 +155,8 @@ func load_settings() -> void:
 
 func fix_broken_settings() -> void:
 	# Fix any "permanently-enabled" resource packs from 1.0.2 snapshots after portable mode was added, but before this bug was fixed
-	for i in range(file.visuals.resource_packs.size()):
-		file.visuals.resource_packs[i] = str(file.visuals.resource_packs[i]).trim_prefix("/")
+	for i in range(file.mods.resource_packs.size()):
+		file.mods.resource_packs[i] = str(file.mods.resource_packs[i]).trim_prefix("/")
 
 func apply_settings() -> void:
 	for i in file.video.keys():

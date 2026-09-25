@@ -15,19 +15,17 @@ var json := {}
 @export var idx := 0
 
 func _ready() -> void:
-	%Enabled.set_pressed_no_signal(enabled)
+	if (is_instance_valid(%Enabled)):
+		%Enabled.set_pressed_no_signal(enabled)
 	
 	set_process(false)
 	update_visuals()
-	
+
 func _process(_delta: float) -> void:
 	handle_visuals()
 	
 	if (Global.multibind_action_just_pressed("ui_accept") || Input.is_action_just_pressed("mb_left")) and visible:
 		selected.emit(self)
-
-func _physics_process(delta: float) -> void:
-	handle_mod_activeness()
 
 func update_visuals() -> void:
 	%Enabled.visible = !info_only
@@ -36,5 +34,10 @@ func update_visuals() -> void:
 func handle_visuals() -> void:
 	pass
 
-func handle_mod_activeness() -> void:
+func handle_toggle() -> void:
 	pass
+
+func on_toggled(toggled_on: bool) -> void:
+	enabled = toggled_on
+	
+	handle_toggle()

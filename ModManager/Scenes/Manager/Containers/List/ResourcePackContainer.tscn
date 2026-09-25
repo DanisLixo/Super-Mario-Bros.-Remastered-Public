@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://d0ec4x61au8mi"]
+
+[ext_resource type="PackedScene" uid="uid://rimg0vlsltw0" path="res://ModManager/Scenes/Manager/Containers/List/ModContainer.tscn" id="1_6ymsx"]
+[ext_resource type="Script" uid="uid://dkmqr0skyy2o1" path="res://ModManager/Scenes/Manager/Containers/List/ResourcePackContainer.gd" id="2_1r8kf"]
+[ext_resource type="Texture2D" uid="uid://uh7uhdkv3e6s" path="res://Assets/Sprites/Blocks/QuestionBlock.png" id="2_6au5m"]
+[ext_resource type="Script" uid="uid://d63p6qr5a748" path="res://Scripts/UI/AutoScrollContainer.gd" id="3_1r8kf"]
+[ext_resource type="Texture2D" uid="uid://7qtdxl2cjxeh" path="res://Assets/Sprites/UI/Checkbox.png" id="4_vkgh2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hflwx"]
+atlas = ExtResource("2_6au5m")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8rgm"]
+atlas = ExtResource("4_vkgh2")
+region = Rect2(0, 0, 16, 16)
+
+[node name="ResourcePackContainer" unique_id=1572140822 instance=ExtResource("1_6ymsx")]
+script = ExtResource("2_1r8kf")
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(582701347) index="0" unique_id=1631299239]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+texture = SubResource("AtlasTexture_hflwx")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="HBoxContainer2" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" parent_id_path=PackedInt32Array(456570900) index="1" unique_id=1462389349]
+visible = false
+
+[node name="ScrollContainer2" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer2" index="0" unique_id=1538947480]
+direction = 1
+
+[node name="Author" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer2/ScrollContainer2" index="0" unique_id=720591774]
+text = "Desc..."
+autowrap_mode = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info" parent_id_path=PackedInt32Array(456570900) index="2" unique_id=110695795]
+layout_mode = 2
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer3" index="0" unique_id=990960415]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("3_1r8kf")
+direction = 1
+
+[node name="Description" type="Label" parent="MarginContainer/HBoxContainer/HBoxContainer/Info/HBoxContainer3/ScrollContainer2" index="0" unique_id=1688440424]
+unique_name_in_owner = true
+modulate = Color(0.47058824, 0.47058824, 0.47058824, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+text = "Description description "
+autowrap_mode = 3
+autowrap_trim_flags = 64
+text_overrun_behavior = 3
+uppercase = true
+
+[node name="Enabled" parent="MarginContainer/HBoxContainer/HBoxContainer/RightHalf" parent_id_path=PackedInt32Array(1323855834) index="0" unique_id=969857188]
+theme_override_icons/checked = SubResource("AtlasTexture_x8rgm")
+
+[node name="LoadedOrder" type="Label" parent="MarginContainer/HBoxContainer/HBoxContainer/RightHalf/Enabled" index="0" unique_id=1796150657]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+uppercase = true

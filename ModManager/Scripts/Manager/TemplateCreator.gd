@@ -126,7 +126,7 @@ func create_template(mode := TemplateMode.RESOURCE_PACK) -> void:
 		
 		var pack_info_path = new_path.path_join("pack_info.json")
 		DirAccess.make_dir_recursive_absolute(pack_info_path.get_base_dir())
-	JSONParser.save_to_file(template_pack_info, pack_info_path)
+		JSONParser.save_to_file(template_pack_info, pack_info_path)
 	
 	match(mode):
 		TemplateMode.CHARACTER:

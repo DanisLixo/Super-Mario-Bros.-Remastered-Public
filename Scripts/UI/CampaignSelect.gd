@@ -35,17 +35,18 @@ func import_level_packs() -> void:
 	for pack_folder in LevelPacksHandler.CUSTOM_CAMPAIGN_JSONS:
 		var json = LevelPacksHandler.CUSTOM_CAMPAIGN_JSONS[pack_folder]
 		
-		var title: Label = %Custom.duplicate()
-		if (json.is_empty()):
-			Level.WORLD_COUNTS[pack_folder] = 1
-			
-			title.text = "ERROR!!!"
-		else:
-			Level.WORLD_COUNTS[pack_folder] = json.number_of_worlds
-			
-			title.text = json.name + "\nBy " + json.author
-			title.add_theme_color_override("font_shadow_color", Color(json.text_colour))
+		if (json.is_empty()): return
 		
+		var title: Label = %Custom.duplicate()
+		var pack_name = "???" if !json.has("name") else json["name"]
+		var pack_author = "UNKNOWN" if !json.has("author") else json["author"]
+		title.text = pack_name + "\nBy " + pack_author
+		if (json.has("text_colour")):
+			title.add_theme_color_override("font_shadow_color", Color(json.text_colour))
+		if (!(json.has("name") || json.has("author") || json.has("text_colour"))):
+			# DawnLR: Those are essentials to have, the rest are just for information, so the level pack can proceed from here with a warning.
+			Global.log_warning("There is missing information for level pack: \"%s\" " % pack_folder)
+	
 		%CampaignNames.add_child(title)
 
 func update() -> void:
@@ -123,9 +124,9 @@ func select() -> void:
 	CustomLevelMenu.has_entered = false
 	Global.current_custom_campaign = ""
 	var idx := 0
-	for i in Settings.file.visuals.resource_packs:
+	for i in Settings.file.mods.resource_packs:
 		if i == Global.custom_pack:
-			Settings.file.visuals.resource_packs.remove_at(idx)
+			Settings.file.mods.resource_packs.remove_at(idx)
 		idx += 1
 	if selected_index == 4:
 		Global.current_campaign = "SMB1"
@@ -152,7 +153,7 @@ func select() -> void:
 			if DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(ModsLoader.resource_packs_path.path_join(Global.custom_pack))) == false:
 				Global.log_error("Current campaign's resource pack was not found inside the resource packs folder.")
 			else:
-				Settings.file.visuals.resource_packs.push_front(Global.custom_pack)
+				Settings.file.mods.resource_packs.push_front(Global.custom_pack)
 		custom_selected.emit()
 	else:
 		Global.custom_pack = ""

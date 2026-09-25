@@ -1,0 +1,270 @@
+[gd_scene format=3 uid="uid://dostibjq6c7n1"]
+
+[ext_resource type="Script" uid="uid://w6p453fpubqp" path="res://ModManager/Scenes/SubScenes/CharacterPreview.gd" id="1_lqwj8"]
+[ext_resource type="Script" uid="uid://d63p6qr5a748" path="res://Scripts/UI/AutoScrollContainer.gd" id="1_q6qmi"]
+[ext_resource type="SpriteFrames" uid="uid://do1ac4iicukox" path="res://Resources/SpriteFrames/Player/Toadette/Big.tres" id="2_lqwj8"]
+[ext_resource type="Script" uid="uid://b08qfwj5jk6g1" path="res://Scripts/Parts/PlayerSprite.gd" id="3_o2b6t"]
+[ext_resource type="Script" uid="uid://cbal8ms2oe1ik" path="res://Scripts/Classes/Components/ResourceSetterNew.gd" id="4_f0lao"]
+
+[node name="CharacterPreview" type="Control" unique_id=2055482123]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lqwj8")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=179051007]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="SpritePosition" type="Control" parent="MarginContainer" unique_id=2039356359]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="MarginContainer/SpritePosition" unique_id=1074594138 node_paths=PackedStringArray("resource_setter")]
+unique_name_in_owner = true
+sprite_frames = ExtResource("2_lqwj8")
+animation = &"Jump"
+script = ExtResource("3_o2b6t")
+resource_setter = NodePath("ResourceSetterNew")
+metadata/_custom_type_script = "uid://b08qfwj5jk6g1"
+
+[node name="ResourceSetterNew" type="Node" parent="MarginContainer/SpritePosition/PlayerSprite" unique_id=737630696]
+script = ExtResource("4_f0lao")
+metadata/_custom_type_script = "uid://cbal8ms2oe1ik"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1294043604]
+layout_mode = 2
+alignment = 1
+
+[node name="GUI" type="VBoxContainer" parent="MarginContainer" unique_id=845922548]
+layout_mode = 2
+alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer/GUI" unique_id=487566738]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/GUI/Buttons" unique_id=266531771]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Backward" type="Button" parent="MarginContainer/GUI/Buttons/MarginContainer4" unique_id=7514536]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/GUI/Buttons/MarginContainer4" unique_id=753662699]
+layout_mode = 2
+text = "◄"
+uppercase = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/GUI/Buttons" unique_id=423488010]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Play" type="Button" parent="MarginContainer/GUI/Buttons/MarginContainer2" unique_id=725608137]
+layout_mode = 2
+
+[node name="AnimLabel" type="Label" parent="MarginContainer/GUI/Buttons/MarginContainer2" unique_id=880309762]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Play Animation"
+uppercase = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GUI/Buttons" unique_id=965776483]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Forward" type="Button" parent="MarginContainer/GUI/Buttons/MarginContainer" unique_id=1757254681]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/GUI/Buttons/MarginContainer" unique_id=292040752]
+layout_mode = 2
+text = "►"
+uppercase = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/GUI/Buttons" unique_id=730599215]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Loop" type="Button" parent="MarginContainer/GUI/Buttons/MarginContainer3" unique_id=53844185]
+layout_mode = 2
+
+[node name="LoopLabel" type="Label" parent="MarginContainer/GUI/Buttons/MarginContainer3" unique_id=1687015301]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Loop: true"
+uppercase = true
+
+[node name="AnimInfo" type="HBoxContainer" parent="MarginContainer/GUI" unique_id=1189356438]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Animation" type="VBoxContainer" parent="MarginContainer/GUI/AnimInfo" unique_id=680605427]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/GUI/AnimInfo/Animation" unique_id=1370703739]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Animation:"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/GUI/AnimInfo/Animation" unique_id=312322258]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="LeftArrow" type="Label" parent="MarginContainer/GUI/AnimInfo/Animation/HBoxContainer" unique_id=1415797791]
+layout_mode = 2
+text = "◄"
+uppercase = true
+
+[node name="AutoScrollContainer" type="ScrollContainer" parent="MarginContainer/GUI/AnimInfo/Animation/HBoxContainer" unique_id=440349362]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+scroll_horizontal = 28
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+script = ExtResource("1_q6qmi")
+is_active = true
+auto_connect_focus = false
+auto_minimum_resize = true
+metadata/_custom_type_script = "uid://d63p6qr5a748"
+
+[node name="CurrentAnimation" type="Label" parent="MarginContainer/GUI/AnimInfo/Animation/HBoxContainer/AutoScrollContainer" unique_id=325852922]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "shitting brocks"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="RightArrow" type="Label" parent="MarginContainer/GUI/AnimInfo/Animation/HBoxContainer" unique_id=218125326]
+layout_mode = 2
+text = "►"
+uppercase = true
+
+[node name="PowerState" type="VBoxContainer" parent="MarginContainer/GUI/AnimInfo" unique_id=784000921]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/GUI/AnimInfo/PowerState" unique_id=1515864175]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Power State:"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer2" type="VBoxContainer" parent="MarginContainer/GUI/AnimInfo/PowerState" unique_id=1856779858]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="UpArrow" type="Label" parent="MarginContainer/GUI/AnimInfo/PowerState/HBoxContainer2" unique_id=787631008]
+layout_mode = 2
+text = "▲"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="AutoScrollContainer" type="ScrollContainer" parent="MarginContainer/GUI/AnimInfo/PowerState/HBoxContainer2" unique_id=1249769023]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+script = ExtResource("1_q6qmi")
+is_active = true
+auto_connect_focus = false
+auto_minimum_resize = true
+metadata/_custom_type_script = "uid://d63p6qr5a748"
+
+[node name="CurrentPowerState" type="Label" parent="MarginContainer/GUI/AnimInfo/PowerState/HBoxContainer2/AutoScrollContainer" unique_id=1325682455]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Small"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="DownArrow" type="Label" parent="MarginContainer/GUI/AnimInfo/PowerState/HBoxContainer2" unique_id=990079410]
+layout_mode = 2
+text = "▼"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/GUI" unique_id=371518694]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/GUI/HBoxContainer" unique_id=255446367]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_constants/separation = -8
+
+[node name="Label" type="Label" parent="MarginContainer/GUI/HBoxContainer/HBoxContainer2" unique_id=1677366744]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "ZOOM: "
+uppercase = true
+
+[node name="Zoom" type="Label" parent="MarginContainer/GUI/HBoxContainer/HBoxContainer2" unique_id=1447140859]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "1.0x"
+uppercase = true
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/GUI/HBoxContainer" unique_id=1463599107]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_constants/separation = -8
+alignment = 2
+
+[node name="Label" type="Label" parent="MarginContainer/GUI/HBoxContainer/HBoxContainer3" unique_id=2016098716]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Speed: "
+uppercase = true
+
+[node name="Speed" type="Label" parent="MarginContainer/GUI/HBoxContainer/HBoxContainer3" unique_id=1251891221]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "1.0x"
+uppercase = true
+
+[connection signal="tree_entered" from="." to="." method="open"]
+[connection signal="pressed" from="MarginContainer/GUI/Buttons/MarginContainer4/Backward" to="." method="frame_backward"]
+[connection signal="pressed" from="MarginContainer/GUI/Buttons/MarginContainer2/Play" to="." method="play_animation"]
+[connection signal="pressed" from="MarginContainer/GUI/Buttons/MarginContainer/Forward" to="." method="frame_forward"]
+[connection signal="pressed" from="MarginContainer/GUI/Buttons/MarginContainer3/Loop" to="." method="toggle_loop"]

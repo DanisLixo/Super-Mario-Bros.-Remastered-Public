@@ -49,8 +49,8 @@ static func get_resource(resource: Resource, node: Node = null, assign := false,
 		if resource is SpriteFrames:
 			if node is not AnimatedSprite2D:
 				resource = resource.get_frame_texture(resource.get_animation_names()[0], 0)
-	if Settings.file.visuals.resource_packs.is_empty() == false:
-		for i in Settings.file.visuals.resource_packs:
+	if Settings.file.mods.resource_packs.is_empty() == false:
+		for i in Settings.file.mods.resource_packs:
 			resource = get_override_resource(resource, i)
 	if cache.has(og_path) == false:
 		cache[og_path] = resource.duplicate()
@@ -128,8 +128,8 @@ static func create_new_sprite_frames(old_sprite_frames: SpriteFrames, resource_p
 	return new_frames
 
 static func get_pure_resource_path(resource_path := "") -> String:
-	if Settings.file.visuals.resource_packs.is_empty() == false:
-		for i in Settings.file.visuals.resource_packs:
+	if Settings.file.mods.resource_packs.is_empty() == false:
+		for i in Settings.file.mods.resource_packs:
 			var new_path = get_override_resource_path(resource_path, i)
 			new_path = new_path.replace(ModsLoader.characters_path, ModsLoader.resource_packs_path.path_join(new_path + "/Sprites/Players/CustomCharacters/"))
 			if FileAccess.file_exists(new_path):

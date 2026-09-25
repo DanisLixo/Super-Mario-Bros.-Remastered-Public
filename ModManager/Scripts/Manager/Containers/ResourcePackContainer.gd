@@ -11,9 +11,9 @@ var pack_id := ""
 var loaded := false
 var selected := false
 var load_order := 0
-var config := {}
 
 var config_path := ""
+var config := {}
 
 var old_idx := -1
 
@@ -37,11 +37,11 @@ func setup_visuals() -> void:
 	%LoadedOrder.text = str(load_order)
 
 func _process(_delta: float) -> void:
-	loaded = Settings.file.visuals.resource_packs.has(pack_id)
+	loaded = Settings.file.mods.resource_packs.has(pack_id)
 	%Cursor.modulate.a = int(selected)
 	%LoadedOrder.visible = loaded
 	%LoadedOrder.text = str(load_order + 1)
-	load_order = Settings.file.visuals.resource_packs.find(pack_id)
+	load_order = Settings.file.mods.resource_packs.find(pack_id)
 	var colour = Color.WHITE
 	if Global.custom_pack == pack_id:
 		colour = Color.YELLOW
@@ -73,13 +73,13 @@ func select() -> void:
 	ResourceGetter.cache.clear()
 	AudioManager.current_level_theme = ""
 	loaded = not loaded
-	if loaded and Settings.file.visuals.resource_packs.has(pack_id) == false:
-		Settings.file.visuals.resource_packs.push_front(pack_id)
+	if loaded and Settings.file.mods.resource_packs.has(pack_id) == false:
+		Settings.file.mods.resource_packs.push_front(pack_id)
 		if config != {}:
 			ResourceSetterNew.pack_configs[pack_id] = config
 	else:
 		ResourceSetterNew.pack_configs.erase(pack_id)
-		Settings.file.visuals.resource_packs.erase(pack_id)
+		Settings.file.mods.resource_packs.erase(pack_id)
 	Global.load_default_translations()
 	TranslationServer.reload_pseudolocalization()
 	Global.update_theme()

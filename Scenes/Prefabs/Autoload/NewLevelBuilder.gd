@@ -12,8 +12,6 @@ signal level_building_complete
 func load_level(temp_level_file := {}) -> void:
 	building = true
 	
-	EntityIDMapper.load_entity_map(LevelEditor.level_file.has("Mods"))
-	
 	for i in 5:
 		LevelEditor.sub_areas[i] = build_sublevel(i, temp_level_file)
 	level_building_complete.emit()

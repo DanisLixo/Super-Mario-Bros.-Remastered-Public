@@ -1,8 +1,9 @@
-class_name CharactersHandler extends Node
+class_name CharactersHandler extends Object
 
 const DEFAULT_CHARACTERS := ["Mario", "Luigi", "Toad", "Toadette"]
 const DEFAULT_CHARACTER_NAMES := ["CHAR_MARIO", "CHAR_LUIGI", "CHAR_TOAD", "CHAR_TOADETTE"]
 const DEFAULT_CHARACTER_AUTHORS := ["NINTENDO", "NINTENDO", "NINTENDO", "NINTENDO"]
+const DEFAULT_CHARACTER_DESCS := ["", "", "", ""]
 const DEFAULT_CHARACTER_COLOURS := [
 	("res://Assets/Sprites/Players/Mario/CharacterColour.json"), 
 	("res://Assets/Sprites/Players/Luigi/CharacterColour.json"), 
@@ -123,30 +124,26 @@ const DEFAULT_PHYSICS_PARAMETERS: Dictionary = {
 static var CHARACTERS := DEFAULT_CHARACTERS.duplicate()
 static var CHARACTER_NAMES := DEFAULT_CHARACTER_NAMES.duplicate()
 static var CHARACTER_AUTHORS := DEFAULT_CHARACTER_AUTHORS.duplicate()
+static var CHARACTER_DESCS := DEFAULT_CHARACTER_DESCS.duplicate()
 static var CHARACTER_COLOURS := DEFAULT_CHARACTER_COLOURS.duplicate()
 static var CHARACTER_PALETTES := DEFAULT_CHARACTER_PALETTES.duplicate()
 static var CHARACTER_ICONS := DEFAULT_CHARACTER_ICONS.duplicate()
 
-static var disabled_mods := []
-
 # This includes Character Select's get_custom_characters method.
-static func get_custom_characters(deep := false) -> void:
-	clear_characters_list()
+static func import_custom_characters() -> void:
+	_clear_characters_list()
 	
-	apply_resource_pack_changes()
+	_apply_resource_pack_changes()
 	
 	var char_dir = ModsLoader.characters_path
 	for i in DirAccess.get_directories_at(char_dir):
 		var char_path = char_dir.path_join(i)
 		var char_info_path = char_path.path_join("CharacterInfo.json")
 		
-		if (!deep):
-			if (disabled_mods.has(i)):
-				continue
 		if !FileAccess.file_exists(char_info_path):
 			continue
 		
-		var json := JSONParser.parse_json_to_dict(char_path.path_join("CharacterInfo.json"))
+		var json := JSONParser.parse_to_dict(char_path.path_join("CharacterInfo.json"))
 		
 		if json.has("physics"):
 			if json.physics.has("PHYSICS_PARAMETERS") == false:
@@ -154,9 +151,46 @@ static func get_custom_characters(deep := false) -> void:
 				Global.log_comment("Updated CharacterInfo for: " + i)
 				FileAccess.open(char_path.path_join("CharacterInfo.json"), FileAccess.WRITE).store_string((JSON.stringify(json, "\t", false)))
 		
-		import_character(i, char_path, json)
+		_register_character(i, char_path, json)
 
-static func import_character(char_id := "", char_path := "", char_json := {}) -> void:
+static func get_custom_characters(include_internal := true, deep := false) -> Array:
+	var dict := CHARACTERS.duplicate()
+	if (!include_internal):
+		for i in DEFAULT_CHARACTERS:
+			dict.erase(i)
+	if (!deep): 
+		for i in Settings.file.mods.disabled_characters:
+			dict.erase(i)
+	return dict
+
+static func has_custom_physics(parameters := {}) -> bool:
+	return DEFAULT_PHYSICS_PARAMETERS == parameters
+
+static func enable_character(char_id := "") -> void:
+	if (!CHARACTERS.has(char_id)):
+		return
+	
+	Settings.file.mods.disabled_characters.erase(char_id)
+	Settings.save_settings()
+
+static func disable_character(char_id := "") -> void:
+	if (!CHARACTERS.has(char_id)):
+		return
+	
+	Settings.file.mods.disabled_characters.append(char_id)
+	Settings.save_settings()
+
+static func _clear_characters_list() -> void:
+	CHARACTERS = DEFAULT_CHARACTERS.duplicate()
+	CHARACTER_NAMES = DEFAULT_CHARACTER_NAMES.duplicate()
+	CHARACTER_AUTHORS = DEFAULT_CHARACTER_AUTHORS.duplicate()
+	CHARACTER_DESCS = DEFAULT_CHARACTER_DESCS.duplicate()
+	CHARACTER_COLOURS = DEFAULT_CHARACTER_COLOURS.duplicate()
+	CHARACTER_PALETTES = DEFAULT_CHARACTER_PALETTES.duplicate()
+	CHARACTER_ICONS = DEFAULT_CHARACTER_ICONS.duplicate()
+	AudioManager.character_sfx_map.clear()
+
+static func _register_character(char_id := "", char_path := "", char_json := {}) -> void:
 	CHARACTERS.append(char_id)
 	
 	var character_doesnt_have := []
@@ -165,33 +199,40 @@ static func import_character(char_id := "", char_path := "", char_json := {}) ->
 	else:
 		CHARACTER_NAMES.append("???")
 		character_doesnt_have.append("name")
-	if (char_json.has("name")):
-		CHARACTER_AUTHORS.append(char_json.name)
+	
+	if (char_json.has("author")):
+		CHARACTER_AUTHORS.append(char_json.author)
 	else:
 		CHARACTER_AUTHORS.append("UNKNOWN")
 		character_doesnt_have.append("author")
+	
+	if (char_json.has("description")):
+		CHARACTER_AUTHORS.append(char_json.description)
+	else:
+		CHARACTER_AUTHORS.append("")
+		character_doesnt_have.append("description")
 
 	if FileAccess.file_exists(char_path.path_join("CharacterColour.json")):
 		CHARACTER_COLOURS.append(char_path.path_join("CharacterColour.json"))
 	else:
-		CHARACTER_COLOURS.append(null)
+		CHARACTER_COLOURS.append("")
 		character_doesnt_have.append("colour")
 
 	if FileAccess.file_exists(char_path.path_join("LifeIcon.json")):
-		GameHUD.character_icons.append(char_path.path_join("LifeIcon.json"))
+		CHARACTER_ICONS.append(char_path.path_join("LifeIcon.json"))
 	else:
-		GameHUD.character_icons.append(null)
+		CHARACTER_ICONS.append("")
 		character_doesnt_have.append("icon")
 		
 	if FileAccess.file_exists(char_path.path_join("ColourPalette.json")):
 		CHARACTER_PALETTES.append(char_path.path_join("ColourPalette.json"))
 	else:
-		CHARACTER_PALETTES.append(null)
+		CHARACTER_PALETTES.append("")
 		character_doesnt_have.append("palette")
 	if (!FileAccess.file_exists(char_path.path_join("CheckpointFlag.json"))):
 		character_doesnt_have.append("checkpoint flag")
 
-	AudioManager.character_sfx_map[i] = JSONParser.parse_to_dict(char_path.path_join("SFX.json"))
+	AudioManager.character_sfx_map[char_id] = JSONParser.parse_to_dict(char_path.path_join("SFX.json"))
 
 	if (character_doesnt_have.size() != 0):
 		var final_list_str := ""
@@ -206,33 +247,22 @@ static func import_character(char_id := "", char_path := "", char_json := {}) ->
 			
 			final_list_str += missing
 			cur_idx += 1
-
+		
 		# DawnLR: Yeah, kind of unnecessary, but come on, at least it's cool!
-		Global.log_warning("Character: \"%s\" is missing: %s!" % [i, final_list_str])
+		Global.log_warning("Character: \"%s\" is missing: %s!" % [char_id, final_list_str])
 
-
-static func clear_characters_list() -> void:
-	CHARACTERS = DEFAULT_CHARACTERS.duplicate()
-	CHARACTER_NAMES = DEFAULT_CHARACTER_NAMES.duplicate()
-	CHARACTER_AUTHORS = DEFAULT_CHARACTER_AUTHORS.duplicate()
-	CHARACTER_COLOURS = DEFAULT_CHARACTER_COLOURS.duplicate()
-	CHARACTER_PALETTES = DEFAULT_CHARACTER_PALETTES.duplicate()
-	CHARACTER_ICONS = DEFAULT_CHARACTER_ICONS.duplicate()
-	AudioManager.character_sfx_map.clear()
-
-static func apply_resource_pack_changes():
+static func _apply_resource_pack_changes():
 	for i in DEFAULT_CHARACTERS.size():
 		var character: String = CHARACTERS[i]
 		
 		var path = ResourceSetter.get_pure_resource_path("res://Assets/Sprites/Players/" + character + "/CharacterInfo.json")
 		if FileAccess.file_exists(path):
-			var json = JSONParser.parse_json_to_dict(path)
+			var json = JSONParser.parse_to_dict(path)
 			if (json.has("name")):
 				CHARACTER_NAMES[i] = json.name
+			if (json.has("author")):
+				CHARACTER_NAMES[i] = json.author
+			# why descriptions if they aren't custom
 		path = ResourceSetter.get_pure_resource_path("res://Assets/Sprites/Players/" + character + "/CharacterColour.json")
 		if FileAccess.file_exists(path):
 			CHARACTER_COLOURS[i] = (path)
-
-static func has_custom_physics(parameters := {}) -> bool:
-	return DEFAULT_PHYSICS_PARAMETERS == parameters
-	

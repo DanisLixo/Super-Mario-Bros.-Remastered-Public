@@ -1,5 +1,5 @@
 class_name ModsTransfer
-extends Node
+extends Object
 
 static func find_mods_in_old_path() -> Array:
 	var arr := []
@@ -40,7 +40,7 @@ static func move_file(path_from := "", move_to := "") -> void:
 
 	if (source == null):
 		var file_error := FileAccess.get_open_error()
-		Global.log_error("GML Mod: \"%s\" has not been moved due to an error! CODE: %s" % [path.get_file(), error_string(file_error)])
+		Global.log_error("GML Mod: \"%s\" has not been moved due to an error! CODE: %s" % [path_from.get_file(), error_string(file_error)])
 		return
 
 	var paste := FileAccess.open(move_to, FileAccess.WRITE)
@@ -51,7 +51,6 @@ static func move_file(path_from := "", move_to := "") -> void:
 		Global.log_error("Couldn't move file \"%s\" to: %s" % [path_from.get_file(), move_to])
 		return
 
-	pasted.close()
 	source.close()
 	paste.close()
 	

@@ -556,6 +556,12 @@ func open_marathon_results() -> void:
 func open_disco_results() -> void:
 	get_node("GameHUD/DiscoResults").open()
 
+func hide_hud() -> void:
+	$GameHUD.hide()
+
+func show_hud() -> void:
+	$GameHUD.show()
+
 func on_score_sfx_finished() -> void:
 	if tallying_score:
 		$ScoreTally.play()
@@ -679,7 +685,7 @@ func load_default_translations() -> void:
 
 func create_translation_from_json(locale := "") -> void:
 	var locale_json := {}
-	for resource_pack in Settings.file.visuals.resource_packs:
+	for resource_pack in Settings.file.mods.resource_packs:
 		var path = $ResourceSetterNew.get_resource_pack_path("res://Assets/Locale/" + locale + ".json", resource_pack)
 		var file_json = JSONParser.parse_to_dict(path)
 		for i in file_json.keys():
