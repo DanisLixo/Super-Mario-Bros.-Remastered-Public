@@ -182,6 +182,8 @@ func _ready() -> void:
 	Global.can_time_tick = false
 	
 	for i in get_tree().get_nodes_in_group("Selectors"):
+		i.mouse_entered.connect(tile_selector_hovered.bind(i))
+		i.mouse_exited.connect(tile_selector_stop_hover.bind(i))
 		tile_list.append(i)
 	var idx := 0
 	for i in music_track_list:
@@ -237,6 +239,7 @@ func _physics_process(delta: float) -> void:
 	if is_instance_valid(%ThemeName):
 		%ThemeName.text = Global.level_theme
 	handle_hud()
+	handle_tile_nametag()
 	if Global.multibind_action_just_pressed("editor_open_menu"):
 		if current_state == EditorState.IDLE:
 			open_tile_menu()
@@ -308,13 +311,16 @@ func close_tile_menu() -> void:
 	current_state = EditorState.IDLE
 	for i in get_tree().get_nodes_in_group("Selectors"):
 		i.disabled = false
-		i.set_mouse_hovered(false)
+
+var exit_after_save := false
 
 func save_level_before_exit() -> void:
 	tile_menu_open = true
 	open_save_dialog()
+	exit_after_save = true
 	await level_saved
-	go_back_to_menu()
+	if exit_after_save:
+		go_back_to_menu()
 
 func go_back_to_menu() -> void:
 	Global.transition_to_scene("res://Scenes/Levels/CustomLevelMenu.tscn")
@@ -327,6 +333,7 @@ func open_bindings_menu() -> void:
 	current_state = EditorState.IDLE
 
 func open_save_dialog() -> void:
+	exit_after_save = false
 	current_state = EditorState.SAVE_MENU
 	can_move_cam = false
 	%SaveLevelDialog.show()
@@ -860,6 +867,7 @@ func replace_area(top_corner := Vector2i.ZERO, layer_num := current_layer, area 
 		var true_target_position = top_corner + Vector2i(int(decode[2]), int(decode[3]))
 		var source = entity_tiles[layer_num][true_source_position]
 		source.get_node("SignalExposer").connections.append([layer_num, true_target_position])
+		source.get_node("SignalExposer").connect_pre_existing_signals()
 
 func save_area(top_corner := Vector2i.ZERO, select_start := Vector2i.ZERO, select_end := Vector2i.ZERO, layer_num := current_layer) -> Dictionary:
 	var dict := {"Tiles": "", "Entities": "", "Connections": "", "Empty": "", "Size": "0,0"}
@@ -946,6 +954,37 @@ func open_tile_selection_menu_scene_ref(selector: TilePropertySceneRef) -> void:
 	close_tile_menu()
 	current_state = EditorState.MODIFYING_TILE
 
+var current_hovered_selector: EditorTileSelector = null
+
+func tile_selector_hovered(selector: EditorTileSelector) -> void:
+	%NamePanel.visible = selector.tile_name != ""
+	%NameLabel.text = selector.tile_name
+	%TileDescription.text = selector.tile_desc
+	%DescPreview.visible = selector.tile_desc != ""
+	current_hovered_selector = selector
+
+func tile_selector_stop_hover(selector: EditorTileSelector) -> void:
+	if current_entity_selector == current_hovered_selector:
+		current_hovered_selector = null
+	%NamePanel.hide()
+
+func handle_tile_nametag() -> void:
+	var target_position = get_viewport().get_mouse_position()
+	target_position.x = clamp(target_position.x, %Panel.size.x / 2, (get_viewport().get_visible_rect().size.x) - %Panel.size.x / 2)
+	%NamePanel.position = target_position
+	if current_hovered_selector == null:
+		return
+	%TileDescription.text = current_hovered_selector.tile_desc
+	%Line.visible = current_hovered_selector.tile_desc != ""
+	%TileDescription.custom_minimum_size.x = get_viewport().get_visible_rect().size.x / 2
+	if current_hovered_selector.tile_desc != "":
+		%DescPreview.visible = not Input.is_action_pressed("editor_inspect")
+		%TileDescription.visible = not %DescPreview.visible
+	else:
+		%TileDescription.hide()
+		%DescPreview.hide()
+	%DescriptionSizer.visible = %TileDescription.visible
+
 func start_signal_connection(node: Node, connection_type := SignalExposer.ConnectType.SIGNAL) -> void:
 	current_state = LevelEditor.EditorState.CONNECTING
 	current_connection_type = connection_type
@@ -976,6 +1015,8 @@ func place_tile(tile_position := Vector2i.ZERO, layer_num := current_layer, tile
 	$TileCursor/Previews.hide()
 	var old_tile = null
 	var old_tile_info = []
+	if tile_to_place == null:
+		return
 	if entity_tiles[layer_num].get(tile_position) != null:
 		var overlapping_tile = entity_tiles[layer_num][tile_position]
 		if overlapping_tile is Player:
@@ -1359,13 +1400,12 @@ func create_player_trail() -> void:
 	saved_trail.clear()
 
 func clear_level() -> void:
-	Global.reload_editor()
-
 	clear_trail()
 	sub_areas = [null, null, null, null, null]
 	level_file = BLANK_FILE.duplicate_deep()
-
 	sub_level_id = 0
+	load_level(0)
+	set_state(EditorState.IDLE)
 
 func set_state(state := EditorState.IDLE) -> void:
 	current_state = state

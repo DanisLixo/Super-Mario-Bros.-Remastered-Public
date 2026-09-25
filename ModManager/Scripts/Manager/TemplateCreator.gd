@@ -14,8 +14,9 @@ const resource_pack_base_info_json := {
 	"name": "New Pack",
 	"description": "Template, give me a description!",
 	"author": "Me, until you change it",
-	"version": "1.0"
-	}
+	"version": "1.0",
+	"show_warnings": true
+}
 	
 const level_pack_base_info_json := {
 	"name": "Test Pack",
